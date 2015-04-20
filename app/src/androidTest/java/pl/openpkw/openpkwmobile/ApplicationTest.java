@@ -1,4 +1,4 @@
-package pl.openpkw.openpkw_mobile;
+package pl.openpkw.openpkwmobile;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

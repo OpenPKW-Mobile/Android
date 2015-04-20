@@ -1,4 +1,4 @@
-package pl.openpkw.openpkw_mobile;
+package pl.openpkw.openpkwmobile;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
