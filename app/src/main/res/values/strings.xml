@@ -3,4 +3,11 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="login.label.login">Zaloguj się</string>
+    <string name="login.label.edittext.user">Użytkownik</string>
+    <string name="login.label.edittext.password">Hasło</string>
+    <string name="login.buttonlabel.login">Zaloguj</string>
+    <string name="login.buttonlabel.newaccount">Utwórz</string>
+    <string name="login.label.newaccount">Nowy użytkownik</string>
+    <string name="login.label.fpassword">Nie pamiętasz hasła?</string>
 </resources>
