@@ -27,4 +27,5 @@
     <dimen name="width.login.button.register">160dp</dimen>
     <dimen name="margin.login.button.register.left">20dp</dimen>
     <dimen name="margin.login.button.register.top">10dp</dimen>
+    <dimen name="rules.link.margin.top">10dp</dimen>
 </resources>

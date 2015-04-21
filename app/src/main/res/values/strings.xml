@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">OpenPKW-Mobile</string>
-
+    <string name="app.name">OpenPKW-Mobile</string>
+    <string name="rules.url">https://openpkw.pl/</string>
+    <string name="rules.text">Zasady korzystania z aplikacji</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="login.label.login">Zaloguj się</string>
