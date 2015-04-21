@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import pl.openpkw.openpkwmobile.R;
+import pl.openpkw.openpkwmobile.activities.LoginActivity;
 import pl.openpkw.openpkwmobile.fragments.SplashFragment;
 
 /**
@@ -30,7 +31,7 @@ public class SplashActivity extends FragmentActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Intent loginIntent = new Intent(SplashActivity.this, TestActivity.class);
+                Intent loginIntent = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(loginIntent);
             }
         };
