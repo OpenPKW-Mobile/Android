@@ -33,6 +33,7 @@ public class SplashActivity extends FragmentActivity {
                 }
                 Intent loginIntent = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(loginIntent);
+                finish();
             }
         };
         splashThread.start();
