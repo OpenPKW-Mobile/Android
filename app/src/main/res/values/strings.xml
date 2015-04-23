@@ -11,4 +11,5 @@
     <string name="login.buttonlabel.newaccount">Utwórz</string>
     <string name="login.label.newaccount">Nowy użytkownik</string>
     <string name="login.label.fpassword">Nie pamiętasz hasła?</string>
+    <string name="fragment.login.twotaptoexit">Tapnij ponownie przycisk BACK, aby wyjść z aplikacji</string>
 </resources>
