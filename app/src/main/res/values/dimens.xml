@@ -7,7 +7,7 @@
     <dimen name="margin.login.left">10dp</dimen>
     <dimen name="margin.login.separator.top">5dp</dimen>
     <dimen name="margin.login.separator.bottom">5dp</dimen>
-    <dimen name="fontsize.login.edittext">24sp</dimen>
+    <dimen name="fontsize.login.edittext">18sp</dimen>
     <dimen name="height.login.separator.top">1dp</dimen>
     <dimen name="height.login.separator.bottom">1dp</dimen>
     <dimen name="margin.login.edittext.user.left">20dp</dimen>

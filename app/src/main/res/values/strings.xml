@@ -12,4 +12,7 @@
     <string name="login.label.newaccount">Nowy użytkownik</string>
     <string name="login.label.fpassword">Nie pamiętasz hasła?</string>
     <string name="fragment.login.twotaptoexit">Tapnij ponownie przycisk BACK, aby wyjść z aplikacji</string>
+    <string name="prestore.label.top">Przypomnij hasło</string>
+    <string name="toast.prestore.emailnotvalid">Wprowadzony adres e-mail jest niepoprawny</string>
+    <string name="toast.prestore.emailvalid">Na podany adres e-mail został wysłany link do zresetowania hasła. Sprawdź swoją skrzynkę pocztową.</string>
 </resources>

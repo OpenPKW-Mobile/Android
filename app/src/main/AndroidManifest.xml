@@ -17,6 +17,7 @@
         </activity>
         
 		<activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.PasswordRestoreActivity" />
         <activity
             android:name="pl.openpkw.openpkwmobile.views.TestActivity"
             android:label="@string/app.name" >
