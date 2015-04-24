@@ -17,7 +17,7 @@
     <dimen name="margin.login.button.login.left">20dp</dimen>
     <dimen name="margin.login.button.login.top">10dp</dimen>
     <dimen name="margin.login.textlink.fpassword.left">20dp</dimen>
-    <dimen name="margin.login.textlink.fpassword.top">10dp</dimen>
+    <dimen name="margin.login.textlink.fpassword.top">5dp</dimen>
     <dimen name="fontsize.login.textlink.fpassword">16sp</dimen>
     <dimen name="margin.login.edittext.password.left">20dp</dimen>
     <dimen name="margin.login.edittext.password.right">20dp</dimen>
