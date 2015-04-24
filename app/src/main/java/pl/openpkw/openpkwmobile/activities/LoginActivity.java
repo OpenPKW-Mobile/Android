@@ -1,9 +1,10 @@
 package pl.openpkw.openpkwmobile.activities;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.Toast;
 
 import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.fragments.LoginFragment;
@@ -13,6 +14,8 @@ import pl.openpkw.openpkwmobile.fragments.LoginFragment;
  */
 public class LoginActivity extends OpenPKWActivity {
     private static final String LOGIN_FRAGMENT_TAG = "LoginFragment";
+    private boolean doubleBackToExitPressedOnce = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,5 +30,24 @@ public class LoginActivity extends OpenPKWActivity {
             ft.commit();
             fm.executePendingTransactions();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, getString(R.string.fragment_login_twotaptoexit), Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 3000);
     }
 }
