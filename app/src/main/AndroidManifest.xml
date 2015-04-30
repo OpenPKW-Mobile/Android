@@ -6,22 +6,24 @@
         android:allowBackup="true"
         android:icon="@mipmap/openpkw_icon"
         android:label="@string/app.name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name="pl.openpkw.openpkwmobile.views.SplashActivity"
-            android:label="@string/app.name" >
+            android:label="@string/app.name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-		<activity android:name=".activities.LoginActivity" />
+
+        <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.PasswordRestoreActivity" />
         <activity
+            android:name=".activities.VotingFormActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name="pl.openpkw.openpkwmobile.views.TestActivity"
-            android:label="@string/app.name" >
-        </activity>
+            android:label="@string/app.name"></activity>
     </application>
 
 </manifest>

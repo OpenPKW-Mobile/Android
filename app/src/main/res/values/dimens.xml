@@ -28,4 +28,6 @@
     <dimen name="margin.login.button.register.left">20dp</dimen>
     <dimen name="margin.login.button.register.top">10dp</dimen>
     <dimen name="rules.link.margin.top">10dp</dimen>
+    <dimen name="height.votingform.min.header">120dp</dimen>
+    <dimen name="height.votingform.max.header">300dp</dimen>
 </resources>

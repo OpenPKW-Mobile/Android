@@ -15,4 +15,11 @@
     <string name="prestore.label.top">Przypomnij hasło</string>
     <string name="toast.prestore.emailnotvalid">Wprowadzony adres e-mail jest niepoprawny</string>
     <string name="toast.prestore.emailvalid">Na podany adres e-mail został wysłany link do zresetowania hasła. Sprawdź swoją skrzynkę pocztową.</string>
+    <string name="fvoting.commision.label">Obwodowa komisja wyborcza</string>
+    <string name="fvoting.changecommision.button.label">Zmień komisję</string>
+    <string name="fvoting.abletovote.label">I.1.Uprawnionych do głosowania</string>
+    <string name="fvoting.validcards.label">II.11. Kart ważnych</string>
+    <string name="fvoting.nonvalidvotes.label">II.12 Głosów nieważnych</string>
+    <string name="fvoting.validvotes.label">II.13. Głosów ważnych</string>
+    <string name="fvoting.votingcardsdistributed.label">I.4.Wydano kart do głosowania</string>
 </resources>
