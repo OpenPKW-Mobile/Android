@@ -1,5 +1,6 @@
 package pl.openpkw.openpkwmobile.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
@@ -30,6 +31,11 @@ public class LoginActivity extends OpenPKWActivity {
             ft.commit();
             fm.executePendingTransactions();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
