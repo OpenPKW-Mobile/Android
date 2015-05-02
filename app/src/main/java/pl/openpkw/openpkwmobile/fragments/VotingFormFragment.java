@@ -1,5 +1,6 @@
 package pl.openpkw.openpkwmobile.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,13 +9,9 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ScrollView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-
+import android.widget.*;
 import pl.openpkw.openpkwmobile.R;
+import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
 
 /**
  * Created by fockeRR on 28.04.15.
@@ -38,6 +35,15 @@ public class VotingFormFragment extends Fragment {
         mCommisionAddress = (TextView) v.findViewById(R.id.fvoting_commision_address);
         mGeneralData = (TableLayout) v.findViewById(R.id.fvoting_generaldata);
         mCandidates = (TableLayout) v.findViewById(R.id.fvoting_candidates);
+        Button nextButton = (Button) v.findViewById(R.id.fvoting_next_button);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent takePhoto = new Intent(getActivity(), TakePhotosActivity.class);
+                startActivity(takePhoto);
+                getActivity().finish();
+            }
+        });
         populateDummmyData();
         return v;
     }

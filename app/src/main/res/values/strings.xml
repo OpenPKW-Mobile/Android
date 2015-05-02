@@ -22,4 +22,7 @@
     <string name="fvoting.nonvalidvotes.label">II.12 Głosów nieważnych</string>
     <string name="fvoting.validvotes.label">II.13. Głosów ważnych</string>
     <string name="fvoting.votingcardsdistributed.label">I.4.Wydano kart do głosowania</string>
+    <string name="empty_string"></string>
+    <string name="fragment_take_photos.header_label">Wprowadzasz Dane Dla</string>
+    <string name="fragment_take_photo.header_label">Zrób Zdjęcie Każdej Pojedynczej i Kolejnej stronie\nPROTOKOŁU WYBORCZEGO</string>
 </resources>

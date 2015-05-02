@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <TextView
+            android:id="@+id/fragment_take_photo.header_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/fragment_take_photo.header_label"
+            android:textSize="15sp" />
+
+    <SurfaceView
+            android:id="@+id/fragment_take_photo.surfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_below="@+id/fragment_take_photo.header_label"
+            android:layout_above="@+id/fragment_take_photo.linearLayout" />
+
+    <LinearLayout
+            android:id="@+id/fragment_take_photo.linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_alignParentBottom="true">
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="but 2"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="but 1"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

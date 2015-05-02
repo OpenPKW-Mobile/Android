@@ -233,6 +233,7 @@
             <!-- Przycisk dalej -->
             <Button
                 style="@style/green_button"
+                android:id="@+id/fvoting.next.button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
