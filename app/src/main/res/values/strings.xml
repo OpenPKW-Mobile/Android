@@ -22,4 +22,7 @@
     <string name="fvoting.nonvalidvotes.label">II.12 Głosów nieważnych</string>
     <string name="fvoting.validvotes.label">II.13. Głosów ważnych</string>
     <string name="fvoting.votingcardsdistributed.label">I.4.Wydano kart do głosowania</string>
+    <string name="network_check_internet_connection">Sprawdź swoje połączenie internetowe</string>
+    <string name="login.error.incorrectloginorpassword">Nieprawidłowy login lub hasło</string>
+    <string name="login.error.nointernetconnection">Brak połączenia internetowego!\nSprawdź swoje ustawienia sieciowe</string>
 </resources>
