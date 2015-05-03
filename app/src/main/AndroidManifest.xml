@@ -26,7 +26,8 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="pl.openpkw.openpkwmobile.views.TestActivity"
-            android:label="@string/app.name"></activity>
+            android:label="@string/app.name"/>
+        <activity android:name=".activities.CommissionsActivity" />
     </application>
 
 </manifest>

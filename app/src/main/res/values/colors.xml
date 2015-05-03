@@ -2,4 +2,5 @@
 <resources>
     <color name="rules.fragment.background">#fff</color>
     <item name="green" type="color">#FF99CC00</item>
+    <item name="yellow" type="color">#FF9933</item>
 </resources>

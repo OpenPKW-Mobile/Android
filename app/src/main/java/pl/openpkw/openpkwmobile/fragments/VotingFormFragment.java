@@ -15,6 +15,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import pl.openpkw.openpkwmobile.R;
+import pl.openpkw.openpkwmobile.models.Commission;
 
 /**
  * Created by fockeRR on 28.04.15.
@@ -27,6 +28,8 @@ public class VotingFormFragment extends Fragment {
     private TextView mCommisionAddress;
     private TableLayout mCandidates;
     private TableLayout mGeneralData;
+
+    private Commission commission;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,13 +49,19 @@ public class VotingFormFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            commission = bundle.getParcelable("commission");
+        }
+
     }
 
     private void populateDummmyData() {
         mCommisionNumber.setText("Nr 5 Łódź");
-        mCommisionId.setText("106101-5");
-        mCommisionName.setText("Laboratorium Produkcji Ogrodniczej w Zespole Szkół Rzemiosła im. Jana Kilińskiego");
-        mCommisionAddress.setText("ul. Liściasta 181, 91-220 Łódź");
+        mCommisionId.setText(commission.getPkwId());
+        mCommisionName.setText(commission.getName());
+        mCommisionAddress.setText(commission.getAddress());
 
         TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT);
         TableRow.LayoutParams nameParams = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 0.7f);

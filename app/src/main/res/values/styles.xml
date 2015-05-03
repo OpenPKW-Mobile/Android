@@ -16,4 +16,15 @@
         <item name="android:clickable">true</item>
     </style>
 
+    <style name="yellow_button" parent="@android:style/Widget.Button">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">#FFFFFFFF</item>
+        <item name="android:textSize">16dip</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/button_yellow</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
 </resources>

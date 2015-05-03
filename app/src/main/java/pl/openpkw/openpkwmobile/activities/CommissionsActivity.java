@@ -8,32 +8,26 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
 import pl.openpkw.openpkwmobile.R;
-import pl.openpkw.openpkwmobile.fragments.LoginFragment;
+import pl.openpkw.openpkwmobile.fragments.CommissionsFragment;
 import pl.openpkw.openpkwmobile.fragments.VotingFormFragment;
 
 /**
  * Created by michalu on 28.04.15.
  */
-public class VotingFormActivity extends FragmentActivity {
-    private static final String VOTINGFORM_FRAGMENT_TAG = "VotingFormFragment";
+public class CommissionsActivity extends FragmentActivity {
+    private static final String COMMISSIONS_FRAGMENT_TAG = "CommissionsFragment";
     private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_voting_form);
+        setContentView(R.layout.activity_commissions);
 
         FragmentManager fm = getSupportFragmentManager();
-        VotingFormFragment fvFragment = (VotingFormFragment) fm.findFragmentByTag(VOTINGFORM_FRAGMENT_TAG);
-        if (fvFragment == null) {
-            fvFragment = new VotingFormFragment();
-
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("commission", getIntent().getParcelableExtra("commission"));
-            fvFragment.setArguments(bundle);
-
+        CommissionsFragment commFragment = (CommissionsFragment) fm.findFragmentByTag(COMMISSIONS_FRAGMENT_TAG);
+        if (commFragment == null) {
             FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.fvoting_fragment_container, fvFragment, VOTINGFORM_FRAGMENT_TAG);
+            ft.replace(R.id.commissions_fragment_container, new CommissionsFragment(), COMMISSIONS_FRAGMENT_TAG);
             ft.commit();
             fm.executePendingTransactions();
         }

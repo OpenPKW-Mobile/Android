@@ -4,6 +4,11 @@
     <string name="rules.text">Zasady korzystania z aplikacji</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="commissions.button.add">Dodaj komisję</string>
+    <string name="commissions.label.top">Twoja Lista Komisji do których jesteś przypisany:</string>
+    <string name="commissions.label.list">Wybierz z listy rozwijanej  komisje dla której wprowadzasz dane bądź dodaj komisje: </string>
+    <string name="commissions.toast.selectcommision">Wybierz komisję, aby przejść do formularza.</string>
+    <string name="global.next">Dalej</string>
     <string name="login.label.login">Zaloguj się</string>
     <string name="login.label.edittext.user">Użytkownik</string>
     <string name="login.label.edittext.password">Hasło</string>

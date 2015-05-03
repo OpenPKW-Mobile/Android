@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/commissions.label.top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:text="@string/commissions.label.top"
+        android:padding="10dp" />
+
+    <TextView
+        android:id="@+id/commissions.info.election"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:padding="10dp" />
+
+    <TextView
+        android:id="@+id/commissions.label.list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/commissions.label.list"
+        android:padding="10dp" />
+
+    <ListView
+        android:id="@id/android:list"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/commissions.add"
+            style="@style/yellow_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin.login.button.login.top"
+            android:layout_weight="1"
+            android:text="@string/commissions.button.add" />
+
+        <Button
+            android:id="@+id/commissions.next"
+            style="@style/green_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin.login.button.login.top"
+            android:layout_weight="1"
+            android:text="@string/global.next" />
+    </LinearLayout>
+</LinearLayout>

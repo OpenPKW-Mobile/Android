@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import pl.openpkw.openpkwmobile.R;
+import pl.openpkw.openpkwmobile.activities.CommissionsActivity;
 import pl.openpkw.openpkwmobile.activities.PasswordRestoreActivity;
 import pl.openpkw.openpkwmobile.activities.VotingFormActivity;
 import pl.openpkw.openpkwmobile.models.User;
@@ -94,8 +95,7 @@ public class LoginFragment extends Fragment {
         Callback<User> loginCallback = new Callback<User>() {
             @Override
             public void success(User user, Response response) {
-                //TODO: change to for other activity ChooseCommisionActivity or similar if implemented
-                Intent fvIntent = new Intent(getActivity(), VotingFormActivity.class);
+                Intent fvIntent = new Intent(getActivity(), CommissionsActivity.class);
                 fvIntent.putExtra("user",user);
                 startActivity(fvIntent);
                 getActivity().finish();
