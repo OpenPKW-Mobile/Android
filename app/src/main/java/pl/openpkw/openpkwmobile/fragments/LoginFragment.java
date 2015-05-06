@@ -17,6 +17,7 @@ import android.widget.Toast;
 import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.activities.PasswordRestoreActivity;
 import pl.openpkw.openpkwmobile.activities.VotingFormActivity;
+import pl.openpkw.openpkwmobile.models.Commission;
 import pl.openpkw.openpkwmobile.models.User;
 import pl.openpkw.openpkwmobile.network.RestClient;
 import retrofit.Callback;
@@ -68,6 +69,7 @@ public class LoginFragment extends Fragment {
 
     /**
      * Simple validation of login and password
+     *
      * @param login
      * @param password
      * @return result of validation
@@ -85,6 +87,7 @@ public class LoginFragment extends Fragment {
 
     /**
      * Method for authenticating users
+     *
      * @param login
      * @param password
      */
@@ -96,7 +99,23 @@ public class LoginFragment extends Fragment {
             public void success(User user, Response response) {
                 //TODO: change to for other activity ChooseCommisionActivity or similar if implemented
                 Intent fvIntent = new Intent(getActivity(), VotingFormActivity.class);
-                fvIntent.putExtra("user",user);
+                Bundle extra = new Bundle();
+                extra.putSerializable("user", user);
+                /*
+                        "id": 1,
+                        "pkwId": "106101-1",
+                        "name": "Studio Consulting Sp. z o.o.",
+                        "address": "ul. Romanowska 55F, 91-174 Łódź",
+                        "protokolCount": 2
+                 */
+
+                Commission dummyCommision = new Commission();
+                dummyCommision.setId(1);
+                dummyCommision.setAddress("ul. Romanowska 55F, 91-174 Łódź");
+                dummyCommision.setPkwId("106101-1");
+                dummyCommision.setName("Studio Consulting Sp. z o.o.");
+                extra.putParcelable("commission", dummyCommision);
+                fvIntent.putExtras(extra);
                 startActivity(fvIntent);
                 getActivity().finish();
             }

@@ -130,6 +130,7 @@
                         android:text="@string/fvoting.abletovote.label" />
 
                     <EditText
+                        android:id="@+id/fvoting.abletovote"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -148,6 +149,7 @@
                         android:text="@string/fvoting.votingcardsdistributed.label" />
 
                     <EditText
+                        android:id="@+id/fvoting.cards"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -166,6 +168,7 @@
                         android:text="@string/fvoting.validcards.label" />
 
                     <EditText
+                        android:id="@+id/fvoting.validcards"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -184,6 +187,7 @@
                         android:text="@string/fvoting.nonvalidvotes.label" />
 
                     <EditText
+                        android:id="@+id/fvoting.invalidvotes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -202,6 +206,7 @@
                         android:text="@string/fvoting.validvotes.label" />
 
                     <EditText
+                        android:id="@+id/fvoting.validvotes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -232,6 +237,7 @@
 
             <!-- Przycisk dalej -->
             <Button
+                android:id="@+id/fvoting.next.button"
                 style="@style/green_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
