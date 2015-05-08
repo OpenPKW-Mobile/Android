@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,7 @@ public class VotingFormFragment extends Fragment {
     private User user = null;
     private Commission commission = null;
     private Map<Integer, Integer> votes = null;
+    private Map<String, Integer> protocol = null;
 
     private int ableToVote;
     private int cards;
@@ -102,6 +104,7 @@ public class VotingFormFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        temporarySaveProtocol();
     }
 
     @Override
@@ -133,11 +136,11 @@ public class VotingFormFragment extends Fragment {
     }
 
     private void fillLayoutWithData(CommissionDetails cDetails) {
-        this.candidatesAndCommission = cDetails;
         mCommisionNumber.setText(cDetails.getOkregowa().getName());
         mCommisionId.setText(cDetails.getPkwId());
         mCommisionName.setText(cDetails.getName());
         mCommisionAddress.setText(cDetails.getAddress());
+
 
         TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT);
         TableRow.LayoutParams nameParams = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 0.7f);
@@ -147,7 +150,8 @@ public class VotingFormFragment extends Fragment {
         maxVotesLength[0] = new InputFilter.LengthFilter(6);
         for (Candidate candidate : cDetails.getKandydatList()) {
             TableRow candidateRow = new TableRow(getActivity());
-            candidateRow.setTag(String.valueOf(candidate.getPkwId()));
+            String pkwIdTag = String.valueOf(candidate.getPkwId());
+            candidateRow.setTag(pkwIdTag);
             candidateRow.setPadding(5, 5, 5, 5);
             TextView order = new TextView(getActivity());
             TextView name = new TextView(getActivity());
@@ -161,9 +165,12 @@ public class VotingFormFragment extends Fragment {
             numberOfVotes.setTag("votes");
             numberOfVotes.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
             numberOfVotes.setFilters(maxVotesLength);
+            numberOfVotes.setGravity(Gravity.RIGHT);
+            if (protocol != null && protocol.containsKey(pkwIdTag))
+                numberOfVotes.setText(String.valueOf(protocol.get(pkwIdTag)));
             candidateRow.addView(order, orderParams);
             candidateRow.addView(name, nameParams);
-            candidateRow.addView(numberOfVotes, nameParams);
+            candidateRow.addView(numberOfVotes, votesParams);
             candidateRow.setWeightSum(1.0f);
             mCandidates.addView(candidateRow);
         }
@@ -204,6 +211,13 @@ public class VotingFormFragment extends Fragment {
         validVotes = getInt(mValidVotes.getText());
     }
 
+    private void temporarySaveProtocol() {
+        if (protocol == null)
+            protocol = new HashMap<String, Integer>();
+        getSummary();
+        getVotes();
+    }
+
     private int getInt(Editable editable) {
         int result = -1;
         if (editable != null && editable.toString().trim().length() > 0) {
@@ -217,15 +231,17 @@ public class VotingFormFragment extends Fragment {
         if (mCandidates == null) {
             return;
         }
+
         for (int i = 0, j = mCandidates.getChildCount(); i < j; i++) {
             View view = mCandidates.getChildAt(i);
             if (view instanceof TableRow) {
                 Integer pkwId = Integer.parseInt((String) view.getTag());
                 EditText editWithVotes = (EditText) view.findViewWithTag("votes");
                 Integer numberOfVotes = 0;
-                if (editWithVotes.getText() != null && editWithVotes.getText().length() > 0) {
+                if (pkwId != null && editWithVotes.getText() != null && editWithVotes.getText().length() > 0) {
                     numberOfVotes = Integer.parseInt(editWithVotes.getText().toString().trim());
                     results.put(pkwId, numberOfVotes);
+                    protocol.put(String.valueOf(pkwId), numberOfVotes);
                 }
 
             }
