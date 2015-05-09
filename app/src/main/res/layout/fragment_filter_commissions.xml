@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/filter.commissions.label.top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:text="@string/filter.commissions.label.top"
+        android:padding="10dp" />
+
+    <TextView
+        android:id="@+id/filter.commissions.label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/filter.commissions.label"
+        android:padding="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/filter.commissions.edittext.teritorial.code"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin.login.edittext.user.left"
+            android:maxLength="6"
+            android:hint="@string/filter.commissions.edittext.teritorial.code"
+            android:inputType="number"
+            android:textSize="@dimen/fontsize.login.edittext" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="@dimen/fontsize.login.edittext" />
+
+        <EditText
+            android:id="@+id/filter.commissions.edittext.coomission.number"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:maxLength="3"
+            android:inputType="number"
+            android:hint="@string/filter.commissions.edittext.commission.number"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin.login.edittext.user.right"
+            android:textSize="@dimen/fontsize.login.edittext" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/filter.commissions.search"
+            style="@style/green_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin.login.button.login.top"
+            android:layout_weight="1"
+            android:text="@string/global.search" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/teritory_code"/>
+
+</LinearLayout>

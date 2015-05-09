@@ -1,7 +1,7 @@
 <resources>
     <string name="app.name">OpenPKW-Mobile</string>
-    <string name="rules.url">https://openpkw.pl/</string>
-    <string name="rules.text">Zasady korzystania z aplikacji</string>
+    <string name="rules.url">https://e-wybory.org/</string>
+    <string name="splash.check.it">Zajrzyj tu</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="login.label.login">Zaloguj się</string>
@@ -9,6 +9,7 @@
     <string name="login.label.edittext.password">Hasło</string>
     <string name="login.buttonlabel.login">Zaloguj</string>
     <string name="login.buttonlabel.newaccount">Utwórz</string>
+    <string name="global.search">Szukaj</string>
     <string name="login.label.newaccount">Nowy użytkownik</string>
     <string name="login.label.fpassword">Nie pamiętasz hasła?</string>
     <string name="fragment.login.twotaptoexit">Tapnij ponownie przycisk BACK, aby wyjść z aplikacji</string>
@@ -25,4 +26,13 @@
     <string name="network_check_internet_connection">Sprawdź swoje połączenie internetowe</string>
     <string name="login.error.incorrectloginorpassword">Nieprawidłowy login lub hasło</string>
     <string name="login.error.nointernetconnection">Brak połączenia internetowego!\nSprawdź swoje ustawienia sieciowe</string>
+    <string name="filter.commissions.label.top">Wyszukaj Komisję z której przekazujesz dane</string>
+    <string name="filter.commissions.label">Wpisz kod terytorialny gminy w której znajduje się Twoja komisja (znajdziesz go na protokole wyborczym)</string>
+    <string name="filter.commissions.edittext.teritorial.code">Kod terytorialny</string>
+    <string name="filter.commissions.edittext.commission.number">Nr obwodu</string>
+    <string name="filter.commissions.edittext.no.teritorial.code">Wprowadź kod terytorialny</string>
+    <string name="filter.commissions.edittext.no.commission.number">Wprowadź numer komisji</string>
+    <string name="filter.commissions.edittext.no.teritorial.code.is.short">Kod terytorialny powinien mieć 6 cyfr</string>
+    <string name="filter.commissions.progress.dialog.search">Szukam komisji...</string>
+    <string name="filter.commissions.no.commission.found">Nie znaleziono komisji</string>
 </resources>

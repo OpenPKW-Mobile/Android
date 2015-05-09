@@ -15,6 +15,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import pl.openpkw.openpkwmobile.R;
+import pl.openpkw.openpkwmobile.models.Commission;
+import pl.openpkw.openpkwmobile.models.User;
 
 /**
  * Created by fockeRR on 28.04.15.
@@ -38,7 +40,8 @@ public class VotingFormFragment extends Fragment {
         mCommisionAddress = (TextView) v.findViewById(R.id.fvoting_commision_address);
         mGeneralData = (TableLayout) v.findViewById(R.id.fvoting_generaldata);
         mCandidates = (TableLayout) v.findViewById(R.id.fvoting_candidates);
-        populateDummmyData();
+        Commission commission = (Commission)getActivity().getIntent().getSerializableExtra(FilterCommissionsFragment.COMMISSION_EXTRA);
+        populateDummmyData(commission);
         return v;
     }
 
@@ -48,11 +51,11 @@ public class VotingFormFragment extends Fragment {
         setRetainInstance(true);
     }
 
-    private void populateDummmyData() {
-        mCommisionNumber.setText("Nr 5 Łódź");
-        mCommisionId.setText("106101-5");
-        mCommisionName.setText("Laboratorium Produkcji Ogrodniczej w Zespole Szkół Rzemiosła im. Jana Kilińskiego");
-        mCommisionAddress.setText("ul. Liściasta 181, 91-220 Łódź");
+    private void populateDummmyData(Commission commission) {
+        mCommisionNumber.setText("Nr "+commission.getCommissionNumber() +" (" + commission.getCommissionCity()+")");
+        mCommisionId.setText(commission.getPkwId());
+        mCommisionName.setText(commission.getName());
+        mCommisionAddress.setText(commission.getAddress());
 
         TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT);
         TableRow.LayoutParams nameParams = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 0.7f);

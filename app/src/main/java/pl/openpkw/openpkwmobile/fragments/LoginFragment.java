@@ -13,10 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import pl.openpkw.openpkwmobile.R;
+import pl.openpkw.openpkwmobile.activities.FilterCommissionsActivity;
 import pl.openpkw.openpkwmobile.activities.PasswordRestoreActivity;
-import pl.openpkw.openpkwmobile.activities.VotingFormActivity;
 import pl.openpkw.openpkwmobile.models.User;
 import pl.openpkw.openpkwmobile.network.RestClient;
 import retrofit.Callback;
@@ -95,7 +94,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void success(User user, Response response) {
                 //TODO: change to for other activity ChooseCommisionActivity or similar if implemented
-                Intent fvIntent = new Intent(getActivity(), VotingFormActivity.class);
+                Intent fvIntent = new Intent(getActivity(), FilterCommissionsActivity.class);
                 fvIntent.putExtra("user",user);
                 startActivity(fvIntent);
                 getActivity().finish();
