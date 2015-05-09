@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="pl.openpkw.openpkwmobile.fragments.PhotosFragment">
+
+    <TextView
+            android:id="@+id/fragment_photos_header_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/fragment.photos.header"
+            android:textSize="15sp"/>
+
+    <GridView
+            android:id="@+id/fragment_photos_gridView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="2"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:layout_below="@+id/fragment_photos_header_label"
+            android:layout_above="@+id/fragment_photos_linearLayout">
+    </GridView>
+
+    <LinearLayout
+            android:id="@+id/fragment_photos_linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_alignParentBottom="true">
+
+        <Button
+                android:id="@+id/fragment_photos_sendButton"
+                style="@style/green_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:padding="10dp"
+                android:text="@string/fragment.photos.sendButton"/>
+    </LinearLayout>
+
+</RelativeLayout>

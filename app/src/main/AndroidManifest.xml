@@ -9,6 +9,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
+        android:largeHeap="true"
         android:allowBackup="true"
         android:icon="@mipmap/openpkw_icon"
         android:label="@string/app.name"
@@ -32,7 +33,8 @@
             android:label="@string/app.name" />
         <activity
             android:name=".activities.TakePhotosActivity"
-            android:label="@string/empty_string">
+            android:label="@string/empty.string"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

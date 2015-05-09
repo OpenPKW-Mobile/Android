@@ -3,35 +3,35 @@
                 android:layout_height="match_parent">
 
     <TextView
-            android:id="@+id/fragment_take_photo_header_label"
+            android:id="@+id/fragment_photo_preview.textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="@string/fragment.take.photo.header.label"
+            android:text="@string/fragment.photo.preview.header.label"
             android:textSize="15sp"/>
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal|center_vertical"
-            android:layout_below="@+id/fragment_take_photo_header_label"
-            android:layout_above="@+id/fragment_take_photo_linearLayout">
+            android:layout_below="@+id/fragment_photo_preview.textView"
+            android:layout_above="@+id/fragment_photo_preview.linearLayout">
 
-        <SurfaceView
-                android:id="@+id/fragment_take_photo.surfaceView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+        <ImageView
+                android:id="@+id/fragment_photo_preview.imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
     </LinearLayout>
 
     <LinearLayout
-            android:id="@+id/fragment_take_photo_linearLayout"
+            android:id="@+id/fragment_photo_preview.linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal|center_vertical"
             android:layout_alignParentBottom="true">
 
         <Button
-                android:id="@+id/fragment_take_photo_finish"
+                android:id="@+id/fragment_photo_preview.repeat_button"
                 style="@style/green_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,10 +39,10 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:padding="10dp"
-                android:text="@string/fragment.take.photo.finish.button"/>
+                android:text="@string/fragment.photo.preview.repeat.button"/>
         <!-- TODO baslow: change button! -->
         <Button
-                android:id="@+id/fragment_take_photo_take_picture"
+                android:id="@+id/fragment_photo_preview.next_button"
                 style="@style/green_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,9 +50,21 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:padding="10dp"
-                android:text="@string/fragment.take.photo.get.image.button"/>
-
-
+                android:text="@string/fragment.photo.preview.next.button"/>
     </LinearLayout>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ProgressBar
+                android:id="@+id/fragment.photo.preview.progressBar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

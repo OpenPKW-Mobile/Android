@@ -3,7 +3,7 @@
                 android:layout_height="match_parent">
 
     <TableLayout
-            android:id="@+id/fragment_take_photos.tableLayout"
+            android:id="@+id/fragment_take_photos_upper_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stretchColumns="*">
@@ -17,12 +17,11 @@
                 android:padding="10dp">
 
             <TextView
-                    android:id="@+id/fragment_take_photos.header_label"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/fragment_take_photos.header_label"
+                    android:text="@string/fragment.take.photos.header.label"
                     android:textSize="15sp"/>
         </TableRow>
 
@@ -35,7 +34,6 @@
                 android:padding="10dp">
 
             <TextView
-                    android:id="@+id/fragment_take_photos.commission_label"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
@@ -44,7 +42,7 @@
                     android:textSize="15sp"/>
 
             <TextView
-                    android:id="@+id/fragment_take_photos.commission_number"
+                    android:id="@+id/fragment_take_photos_commission_id"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -57,8 +55,8 @@
     </TableLayout>
 
     <RelativeLayout
-            android:id="@+id/fragment_take_photos.inner_container"
-            android:layout_below="@+id/fragment_take_photos.tableLayout"
+            android:id="@+id/fragment_take_photos_inner_container"
+            android:layout_below="@+id/fragment_take_photos_upper_table"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"/>

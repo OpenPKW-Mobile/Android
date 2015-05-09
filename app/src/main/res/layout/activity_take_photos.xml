@@ -3,7 +3,7 @@
              android:layout_height="match_parent">
 
     <RelativeLayout
-            android:id="@+id/activity_take_photos.inner_container"
+            android:id="@+id/activity_take_photos_inner_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

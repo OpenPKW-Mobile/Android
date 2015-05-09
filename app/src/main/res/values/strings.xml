@@ -22,7 +22,14 @@
     <string name="fvoting.nonvalidvotes.label">II.12 Głosów nieważnych</string>
     <string name="fvoting.validvotes.label">II.13. Głosów ważnych</string>
     <string name="fvoting.votingcardsdistributed.label">I.4.Wydano kart do głosowania</string>
-    <string name="empty_string"></string>
-    <string name="fragment_take_photos.header_label">Wprowadzasz Dane Dla</string>
-    <string name="fragment_take_photo.header_label">Zrób Zdjęcie Każdej Pojedynczej i Kolejnej stronie\nPROTOKOŁU WYBORCZEGO</string>
+    <string name="empty.string"></string>
+    <string name="fragment.take.photos.header.label">Wprowadzasz Dane Dla</string>
+    <string name="fragment.take.photo.header.label">Zrób Zdjęcie Każdej Pojedynczej i Kolejnej stronie\nPROTOKOŁU WYBORCZEGO</string>
+    <string name="fragment.take.photo.finish.button">Koniec zdjęć</string>
+    <string name="fragment.take.photo.get.image.button">Dalej</string>
+    <string name="fragment.photo.preview.header.label">Czy zdjęcje jest wyraźne i dobrze wykadrowane?\nJeśli Nie Ponów Próbę</string>
+    <string name="fragment.photo.preview.repeat.button">Ponów</string>
+    <string name="fragment.photo.preview.next.button">Kolejne</string>
+    <string name="fragment.photos.header">Przesyłasz Następujące Zdjęcia:</string>
+    <string name="fragment.photos.sendButton">Wyślij</string>
 </resources>
