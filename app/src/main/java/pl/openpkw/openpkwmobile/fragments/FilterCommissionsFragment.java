@@ -16,6 +16,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.logging.Logger;
+
 import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.activities.VotingFormActivity;
 import pl.openpkw.openpkwmobile.models.Commission;
@@ -28,6 +30,7 @@ public class FilterCommissionsFragment extends Fragment {
     private EditText commissionNumberET;
 
     public static String COMMISSION_EXTRA = "commission_extra";
+    Logger logger = Logger.getLogger(getClass().getSimpleName());
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,7 +78,7 @@ public class FilterCommissionsFragment extends Fragment {
         @Override
         protected Commission doInBackground(String... params) {
             BufferedReader br = null;
-            String line = "";
+            String line;
             String cvsSplitBy = "\\|";
             Commission commission = null;
 
@@ -107,16 +110,14 @@ public class FilterCommissionsFragment extends Fragment {
                         break;
                     }
                 }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.warning(e.getLocalizedMessage());
             } finally {
                 if (br != null) {
                     try {
                         br.close();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        logger.warning(e.getLocalizedMessage());
                     }
                 }
             }
@@ -138,6 +139,5 @@ public class FilterCommissionsFragment extends Fragment {
             }
         }
     }
-
 
 }
