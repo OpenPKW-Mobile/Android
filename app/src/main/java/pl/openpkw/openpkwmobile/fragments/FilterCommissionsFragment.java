@@ -50,23 +50,19 @@ public class FilterCommissionsFragment extends Fragment {
         searchCommission.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (teritorialCodeET.getText().toString()!=null && teritorialCodeET.getText().toString().length()==6) {
-                        String commissionNumberWithoutZero = commissionNumberET.getText().toString().replaceFirst("^0+(?!$)", "");
-                        if (!commissionNumberWithoutZero.equals("") || !commissionNumberWithoutZero.equals("0")) {
-                            new SearchCommission().execute(teritorialCodeET.getText().toString().trim(), commissionNumberWithoutZero);
+                if (teritorialCodeET.getText().toString() != null && teritorialCodeET.getText().toString().length() == 6) {
+                    String commissionNumberWithoutZero = commissionNumberET.getText().toString().replaceFirst("^0+(?!$)", "");
+                    if (!commissionNumberWithoutZero.equals("") || !commissionNumberWithoutZero.equals("0")) {
+                        new SearchCommission().execute(teritorialCodeET.getText().toString().trim(), commissionNumberWithoutZero);
                     } else {
                         Toast.makeText(getActivity().getApplicationContext(), getActivity().getString(R.string.filter_commissions_edittext_no_commission_number), Toast.LENGTH_SHORT).show();
                     }
-                        } else {
-                            Toast.makeText(getActivity().getApplicationContext(), getActivity().getString(R.string.filter_commissions_edittext_no_commission_number), Toast.LENGTH_SHORT).show();
-                        }
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), getActivity().getString(R.string.filter_commissions_edittext_no_teritorial_code_is_short), Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        return v;
     }
 
     @Override
