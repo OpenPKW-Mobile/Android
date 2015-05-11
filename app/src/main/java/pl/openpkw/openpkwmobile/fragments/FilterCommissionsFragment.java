@@ -28,6 +28,7 @@ import pl.openpkw.openpkwmobile.models.Commission;
 public class FilterCommissionsFragment extends Fragment {
     private EditText teritorialCodeET;
     private EditText commissionNumberET;
+    private Button searchCommission;
 
     public static String COMMISSION_EXTRA = "commission_extra";
     Logger logger = Logger.getLogger(getClass().getSimpleName());
@@ -37,7 +38,14 @@ public class FilterCommissionsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_filter_commissions, container, false);
         teritorialCodeET = (EditText) v.findViewById(R.id.filter_commissions_edittext_teritorial_code);
         commissionNumberET = (EditText) v.findViewById(R.id.filter_commissions_edittext_coomission_number);
-        Button searchCommission = (Button) v.findViewById(R.id.filter_commissions_search);
+        searchCommission = (Button) v.findViewById(R.id.filter_commissions_search);
+
+        return v;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         searchCommission.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +54,9 @@ public class FilterCommissionsFragment extends Fragment {
                         String commissionNumberWithoutZero = commissionNumberET.getText().toString().replaceFirst("^0+(?!$)", "");
                         if (!commissionNumberWithoutZero.equals("") || !commissionNumberWithoutZero.equals("0")) {
                             new SearchCommission().execute(teritorialCodeET.getText().toString().trim(), commissionNumberWithoutZero);
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), getActivity().getString(R.string.filter_commissions_edittext_no_commission_number), Toast.LENGTH_SHORT).show();
+                    }
                         } else {
                             Toast.makeText(getActivity().getApplicationContext(), getActivity().getString(R.string.filter_commissions_edittext_no_commission_number), Toast.LENGTH_SHORT).show();
                         }
