@@ -27,4 +27,5 @@
     <string name="login.error.nointernetconnection">Brak połączenia internetowego!\nSprawdź swoje ustawienia sieciowe</string>
     <string name="fvoting.toast.notalldataentered">Nie wprowadzono wszystkich danych w protokole</string>
     <string name="fvoting.toast.notallcandidatesvotesentered">Nie wprowadzono wyników głosowania dla wszystkich kandydatów</string>
+    <string name="fvoting.protocol.successfully.sent">Protokół został pomyślnie wysłany!</string>
 </resources>

@@ -166,8 +166,8 @@ public class VotingFormFragment extends Fragment {
             numberOfVotes.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
             numberOfVotes.setFilters(maxVotesLength);
             numberOfVotes.setGravity(Gravity.RIGHT);
-            if (protocol != null && protocol.containsKey(pkwIdTag))
-                numberOfVotes.setText(String.valueOf(protocol.get(pkwIdTag)));
+            if (protocol != null && protocol.containsKey("k" + pkwIdTag))
+                numberOfVotes.setText(String.valueOf(protocol.get("k" + pkwIdTag)));
             candidateRow.addView(order, orderParams);
             candidateRow.addView(name, nameParams);
             candidateRow.addView(numberOfVotes, votesParams);
@@ -179,7 +179,21 @@ public class VotingFormFragment extends Fragment {
     View.OnClickListener onNextButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            validateForm(getActivity().getApplicationContext());
+            Context ctx = getActivity().getApplicationContext();
+
+            if (validateForm(ctx)) {
+                RestClient.get(ctx).submitProtocol(user.getLogin(), user.getToken(), commission.getPkwId(),  protocol, new Callback<Void>() {
+                    @Override
+                    public void success(Void aVoid, Response response) {
+                        Context ctx = getActivity().getApplicationContext();
+                        Toast.makeText(ctx,ctx.getString(R.string.fvoting_protocol_successfully_sent), Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                    }
+                });
+            }
         }
     };
 
@@ -190,12 +204,12 @@ public class VotingFormFragment extends Fragment {
 
         if (ableToVote == -1 || cards == -1 || validCards == -1 ||
                 invalidVotes == -1 || validVotes == -1) {
-            Toast.makeText(ctx,ctx.getString(R.string.fvoting_toast_notalldataentered), Toast.LENGTH_SHORT).show();
+            Toast.makeText(ctx, ctx.getString(R.string.fvoting_toast_notalldataentered), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if (votes.keySet().size() != candidatesAndCommission.getKandydatList().size()) {
-            Toast.makeText(ctx,ctx.getString(R.string.fvoting_toast_notallcandidatesvotesentered), Toast.LENGTH_SHORT).show();
+            Toast.makeText(ctx, ctx.getString(R.string.fvoting_toast_notallcandidatesvotesentered), Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -204,11 +218,19 @@ public class VotingFormFragment extends Fragment {
 
 
     private void getSummary() {
+        if (protocol == null)
+            protocol = new HashMap<String, Integer>();
         ableToVote = getInt(mAbleToVote.getText());
         cards = getInt(mCards.getText());
         validCards = getInt(mValidCards.getText());
         invalidVotes = getInt(mInvalidVotes.getText());
         validVotes = getInt(mValidVotes.getText());
+
+        protocol.put("glosujacych",ableToVote);
+        protocol.put("glosowWaznych",validVotes);
+        protocol.put("glosowNieWaznych",invalidVotes);
+        protocol.put("kartWaznych",validCards);
+        protocol.put("uprawnionych",cards);
     }
 
     private void temporarySaveProtocol() {
@@ -231,17 +253,21 @@ public class VotingFormFragment extends Fragment {
         if (mCandidates == null) {
             return;
         }
+        if (protocol == null)
+            protocol = new HashMap<String, Integer>();
 
         for (int i = 0, j = mCandidates.getChildCount(); i < j; i++) {
             View view = mCandidates.getChildAt(i);
             if (view instanceof TableRow) {
-                Integer pkwId = Integer.parseInt((String) view.getTag());
-                EditText editWithVotes = (EditText) view.findViewWithTag("votes");
-                Integer numberOfVotes = 0;
-                if (pkwId != null && editWithVotes.getText() != null && editWithVotes.getText().length() > 0) {
-                    numberOfVotes = Integer.parseInt(editWithVotes.getText().toString().trim());
-                    results.put(pkwId, numberOfVotes);
-                    protocol.put(String.valueOf(pkwId), numberOfVotes);
+                if (view.getTag() != null) {
+                    int pkwId = Integer.parseInt((String) view.getTag());
+                    EditText editWithVotes = (EditText) view.findViewWithTag("votes");
+                    Integer numberOfVotes = 0;
+                    if (editWithVotes.getText() != null && editWithVotes.getText().toString().trim().length() > 0) {
+                        numberOfVotes = Integer.parseInt(editWithVotes.getText().toString().trim());
+                        results.put(pkwId, numberOfVotes);
+                        protocol.put("k" + String.valueOf(pkwId), numberOfVotes);
+                    }
                 }
 
             }

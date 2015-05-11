@@ -1,10 +1,14 @@
 package pl.openpkw.openpkwmobile.network;
 
+import java.util.Map;
+
 import pl.openpkw.openpkwmobile.models.CommissionDetails;
 import pl.openpkw.openpkwmobile.models.User;
 import retrofit.Callback;
+import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.Header;
+import retrofit.http.POST;
 import retrofit.http.Path;
 
 /**
@@ -24,6 +28,7 @@ public interface API {
 
     /**
      * a method to get detailed information about candidates for given commission
+     *
      * @param token
      * @param pkwId
      * @param callback
@@ -31,6 +36,15 @@ public interface API {
      */
     @GET("/komisja/{pkwId}")
     void getCandidates(@Header("X-OPW-login") String login, @Header("X-OPW-token") String token, @Path("pkwId") String pkwId,
-                                    Callback<CommissionDetails> callback);
+                       Callback<CommissionDetails> callback);
 
+    /**
+     * a method to send protocol to backend
+     *
+     * @param login
+     * @param token
+     */
+    @POST("/komisja/{pkwId}/protokol")
+    void submitProtocol(@Header("X-OPW-login") String login, @Header("X-OPW-token") String token,
+                        @Path("pkwId") String pkwId, @Body Map<String, Integer> map, Callback<Void> callback);
 }
