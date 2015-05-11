@@ -46,7 +46,7 @@
             android:id="@+id/filter.commissions.edittext.coomission.number"
             android:layout_weight="0.5"
             android:layout_width="0dp"
-            android:maxLength="3"
+            android:maxLength="4"
             android:inputType="number"
             android:hint="@string/filter.commissions.edittext.commission.number"
             android:layout_height="wrap_content"

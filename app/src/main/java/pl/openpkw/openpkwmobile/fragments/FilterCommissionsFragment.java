@@ -43,8 +43,9 @@ public class FilterCommissionsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (teritorialCodeET.getText().toString()!=null && teritorialCodeET.getText().toString().length()==6) {
-                        if (!commissionNumberET.getText().toString().isEmpty()) {
-                            new SearchCommission().execute(teritorialCodeET.getText().toString().trim(), commissionNumberET.getText().toString().trim());
+                        String commissionNumberWithoutZero = commissionNumberET.getText().toString().replaceFirst("^0+(?!$)", "");
+                        if (!commissionNumberWithoutZero.equals("") || !commissionNumberWithoutZero.equals("0")) {
+                            new SearchCommission().execute(teritorialCodeET.getText().toString().trim(), commissionNumberWithoutZero);
                         } else {
                             Toast.makeText(getActivity().getApplicationContext(), getActivity().getString(R.string.filter_commissions_edittext_no_commission_number), Toast.LENGTH_SHORT).show();
                         }
