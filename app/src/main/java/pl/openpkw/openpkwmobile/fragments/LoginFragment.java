@@ -67,6 +67,7 @@ public class LoginFragment extends Fragment {
 
     /**
      * Simple validation of login and password
+     *
      * @param login
      * @param password
      * @return result of validation
@@ -74,16 +75,20 @@ public class LoginFragment extends Fragment {
     private boolean validate(String login, String password) {
         if (login == null || password == null)
             return false;
+        Context ctx = getActivity().getApplicationContext();
         login = login.trim();
         password = password.trim();
-        if (login.isEmpty() || password.isEmpty())
+        if (login.isEmpty() || password.isEmpty()) {
+            Toast.makeText(ctx, ctx
+                    .getString(R.string.login_validation_login_password_empty), Toast.LENGTH_SHORT).show();
             return false;
-        else
+        } else
             return true;
     }
 
     /**
      * Method for authenticating users
+     *
      * @param login
      * @param password
      */

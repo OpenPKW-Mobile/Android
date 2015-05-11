@@ -35,4 +35,5 @@
     <string name="filter.commissions.edittext.no.teritorial.code.is.short">Kod terytorialny powinien mieć 6 cyfr</string>
     <string name="filter.commissions.progress.dialog.search">Szukam komisji...</string>
     <string name="filter.commissions.no.commission.found">Nie znaleziono komisji</string>
+    <string name="login.validation.login.password.empty">Pola login oraz hasło nie mogą być puste</string>
 </resources>
