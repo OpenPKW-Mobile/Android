@@ -26,19 +26,30 @@ import retrofit.client.Response;
  * Created by fockeRR on 21.04.15.
  */
 public class LoginFragment extends Fragment {
+
     private EditText mLogin;
     private EditText mPassword;
+
+    private Button restorePasswordBtn, loginButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         mLogin = (EditText) v.findViewById(R.id.login_edittext_user);
         mPassword = (EditText) v.findViewById(R.id.login_edittext_password);
-        Button restorePasswordBtn = (Button) v.findViewById(R.id.login_textlink_fpassword);
-        Button loginButton = (Button) v.findViewById(R.id.login_button_login);
+        restorePasswordBtn = (Button) v.findViewById(R.id.login_textlink_fpassword);
+        loginButton = (Button) v.findViewById(R.id.login_button_login);
         SpannableString buttonText = new SpannableString(restorePasswordBtn.getText());
         buttonText.setSpan(new UnderlineSpan(), 0, buttonText.length(), 0);
         restorePasswordBtn.setText(buttonText);
+
+        return v;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
         restorePasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +67,6 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
-        return v;
     }
 
     @Override

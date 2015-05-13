@@ -1,0 +1,11 @@
+<resources>
+
+    <integer-array name="abroad_locations_array">
+        <!-- Warszawa Sródmieście-->
+        <item>149901</item>
+        <!-- Statek Dalmori -->
+        <item>229801</item>
+    </integer-array>
+
+    <integer name="max_values">3000</integer>
+</resources>

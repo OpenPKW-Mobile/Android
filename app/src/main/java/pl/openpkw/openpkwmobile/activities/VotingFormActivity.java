@@ -8,8 +8,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
 import pl.openpkw.openpkwmobile.R;
-import pl.openpkw.openpkwmobile.fragments.LoginFragment;
 import pl.openpkw.openpkwmobile.fragments.VotingFormFragment;
+import pl.openpkw.openpkwmobile.models.Commission;
+import pl.openpkw.openpkwmobile.models.User;
 
 /**
  * Created by michalu on 28.04.15.
@@ -23,14 +24,22 @@ public class VotingFormActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voting_form);
-
-        FragmentManager fm = getSupportFragmentManager();
-        VotingFormFragment fvFragment = (VotingFormFragment) fm.findFragmentByTag(VOTINGFORM_FRAGMENT_TAG);
-        if (fvFragment == null) {
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.fvoting_fragment_container, new VotingFormFragment(), VOTINGFORM_FRAGMENT_TAG);
-            ft.commit();
-            fm.executePendingTransactions();
+        User user = null;
+        Commission commission = null;
+        Bundle intentExtras = getIntent().getExtras();
+        if (intentExtras != null && intentExtras.containsKey("user") && intentExtras.containsKey("commission")) {
+            user = (User) intentExtras.getSerializable("user");
+            commission = (Commission) intentExtras.getParcelable("commission");
+        }
+        if (user != null && commission != null) {
+            FragmentManager fm = getSupportFragmentManager();
+            VotingFormFragment fvFragment = (VotingFormFragment) fm.findFragmentByTag(VOTINGFORM_FRAGMENT_TAG);
+            if (fvFragment == null) {
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.fvoting_fragment_container, VotingFormFragment.create(user, commission), VOTINGFORM_FRAGMENT_TAG);
+                ft.commit();
+                fm.executePendingTransactions();
+            }
         }
     }
 
