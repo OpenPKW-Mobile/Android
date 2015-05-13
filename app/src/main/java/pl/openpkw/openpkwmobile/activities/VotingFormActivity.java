@@ -26,10 +26,9 @@ public class VotingFormActivity extends FragmentActivity {
         setContentView(R.layout.activity_voting_form);
         User user = null;
         Commission commission = null;
-        Bundle intentExtras = getIntent().getExtras();
-        if (intentExtras != null && intentExtras.containsKey("user") && intentExtras.containsKey("commission")) {
-            user = (User) intentExtras.getSerializable("user");
-            commission = (Commission) intentExtras.getParcelable("commission");
+        if (getIntent() != null && getIntent().hasExtra("user_extra") && getIntent().hasExtra("commission_extra")) {
+            user = (User) getIntent().getSerializableExtra("user_extra");
+            commission = (Commission) getIntent().getParcelableExtra("commission_extra");
         }
         if (user != null && commission != null) {
             FragmentManager fm = getSupportFragmentManager();

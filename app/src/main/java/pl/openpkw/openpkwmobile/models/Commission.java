@@ -26,6 +26,8 @@ public class Commission implements Parcelable {
         this.setName(parcel.readString());
         this.setAddress(parcel.readString());
         this.setProtokolCount(parcel.readInt());
+        this.setCommissionCity(parcel.readString());
+        this.setCommissionNumber(parcel.readString());
     }
 
     @Override
@@ -40,6 +42,8 @@ public class Commission implements Parcelable {
         dest.writeString(getName());
         dest.writeString(getAddress());
         dest.writeInt(getProtokolCount());
+        dest.writeString(getCommissionCity());
+        dest.writeString(getCommissionNumber());
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
