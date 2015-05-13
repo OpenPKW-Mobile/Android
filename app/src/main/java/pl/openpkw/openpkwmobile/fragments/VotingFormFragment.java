@@ -1,5 +1,6 @@
 package pl.openpkw.openpkwmobile.fragments;
 
+import android.support.v4.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -165,7 +167,7 @@ public class VotingFormFragment extends Fragment {
         mCommisionName.setText(cDetails.getName());
         mCommisionAddress.setText(cDetails.getAddress());
 
-        terit_code = Integer.parseInt(cDetails.getPkwId().substring(0, 6));
+        terit_code = Integer.parseInt(cDetails.getPkwId().substring(0,6));
 
 
         TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT);
@@ -211,18 +213,18 @@ public class VotingFormFragment extends Fragment {
             if (validateForm(getActivity().getApplicationContext())){
                 Log.d(TAG, "validForm = OK");
 
-                if (softErrorsValidation()){
-                    // Run Activity!
-                    Log.d(TAG, "validForm = OK / SoftValidation OK = RUN APP");
-                } else {
-                    if (click == 1){
-                        // Do nothing, errors were showed
-                        Log.d(TAG, "validForm = OK / SoftValidation NOK = WAIT");
+                    if (softErrorsValidation()){
+                        // Run Activity!
+                        Log.d(TAG, "validForm = OK / SoftValidation OK = RUN APP");
                     } else {
-                        // Run activity - soft errors were showed!
-                        Log.d(TAG, "validForm = OK / SoftValidation NOK = RUN APP");
+                        if (click == 1){
+                            // Do nothing, errors were showed
+                            Log.d(TAG, "validForm = OK / SoftValidation NOK = WAIT");
+                        } else {
+                            // Run activity - soft errors were showed!
+                            Log.d(TAG, "validForm = OK / SoftValidation NOK = RUN APP");
+                        }
                     }
-                }
             } else {
                 Log.d(TAG, "validForm = NOK");
             }
@@ -232,7 +234,7 @@ public class VotingFormFragment extends Fragment {
     private boolean validateForm(Context ctx) {
         if (areFieldsFilled(ctx)) {
             if (validation1(ctx) && validation2(ctx) && validation3(ctx) && validation4(ctx)
-                    && validation5(ctx) && validation6(ctx)){
+                && validation5(ctx) && validation6(ctx)){
                 hideallErrors();
                 return true;
             } else {
@@ -261,8 +263,8 @@ public class VotingFormFragment extends Fragment {
     /*Liczba kart wyjętych z urny (pkt. 9)
     musi być równa sumie liczby kart nieważnych (pkt. 10)
     i liczby kart ważnych (pkt. 11).*/
-    private boolean validation2(Context ctx) {
-        if (cards != (validVotes + invalidVotes)) {
+    private boolean validation2(Context ctx){
+        if (cards != (validVotes + invalidVotes)){
             showDialog(ctx, getResources().getString(R.string.validation_2));
             mCards.setError(getResources().getString(R.string.error));
             mInvalidVotes.setError(getResources().getString(R.string.error));
@@ -277,8 +279,8 @@ public class VotingFormFragment extends Fragment {
     /*Liczba kart ważnych (pkt. 11) musi być równa sumie
     liczby głosów nieważnych (pkt. 12) i liczby głosów ważnych
     oddanych na wszystkich kandydatów (pkt. 13).*/
-    private boolean validation3(Context ctx) {
-        if (validCards != (totalVotes + invalidVotes)) {
+    private boolean validation3(Context ctx){
+        if (validCards != (totalVotes + invalidVotes)){
             showDialog(ctx, getResources().getString(R.string.validation_3));
             mInvalidVotes.setError(getResources().getString(R.string.error));
             mValidVotes.setError(getResources().getString(R.string.error));
@@ -295,8 +297,8 @@ public class VotingFormFragment extends Fragment {
     /*P8 Suma głosów oddanych na wszystkich kandydatów
     (pkt. 14 pole RAZEM) nie może być różna od sumy głosów oddanych
      na poszczególnych kandydatów (w pkt. 14).	*/
-    private boolean validation4(Context ctx) {
-        if (totalVotes != validVotes) {
+    private boolean validation4(Context ctx){
+        if (totalVotes != validVotes){
             showDialog(ctx, getResources().getString(R.string.validation_4));
             mCandidatesHeader.setError(getResources().getString(R.string.error));
             mScrollView.fullScroll(View.FOCUS_UP);
@@ -308,8 +310,8 @@ public class VotingFormFragment extends Fragment {
 
     /*P9 Suma głosów oddanych na wszystkich kandydatów (w pkt. 14)
     musi być równa liczbie głosów ważnych (w pkt. 13).*/
-    private boolean validation5(Context ctx) {
-        if (totalVotes != validVotes) {
+    private boolean validation5(Context ctx){
+        if(totalVotes != validVotes){
             showDialog(ctx, getResources().getString(R.string.validation_5));
             mValidVotes.setError(getResources().getString(R.string.error));
             mCandidatesHeader.setError(getResources().getString(R.string.error));
@@ -322,12 +324,12 @@ public class VotingFormFragment extends Fragment {
     }
 
     /* Wszystkie liczby nie mogą byc większe niż 3000 (za wyjątkiem ZAGRANICY) */
-    private boolean validation6(Context ctx) {
+    private boolean validation6(Context ctx){
         int limit = getResources().getInteger(R.integer.max_values);
         Log.d(TAG, "limit =" + limit);
         String error = getResources().getString(R.string.error_limit) + " " + limit;
 
-        if (!abroad()) {
+        if(!abroad()) {
             Log.d(TAG, "ABROAD = NO");
             if (ableToVote > limit) {
                 mAbleToVote.setError(error);
@@ -337,15 +339,15 @@ public class VotingFormFragment extends Fragment {
                 mCards.setError(error);
                 mScrollView.fullScroll(View.FOCUS_UP);
                 return false;
-            } else if (validCards > limit) {
+            } else if (validCards > limit){
                 mValidCards.setError(error);
                 mScrollView.fullScroll(View.FOCUS_UP);
                 return false;
-            } else if (invalidVotes > limit) {
+            } else if ( invalidVotes > limit){
                 mInvalidVotes.setError(error);
                 mScrollView.fullScroll(View.FOCUS_UP);
                 return false;
-            } else if (validVotes > limit) {
+            } else if (validVotes > limit){
                 mValidVotes.setError(error);
                 mScrollView.fullScroll(View.FOCUS_UP);
                 return false;
@@ -359,8 +361,8 @@ public class VotingFormFragment extends Fragment {
         }
     }
 
-    private boolean abroad() {
-        int[] abroad_teri_codes = getResources().getIntArray(R.array.abroad_locations_array);
+    private boolean abroad(){
+        int[] abroad_teri_codes  = getResources().getIntArray(R.array.abroad_locations_array);
 
 
         for (int i = 0; i < abroad_teri_codes.length; i++) {
@@ -373,17 +375,17 @@ public class VotingFormFragment extends Fragment {
     }
 
 
-    private void hideallErrors() {
+     private void hideallErrors() {
         mAbleToVote.setError(null);
         mCards.setError(null);
         mValidCards.setError(null);
         mInvalidVotes.setError(null);
         mValidVotes.setError(null);
         mCandidatesHeader.setError(null);
-    }
+     }
 
-    private boolean softErrorsValidation() {
-        if (cards > (0.9 * ableToVote)) {
+    private boolean softErrorsValidation(){
+        if (cards > (0.9 * ableToVote)){
             mSoftContainer.setVisibility(View.VISIBLE);
             mSoftError1.setVisibility(View.VISIBLE);
             return false;
@@ -395,7 +397,7 @@ public class VotingFormFragment extends Fragment {
             mSoftContainer.setVisibility(View.VISIBLE);
             mSoftError3.setVisibility(View.VISIBLE);
             return false;
-        } else {
+        } else{
             mSoftContainer.setVisibility(View.GONE);
             mSoftError1.setVisibility(View.GONE);
             mSoftError2.setVisibility(View.GONE);
@@ -405,11 +407,12 @@ public class VotingFormFragment extends Fragment {
     }
 
 
+
     private void showDialog(Context ctx, String msg) {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         Fragment prev = getActivity().getSupportFragmentManager().findFragmentByTag("dialog");
 
-        if (prev != null) {
+        if (prev != null){
             ft.remove(prev);
         }
 
@@ -417,7 +420,7 @@ public class VotingFormFragment extends Fragment {
 
         DialogFragment df = CustomAlertDialog.newInstance(getResources().getString(R.string.alert_dialog_title), msg);
         df.setTargetFragment(this, DIALOG_FRAGMENT);
-        df.show(getFragmentManager().beginTransaction(), "dialog");
+        df.show(getFragmentManager().beginTransaction(), "dialog" );
     }
 
     private boolean areFieldsFilled(Context ctx) {
@@ -446,11 +449,11 @@ public class VotingFormFragment extends Fragment {
         invalidVotes = getInt(mInvalidVotes.getText());
         validVotes = getInt(mValidVotes.getText());
 
-        protocol.put("glosujacych", ableToVote);
-        protocol.put("glosowWaznych", validVotes);
-        protocol.put("glosowNieWaznych", invalidVotes);
-        protocol.put("kartWaznych", validCards);
-        protocol.put("uprawnionych", cards);
+        protocol.put("glosujacych",ableToVote);
+        protocol.put("glosowWaznych",validVotes);
+        protocol.put("glosowNieWaznych",invalidVotes);
+        protocol.put("kartWaznych",validCards);
+        protocol.put("uprawnionych",cards);
     }
 
     private void temporarySaveProtocol() {
@@ -488,7 +491,7 @@ public class VotingFormFragment extends Fragment {
                         numberOfVotes = Integer.parseInt(editWithVotes.getText().toString().trim());
                         results.put(pkwId, numberOfVotes);
                         protocol.put("k" + String.valueOf(pkwId), numberOfVotes);
-                        totalVotes += numberOfVotes;
+						totalVotes += numberOfVotes;
                     }
                 }
 
