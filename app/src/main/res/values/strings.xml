@@ -1,6 +1,7 @@
 <resources>
     <string name="app.name">OpenPKW-Mobile</string>
     <string name="rules.url">https://e-wybory.org/</string>
+    <string name="register.url">https://otwartapw.pl/opw/register.xhtml</string>
     <string name="splash.check.it">Zajrzyj tu</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
