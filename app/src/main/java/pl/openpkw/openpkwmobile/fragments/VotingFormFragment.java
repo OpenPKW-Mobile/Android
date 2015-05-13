@@ -1,18 +1,22 @@
 package pl.openpkw.openpkwmobile.fragments;
 
+import android.support.v4.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -28,6 +32,7 @@ import pl.openpkw.openpkwmobile.models.Commission;
 import pl.openpkw.openpkwmobile.models.CommissionDetails;
 import pl.openpkw.openpkwmobile.models.User;
 import pl.openpkw.openpkwmobile.network.RestClient;
+import pl.openpkw.openpkwmobile.views.CustomAlertDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -36,13 +41,22 @@ import retrofit.client.Response;
  * Created by fockeRR on 28.04.15.
  */
 public class VotingFormFragment extends Fragment {
+    public static final int DIALOG_FRAGMENT = 1;
+    public static final String TAG = "VotingFormFragment";
+
     private ScrollView mScrollView;
     private TextView mCommisionNumber;
     private TextView mCommisionId;
     private TextView mCommisionName;
     private TextView mCommisionAddress;
+    private TextView mCandidatesHeader;
     private TableLayout mCandidates;
     private TableLayout mGeneralData;
+    private TextView mSoftError1;
+    private TextView mSoftError2;
+    private TextView mSoftError3;
+    private LinearLayout mSoftContainer;
+
     private Button mNextButton;
 
     private EditText mAbleToVote;
@@ -62,6 +76,10 @@ public class VotingFormFragment extends Fragment {
     private int validCards;
     private int invalidVotes;
     private int validVotes;
+    private int totalVotes;
+    private int click;
+
+    private int terit_code;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -79,6 +97,11 @@ public class VotingFormFragment extends Fragment {
         mInvalidVotes = (EditText) v.findViewById(R.id.fvoting_invalidvotes);
         mValidVotes = (EditText) v.findViewById(R.id.fvoting_validvotes);
         mCandidates = (TableLayout) v.findViewById(R.id.fvoting_candidates);
+        mCandidatesHeader = (TextView) v.findViewById(R.id.tvcoting_candidates_heading);
+        mSoftContainer = (LinearLayout) v.findViewById(R.id.ll_soft_error_container);
+        mSoftError1 = (TextView) v.findViewById(R.id.tvSoftError1);
+        mSoftError2 = (TextView) v.findViewById(R.id.tvSoftError2);
+        mSoftError3 = (TextView) v.findViewById(R.id.tvSoftError3);
 
         mNextButton.setOnClickListener(onNextButtonListener);
 
@@ -110,6 +133,7 @@ public class VotingFormFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        click = 0;
         if (candidatesAndCommission == null) {
             if (getArguments() != null && getArguments().containsKey("commission") && getArguments().containsKey("user")) {
                 user = (User) getArguments().getSerializable("user");
@@ -140,6 +164,8 @@ public class VotingFormFragment extends Fragment {
         mCommisionId.setText(cDetails.getPkwId());
         mCommisionName.setText(cDetails.getName());
         mCommisionAddress.setText(cDetails.getAddress());
+
+        terit_code = Integer.parseInt(cDetails.getPkwId().substring(0,6));
 
 
         TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT);
@@ -179,26 +205,223 @@ public class VotingFormFragment extends Fragment {
     View.OnClickListener onNextButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Context ctx = getActivity().getApplicationContext();
+            click ++;
+            Log.d(TAG, "clicks = " + click);
 
-            if (validateForm(ctx)) {
-                RestClient.get(ctx).submitProtocol(user.getLogin(), user.getToken(), commission.getPkwId(),  protocol, new Callback<Void>() {
-                    @Override
-                    public void success(Void aVoid, Response response) {
-                        Context ctx = getActivity().getApplicationContext();
-                        Toast.makeText(ctx,ctx.getString(R.string.fvoting_protocol_successfully_sent), Toast.LENGTH_LONG).show();
-                    }
+            if (validateForm(getActivity().getApplicationContext())){
+                Log.d(TAG, "validForm = OK");
 
-                    @Override
-                    public void failure(RetrofitError error) {
+                    if (softErrorsValidation()){
+                        // Run Activity!
+                        Log.d(TAG, "validForm = OK / SoftValidation OK = RUN APP");
+                    } else {
+                        if (click == 1){
+                            // Do nothing, errors were showed
+                            Log.d(TAG, "validForm = OK / SoftValidation NOK = WAIT");
+                        } else {
+                            // Run activity - soft errors were showed!
+                            Log.d(TAG, "validForm = OK / SoftValidation NOK = RUN APP");
+                        }
                     }
-                });
+            } else {
+                Log.d(TAG, "validForm = NOK");
             }
-        }
+        };
     };
 
     private boolean validateForm(Context ctx) {
-        boolean result = true;
+        if (areFieldsFilled(ctx)) {
+            if (validation1(ctx) && validation2(ctx) && validation3(ctx) && validation4(ctx)
+                && validation5(ctx) && validation6(ctx)){
+                hideallErrors();
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /*Liczba osób, którym wydano karty do głosowania (pkt. 4),
+    nie może być większa od liczby wyborców uprawnionych do
+    głosowania (pkt. 1).*/
+    private boolean validation1(Context ctx) {
+        if (cards > ableToVote) {
+            showDialog(ctx, getResources().getString(R.string.validation_1));
+            mCards.setError(getResources().getString(R.string.error));
+            mScrollView.fullScroll(View.FOCUS_UP);
+            return false;
+        } else {
+            hideallErrors();
+            return true;
+        }
+    }
+
+    /*Liczba kart wyjętych z urny (pkt. 9)
+    musi być równa sumie liczby kart nieważnych (pkt. 10)
+    i liczby kart ważnych (pkt. 11).*/
+    private boolean validation2(Context ctx){
+        if (cards != (validVotes + invalidVotes)){
+            showDialog(ctx, getResources().getString(R.string.validation_2));
+            mCards.setError(getResources().getString(R.string.error));
+            mInvalidVotes.setError(getResources().getString(R.string.error));
+            mValidVotes.setError(getResources().getString(R.string.error));
+            mScrollView.fullScroll(View.FOCUS_UP);
+            return false;
+        }
+        hideallErrors();
+        return true;
+    }
+
+    /*Liczba kart ważnych (pkt. 11) musi być równa sumie
+    liczby głosów nieważnych (pkt. 12) i liczby głosów ważnych
+    oddanych na wszystkich kandydatów (pkt. 13).*/
+    private boolean validation3(Context ctx){
+        if (validCards != (totalVotes + invalidVotes)){
+            showDialog(ctx, getResources().getString(R.string.validation_3));
+            mInvalidVotes.setError(getResources().getString(R.string.error));
+            mValidVotes.setError(getResources().getString(R.string.error));
+            mCandidatesHeader.setError(getResources().getString(R.string.error));
+            mScrollView.fullScroll(View.FOCUS_UP);
+            return false;
+        } else {
+            hideallErrors();
+            return true;
+        }
+    }
+
+    //TODO: Check This Validation with Przemek J. Remove if not valid.
+    /*P8 Suma głosów oddanych na wszystkich kandydatów
+    (pkt. 14 pole RAZEM) nie może być różna od sumy głosów oddanych
+     na poszczególnych kandydatów (w pkt. 14).	*/
+    private boolean validation4(Context ctx){
+        if (totalVotes != validVotes){
+            showDialog(ctx, getResources().getString(R.string.validation_4));
+            mCandidatesHeader.setError(getResources().getString(R.string.error));
+            mScrollView.fullScroll(View.FOCUS_UP);
+            return false;
+        }
+        hideallErrors();
+        return true;
+    }
+
+    /*P9 Suma głosów oddanych na wszystkich kandydatów (w pkt. 14)
+    musi być równa liczbie głosów ważnych (w pkt. 13).*/
+    private boolean validation5(Context ctx){
+        if(totalVotes != validVotes){
+            showDialog(ctx, getResources().getString(R.string.validation_5));
+            mValidVotes.setError(getResources().getString(R.string.error));
+            mCandidatesHeader.setError(getResources().getString(R.string.error));
+            mScrollView.fullScroll(View.FOCUS_UP);
+            return false;
+        } else {
+            hideallErrors();
+            return true;
+        }
+    }
+
+    /* Wszystkie liczby nie mogą byc większe niż 3000 (za wyjątkiem ZAGRANICY) */
+    private boolean validation6(Context ctx){
+        int limit = getResources().getInteger(R.integer.max_values);
+        Log.d(TAG, "limit =" + limit);
+        String error = getResources().getString(R.string.error_limit) + " " + limit;
+
+        if(!abroad()) {
+            Log.d(TAG, "ABROAD = NO");
+            if (ableToVote > limit) {
+                mAbleToVote.setError(error);
+                mScrollView.fullScroll(View.FOCUS_UP);
+                return false;
+            } else if (cards > limit) {
+                mCards.setError(error);
+                mScrollView.fullScroll(View.FOCUS_UP);
+                return false;
+            } else if (validCards > limit){
+                mValidCards.setError(error);
+                mScrollView.fullScroll(View.FOCUS_UP);
+                return false;
+            } else if ( invalidVotes > limit){
+                mInvalidVotes.setError(error);
+                mScrollView.fullScroll(View.FOCUS_UP);
+                return false;
+            } else if (validVotes > limit){
+                mValidVotes.setError(error);
+                mScrollView.fullScroll(View.FOCUS_UP);
+                return false;
+            } else {
+                return false;
+            }
+        } else {
+            hideallErrors();
+            Log.d(TAG, "ABROAD = YES");
+            return true;
+        }
+    }
+
+    private boolean abroad(){
+        int[] abroad_teri_codes  = getResources().getIntArray(R.array.abroad_locations_array);
+
+
+        for (int i = 0; i < abroad_teri_codes.length; i++) {
+            if (terit_code == abroad_teri_codes[i]) {
+                Log.d(TAG, "teri_codes = " + abroad_teri_codes[i]);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+     private void hideallErrors() {
+        mAbleToVote.setError(null);
+        mCards.setError(null);
+        mValidCards.setError(null);
+        mInvalidVotes.setError(null);
+        mValidVotes.setError(null);
+        mCandidatesHeader.setError(null);
+     }
+
+    private boolean softErrorsValidation(){
+        if (cards > (0.9 * ableToVote)){
+            mSoftContainer.setVisibility(View.VISIBLE);
+            mSoftError1.setVisibility(View.VISIBLE);
+            return false;
+        } else if (cards > ableToVote) {
+            mSoftContainer.setVisibility(View.VISIBLE);
+            mSoftError2.setVisibility(View.VISIBLE);
+            return false;
+        } else if (validCards > ableToVote) {
+            mSoftContainer.setVisibility(View.VISIBLE);
+            mSoftError3.setVisibility(View.VISIBLE);
+            return false;
+        } else{
+            mSoftContainer.setVisibility(View.GONE);
+            mSoftError1.setVisibility(View.GONE);
+            mSoftError2.setVisibility(View.GONE);
+            mSoftError3.setVisibility(View.GONE);
+            return true;
+        }
+    }
+
+
+
+    private void showDialog(Context ctx, String msg) {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        Fragment prev = getActivity().getSupportFragmentManager().findFragmentByTag("dialog");
+
+        if (prev != null){
+            ft.remove(prev);
+        }
+
+        ft.addToBackStack(null);
+
+        DialogFragment df = CustomAlertDialog.newInstance(getResources().getString(R.string.alert_dialog_title), msg);
+        df.setTargetFragment(this, DIALOG_FRAGMENT);
+        df.show(getFragmentManager().beginTransaction(), "dialog" );
+    }
+
+    private boolean areFieldsFilled(Context ctx) {
         getSummary();
         getVotes();
 
@@ -207,13 +430,11 @@ public class VotingFormFragment extends Fragment {
             Toast.makeText(ctx, ctx.getString(R.string.fvoting_toast_notalldataentered), Toast.LENGTH_SHORT).show();
             return false;
         }
-
         if (votes.keySet().size() != candidatesAndCommission.getKandydatList().size()) {
             Toast.makeText(ctx, ctx.getString(R.string.fvoting_toast_notallcandidatesvotesentered), Toast.LENGTH_SHORT).show();
             return false;
         }
-
-        return result;
+        return true;
     }
 
 
@@ -249,6 +470,7 @@ public class VotingFormFragment extends Fragment {
     }
 
     private void getVotes() {
+        totalVotes = 0;
         HashMap<Integer, Integer> results = new HashMap<>();
         if (mCandidates == null) {
             return;
@@ -267,6 +489,7 @@ public class VotingFormFragment extends Fragment {
                         numberOfVotes = Integer.parseInt(editWithVotes.getText().toString().trim());
                         results.put(pkwId, numberOfVotes);
                         protocol.put("k" + String.valueOf(pkwId), numberOfVotes);
+						totalVotes += numberOfVotes;
                     }
                 }
 
