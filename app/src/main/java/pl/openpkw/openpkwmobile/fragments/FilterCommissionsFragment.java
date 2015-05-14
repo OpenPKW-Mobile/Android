@@ -113,11 +113,16 @@ public class FilterCommissionsFragment extends Fragment {
                         new InputStreamReader(getActivity().getAssets().open("pollstations.csv")));
                 while ((line = br.readLine()) != null) {
                     String[] commissionRow = line.split(cvsSplitBy);
-                    if (commissionRow[0].trim().equals(params[0]) && commissionRow[1].trim().equals(params[1])) {
+                    if (commissionRow[0].trim().contains(params[0]) && commissionRow[1].trim().equals(params[1])) {
                         commission = new Commission();
                         commission.setCommissionCity(commissionRow[2]);
                         commission.setCommissionNumber(commissionRow[1]);
-                        commission.setPkwId(commissionRow[0].trim()+"-"+commissionRow[1].trim());
+                        if (commissionRow[0].trim().length()>6) {
+                            commission.setPkwId(commissionRow[0].trim().substring(1)+"-"+commissionRow[1].trim());
+                        } else {
+                            commission.setPkwId(commissionRow[0].trim()+"-"+commissionRow[1].trim());
+                        }
+
                         commission.setName(commissionRow[7]);
                         StringBuilder stringBuilder = new StringBuilder();
                         stringBuilder.append(commissionRow[4]);
