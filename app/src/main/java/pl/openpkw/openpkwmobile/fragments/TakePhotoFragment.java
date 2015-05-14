@@ -50,7 +50,7 @@ public class TakePhotoFragment extends Fragment {
                     Log.d(tag, "Setting preview...");
                     camera.setPreviewDisplay(holder);
                 } catch (IOException ex) {
-                    Toast.makeText(getActivity(), "Nie można ustawić podglądu", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), R.string.fragment_take_photo_error_cannot_start_preview, Toast.LENGTH_LONG).show();
                 }
 
                 startPreview();
@@ -62,36 +62,44 @@ public class TakePhotoFragment extends Fragment {
             Camera.Parameters cameraParameters = camera.getParameters();
 
             // preview size
-            Camera.Size bestSize = findBestSize(cameraParameters, surfaceWidth, surfaceHeight);
+            Camera.Size bestSize = findBestPreviewSize(cameraParameters, surfaceWidth, surfaceHeight);
             cameraParameters.setPreviewSize(bestSize.width, bestSize.height);
 
             // image size
-            bestSize = findBestSize(cameraParameters.getSupportedPictureSizes());
+            bestSize = null;
+            bestSize = findBestPictureSize(cameraParameters, TakePhotosActivity.MAX_PICTURE_WIDTH, TakePhotosActivity.MAX_PICTURE_HEIGHT);
             cameraParameters.setPictureSize(bestSize.width, bestSize.height);
 
             // flash mode
             cameraParameters.setFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
 
+            // rotate 90
+            cameraParameters.setRotation(90);
+
             camera.setParameters(cameraParameters);
             camera.setDisplayOrientation(90);
         }
 
-        private Camera.Size findBestSize(List<Camera.Size> sizes) {
+        private Camera.Size findBestPreviewSize(Camera.Parameters cameraParameters, int maxWidth, int maxHeight) {
+            List<Camera.Size> sizes = cameraParameters.getSupportedPreviewSizes();
             Camera.Size bestSize = sizes.remove(0);
             for (Camera.Size size : sizes) {
-                if ((size.width * size.height) > (bestSize.width * bestSize.height)) {
+                if ((size.width * size.height) > (bestSize.width * bestSize.height)
+                        && (size.width <= maxWidth) && (size.height <= maxHeight)) {
                     bestSize = size;
                 }
             }
             return bestSize;
         }
 
-        private Camera.Size findBestSize(Camera.Parameters cameraParameters, int surfaceWidth, int surfaceHeight) {
-            List<Camera.Size> sizes = cameraParameters.getSupportedPreviewSizes();
-            Camera.Size bestSize = null;
-            int bestSizeCnt = 1;
+        private Camera.Size findBestPictureSize(Camera.Parameters cameraParameters, int maxWidth, int maxHeight) {
+            List<Camera.Size> sizes = cameraParameters.getSupportedPictureSizes();
+            Camera.Size bestSize = sizes.remove(0);
+            float bestRatio = (float) maxWidth / maxHeight;
             for (Camera.Size size : sizes) {
-                if ((size.width * size.height) > bestSizeCnt && (size.width < surfaceWidth && size.height < surfaceHeight)) {
+                int sizeArea = size.width * size.height;
+                float sizeRatio = (float) size.width / size.height;
+                if (sizeArea > (bestSize.width * bestSize.height) && sizeArea <= (maxWidth * maxHeight) && sizeRatio <= bestRatio) {
                     bestSize = size;
                 }
             }
@@ -116,7 +124,7 @@ public class TakePhotoFragment extends Fragment {
         }
     };
 
-    private volatile boolean isInProgress;
+    private boolean isInProgress;
 
     private boolean isPreviewing;
 
@@ -203,7 +211,7 @@ public class TakePhotoFragment extends Fragment {
         try {
             camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
         } catch (RuntimeException ex) {
-            Toast.makeText(getActivity(), "Nie można uruchomić kamery", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.fragment_take_photo_error_cannot_start_camera, Toast.LENGTH_LONG).show();
         }
     }
 

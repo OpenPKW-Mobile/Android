@@ -3,10 +3,12 @@ package pl.openpkw.openpkwmobile.fragments;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +18,10 @@ import android.widget.ProgressBar;
 import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.nio.ByteBuffer;
 import java.util.Date;
 
 /**
@@ -29,12 +31,14 @@ public class PhotoPreviewFragment extends Fragment {
 
     private final String tag = getClass().getSimpleName();
 
+    private byte[] imgData;
+    private Bitmap thumbnailBmp;
+
     private ProgressBar progressBar;
     private ImageView imageView;
-    private Bitmap bitmap;
 
     private volatile boolean isButtonLock;
-    private AsyncTask<Bitmap, Void, Void> saveImageTask;
+    private AsyncTask<Void, Void, Void> saveImageTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +70,7 @@ public class PhotoPreviewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!isButtonLock) {
-                    saveImageTask.execute(bitmap);
+                    saveImageTask.execute();
                 }
             }
         });
@@ -93,64 +97,109 @@ public class PhotoPreviewFragment extends Fragment {
 
             @Override
             protected Bitmap doInBackground(byte[]... params) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(params[0], 0, params[0].length);
+
+                imgData = params[0];
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+
+                BitmapFactory.decodeByteArray(params[0], 0, params[0].length, options);
+
+                final int width = options.outWidth;
+                final int height = options.outHeight;
+                int inSampleSize = 1;
+
+                Display display = getActivity().getWindowManager().getDefaultDisplay();
+                Point size = new Point();
+                display.getSize(size);
+
+                final int reqWidth = size.x;
+                final int reqHeiht = size.y;
+
+                if (width > reqWidth && height > reqHeiht) {
+                    final int halfWidth = width / 2;
+                    final int halfHeight = height / 2;
+
+                    while ((halfWidth / inSampleSize) > reqWidth && (halfHeight / inSampleSize) > reqHeiht) {
+                        inSampleSize *= 2;
+                    }
+                }
+
+                options.inSampleSize = inSampleSize;
+                options.inJustDecodeBounds = false;
+
+                Bitmap bitmap = BitmapFactory.decodeByteArray(params[0], 0, params[0].length, options);
 
                 Matrix matrix = new Matrix();
                 matrix.postRotate(90);
 
                 Bitmap bmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-
-                ByteBuffer byteBuffer = ByteBuffer.allocate(bmp.getByteCount());
-                bmp.copyPixelsToBuffer(byteBuffer);
-
                 return bmp;
             }
 
             @Override
             protected void onPostExecute(Bitmap bitmap) {
-                PhotoPreviewFragment.this.bitmap = bitmap;
-                imageView.setImageBitmap(bitmap);
+                thumbnailBmp = bitmap;
+                imageView.setImageBitmap(thumbnailBmp);
                 super.onPostExecute(bitmap);
             }
         };
     }
 
-    private AsyncTask<Bitmap, Void, Void> makeSaveAsyncTask() {
-        return new ImageAsyncTask<Bitmap, Void, Void>() {
+    private AsyncTask<Void, Void, Void> makeSaveAsyncTask() {
+        return new ImageAsyncTask<Void, Void, Void>() {
 
             @Override
-            protected Void doInBackground(Bitmap... params) {
+            protected Void doInBackground(Void... vParams) {
 
-                ByteArrayOutputStream imageStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, TakePhotosActivity.IMAGE_COMPRESSION, imageStream);
-                byte[] imageData = imageStream.toByteArray();
+                int imgDataLength = imgData.length;
+                if (imgDataLength > 0) {
+                    String imageDir = getArguments().getString(TakePhotosActivity.IMAGE_PATH);
+                    String fileName = TakePhotosActivity.NAME_FORMAT.format(new Date(System.currentTimeMillis()));
 
-                Bitmap thumbnail = Bitmap.createScaledBitmap(bitmap,
-                        (int) (bitmap.getWidth() * TakePhotosActivity.THUMBNAIL_RATIO),
-                        (int) (bitmap.getHeight() * TakePhotosActivity.THUMBNAIL_RATIO), true);
+                    File imageFile = new File(imageDir, fileName + TakePhotosActivity.IMAGE_EXTENSION);
+                    File thumbnailFile = new File(imageDir, fileName + TakePhotosActivity.THUMBNAIL_EXTENSION);
 
-                ByteArrayOutputStream tumbnailStream = new ByteArrayOutputStream();
-                thumbnail.compress(Bitmap.CompressFormat.JPEG, TakePhotosActivity.THUMBNAIL_COMPRESSION, tumbnailStream);
-                byte[] thumbnailData = tumbnailStream.toByteArray();
+                    Display display = getActivity().getWindowManager().getDefaultDisplay();
+                    Point size = new Point();
+                    display.getSize(size);
 
-                String fileName = TakePhotosActivity.NAME_FORMAT.format(new Date(System.currentTimeMillis()));
+                    float place = size.x / 3.5f;
 
-                String imageDir = getArguments().getString(TakePhotosActivity.IMAGE_PATH);
+                    int imgWidth = (int) place;
+                    int imgHeight = (int) ((place * ((float) thumbnailBmp.getHeight()) / thumbnailBmp.getWidth()));
 
-                File imageFile = new File(imageDir, fileName + TakePhotosActivity.IMAGE_EXTENSION);
-                File thumbnailFile = new File(imageDir, fileName + TakePhotosActivity.THUMBNAIL_EXTENSION);
+                    Bitmap thumbnail = Bitmap.createScaledBitmap(thumbnailBmp,
+                            imgWidth, imgHeight, true);
 
-                try {
-                    FileOutputStream destImageStream = new FileOutputStream(imageFile);
-                    FileOutputStream destThumbnailStream = new FileOutputStream(thumbnailFile);
+                    ByteArrayOutputStream tumbnailStream = new ByteArrayOutputStream();
+                    thumbnail.compress(Bitmap.CompressFormat.JPEG, TakePhotosActivity.THUMBNAIL_COMPRESSION, tumbnailStream);
+                    byte[] thumbnailData = tumbnailStream.toByteArray();
 
-                    destImageStream.write(imageData);
-                    destThumbnailStream.write(thumbnailData);
+                    try {
+                        BufferedOutputStream destImageStream = new BufferedOutputStream(new FileOutputStream(imageFile));
+                        BufferedOutputStream destThumbnailStream = new BufferedOutputStream(new FileOutputStream(thumbnailFile));
 
-                    destImageStream.close();
-                    destThumbnailStream.close();
-                } catch (Exception ex) {
-                    Log.d(tag, "exception: " + ex.toString());
+                        int offset = 0;
+                        int length = TakePhotosActivity.SAVING_BUFFER;
+
+                        while (imgDataLength > offset) {
+                            if (offset + length > imgDataLength) {
+                                length = imgDataLength - offset;
+                            }
+                            destImageStream.write(imgData, offset, length);
+                            offset += length;
+                        }
+
+                        destThumbnailStream.write(thumbnailData);
+
+                        destImageStream.close();
+                        destThumbnailStream.close();
+
+                    } catch (Exception ex) {
+                        Log.d(tag, "Exception during image saving: " + ex.toString());
+                    }
+
                 }
                 return null;
             }

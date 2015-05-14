@@ -24,10 +24,13 @@ public class TakePhotosActivity extends OpenPKWActivity {
     public final static String IMAGE_EXTENSION = ".jpg";
     public final static String THUMBNAIL_EXTENSION = ".m.jpg";
 
-    public final static int IMAGE_COMPRESSION = 100;
+    public final static int SAVING_BUFFER = 8 * 1024;
+
     public final static int THUMBNAIL_COMPRESSION = 75;
 
-    public final static float THUMBNAIL_RATIO = 0.25f;
+    // 6 MPX 3008x2000
+    public final static int MAX_PICTURE_HEIGHT = 2000;
+    public final static int MAX_PICTURE_WIDTH = 3008;
 
     public final static String COMMISSION_ID = "commissionId";
     public final static String IMAGE_DATA = "imageData";
@@ -132,10 +135,10 @@ public class TakePhotosActivity extends OpenPKWActivity {
             }
 
             if (!dirExist) {
-                Toast.makeText(getApplication(), "Brak dostępu do katalogu docelowego", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplication(), R.string.activity_take_photos_error_message_cannot_create_directory, Toast.LENGTH_LONG).show();
             }
         } else {
-            Toast.makeText(getApplication(), "Brak pamięci zewnętrznej", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplication(), R.string.activity_take_photos_error_message_no_external_memory, Toast.LENGTH_LONG).show();
         }
     }
 }
