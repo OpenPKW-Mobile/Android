@@ -36,6 +36,7 @@
     <string name="fvoting.votingcardsdistributed.label">I.4.Wydano kart do głosowania</string>
     <string name="network_check_internet_connection">Sprawdź swoje połączenie internetowe</string>
     <string name="login.error.incorrectloginorpassword">Nieprawidłowy login lub hasło</string>
+    <string name="internal.server.error">Wystąpił błąd</string>
     <string name="login.error.nointernetconnection">Brak połączenia internetowego!\nSprawdź swoje ustawienia sieciowe</string>
     <string name="filter.commissions.label.top">Wyszukaj Komisję z której przekazujesz dane</string>
     <string name="filter.commissions.label">Wpisz kod terytorialny gminy w której znajduje się Twoja komisja (znajdziesz go na protokole wyborczym)</string>
