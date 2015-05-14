@@ -36,7 +36,7 @@ public interface API {
     @Headers("Content-Type: application/json")
     @POST("/user/register")
     void register(@Header("X-OPW-API-client") String apiClient, @Header("X-OPW-API-token") String apiToken, @Body UserRegister userRegister, Callback<String> callback);
-     */
+
     @GET("/komisja/{pkwId}")
     void getCandidates(@Header("X-OPW-login") String login, @Header("X-OPW-token") String token, @Path("pkwId") String pkwId,
                        Callback<CommissionDetails> callback);

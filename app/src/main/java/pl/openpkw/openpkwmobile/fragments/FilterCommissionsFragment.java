@@ -30,9 +30,28 @@ public class FilterCommissionsFragment extends Fragment {
     private EditText teritorialCodeET;
     private EditText commissionNumberET;
     private Button searchCommission;
+    private User user;
 
     public static String COMMISSION_EXTRA = "commission_extra";
+    public static String USER_EXTRA = "user_extra";
     Logger logger = Logger.getLogger(getClass().getSimpleName());
+
+    public static FilterCommissionsFragment create(User user) {
+        FilterCommissionsFragment f = new FilterCommissionsFragment();
+        f.setRetainInstance(true);
+        Bundle args = new Bundle();
+        args.putSerializable("user", user);
+        f.setArguments(args);
+        return f;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (getArguments() != null && getArguments().containsKey("user")) {
+            user = (User) getArguments().getSerializable("user");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,14 +82,11 @@ public class FilterCommissionsFragment extends Fragment {
                 }
             }
         });
-
-        return v;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
     }
 
     class SearchCommission extends AsyncTask<String, String, Commission> {
@@ -142,6 +158,7 @@ public class FilterCommissionsFragment extends Fragment {
             if (commission!=null) {
                 Intent votingFormActivity = new Intent(getActivity(), VotingFormActivity.class);
                 votingFormActivity.putExtra(COMMISSION_EXTRA, commission);
+                votingFormActivity.putExtra(USER_EXTRA, user);
                 startActivity(votingFormActivity);
                 getActivity().finish();
             } else {

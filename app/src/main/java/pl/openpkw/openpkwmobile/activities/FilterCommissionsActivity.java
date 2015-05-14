@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
+
 import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.fragments.FilterCommissionsFragment;
 import pl.openpkw.openpkwmobile.models.Commission;
@@ -22,6 +23,7 @@ public class FilterCommissionsActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_commissions);
+
         User user = null;
         if (getIntent() != null && getIntent().hasExtra("user")) {
             user = (User) getIntent().getSerializableExtra("user");
