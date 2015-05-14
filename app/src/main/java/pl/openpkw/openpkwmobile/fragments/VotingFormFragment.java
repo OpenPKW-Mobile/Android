@@ -1,6 +1,7 @@
 package pl.openpkw.openpkwmobile.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -14,19 +15,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.HashMap;
-import java.util.Map;
-
+import android.widget.*;
 import pl.openpkw.openpkwmobile.R;
+import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
 import pl.openpkw.openpkwmobile.models.Candidate;
 import pl.openpkw.openpkwmobile.models.Commission;
 import pl.openpkw.openpkwmobile.models.CommissionDetails;
@@ -36,6 +27,9 @@ import pl.openpkw.openpkwmobile.views.CustomAlertDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by fockeRR on 28.04.15.
@@ -219,6 +213,10 @@ public class VotingFormFragment extends Fragment {
                         public void success(Void aVoid, Response response) {
                             Context ctx = getActivity().getApplicationContext();
                             Toast.makeText(ctx, ctx.getString(R.string.fvoting_protocol_successfully_sent), Toast.LENGTH_LONG).show();
+
+                            Intent takePhoto = new Intent(getActivity(), TakePhotosActivity.class);
+                            startActivity(takePhoto);
+                            getActivity().finish();
                         }
 
                         @Override

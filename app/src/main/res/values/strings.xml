@@ -49,6 +49,20 @@
     <string name="filter.commissions.progress.dialog.search">Szukam komisji...</string>
     <string name="filter.commissions.no.commission.found">Nie znaleziono komisji</string>
     <string name="login.validation.login.password.empty">Pola login oraz hasło nie mogą być puste</string>
+    <string name="empty.string"></string>
+    <string name="activity.take.photos.error.message.cannot.create.directory">Nie można utworzyć katalogu docelowego</string>
+    <string name="activity.take.photos.error.message.no.external.memory">Brak pamięci zewnętrznej</string>
+    <string name="fragment.take.photos.header.label">Wprowadzasz Dane Dla</string>
+    <string name="fragment.take.photo.header.label">Zrób Zdjęcie Każdej Pojedynczej i Kolejnej stronie\nPROTOKOŁU WYBORCZEGO</string>
+    <string name="fragment.take.photo.finish.button">Koniec zdjęć</string>
+    <string name="fragment.take.photo.get.image.button">Dalej</string>
+    <string name="fragment.take.photo.error.cannot.start.preview">Nie można ustawić podglądu</string>
+    <string name="fragment.take.photo.error.cannot.start.camera">Nie można uruchomić kamery</string>
+    <string name="fragment.photo.preview.header.label">Czy zdjęcje jest wyraźne i dobrze wykadrowane?\nJeśli Nie Ponów Próbę</string>
+    <string name="fragment.photo.preview.repeat.button">Ponów</string>
+    <string name="fragment.photo.preview.next.button">Kolejne</string>
+    <string name="fragment.photos.header">Przesyłasz Następujące Zdjęcia:</string>
+    <string name="fragment.photos.sendButton">Wyślij</string>
     <string name="fvoting.toast.notalldataentered">Nie wprowadzono wszystkich danych w protokole</string>
     <string name="fvoting.toast.notallcandidatesvotesentered">Nie wprowadzono wyników głosowania dla wszystkich kandydatów</string>
 

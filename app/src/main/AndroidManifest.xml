@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pl.openpkw.openpkwmobile">
+    package="pl.openpkw.openpkwmobile" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <application
+        android:largeHeap="true"
         android:allowBackup="true"
         android:icon="@mipmap/openpkw_icon"
         android:label="@string/app.name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".activities.SplashActivity"
-            android:label="@string/app.name">
+            android:label="@string/app.name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.PasswordRestoreActivity" />
@@ -28,6 +35,10 @@
             android:screenOrientation="portrait"
             android:name=".activities.FilterCommissionsActivity"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.TakePhotosActivity"
+            android:label="@string/empty.string"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
