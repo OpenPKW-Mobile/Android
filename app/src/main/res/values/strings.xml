@@ -20,6 +20,7 @@
     <string name="register.buttonlabel.register">Zarejestruj</string>
     <string name="register.fill.all.fields">Wypełnij wszystkie pola</string>
     <string name="register.email.exists">Podany adres e-mail już istnieje w naszej bazie</string>
+    <string name="register.ok">Rejestracja przebiegła prawidłowo</string>
     <string name="global.search">Szukaj</string>
     <string name="login.label.newaccount">Nowy użytkownik</string>
     <string name="login.label.fpassword">Nie pamiętasz hasła?</string>

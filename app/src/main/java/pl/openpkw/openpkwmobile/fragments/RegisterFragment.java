@@ -70,18 +70,17 @@ public class RegisterFragment extends Fragment {
         Callback<String> checkEmailCallback = new Callback<String>() {
             @Override
             public void success(String responseString, Response response) {
-                System.out.println("res " + response.toString());
                 register(firstName, lastName, email, phone);
-//                if (exists) {
-//                    Toast.makeText(getActivity(), getActivity().getString(R.string.register_email_exists), Toast.LENGTH_SHORT).show();
-//                } else {
-//
-//                }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                Response r = error.getResponse();
+                if (r != null && r.getStatus() == 409) {
+                    Toast.makeText(getActivity(), getActivity().getString(R.string.register_email_exists), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         };
 
@@ -100,7 +99,7 @@ public class RegisterFragment extends Fragment {
         Callback<String> registerCallback = new Callback<String>() {
             @Override
             public void success(String responseString, Response response) {
-                Toast.makeText(getActivity(), "ok", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getActivity().getString(R.string.register_ok), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -112,9 +111,4 @@ public class RegisterFragment extends Fragment {
         RestClient.get(appContext).register(apiClient, apiToken, userRegister, registerCallback);
 
     }
-
-
-
-
-
 }
