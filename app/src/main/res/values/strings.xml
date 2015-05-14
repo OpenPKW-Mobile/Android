@@ -1,6 +1,9 @@
 <resources>
     <string name="app.name">OpenPKW-Mobile</string>
-    <string name="rules.url">https://e-wybory.org/</string>
+    <string name="rules.url">http://android.open-pkw.pl</string>
+    <string name="register.url">https://otwartapw.pl/opw/register.xhtml</string>
+    <string name="api.token">b516f01b18cc4144ef39d5c1b039a250fd318cdd15aff4fd746bde9a</string>
+    <string name="api.client">OpenPKWmobile-androidApp</string>
     <string name="splash.check.it">Zajrzyj tu</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -9,6 +12,15 @@
     <string name="login.label.edittext.password">Hasło</string>
     <string name="login.buttonlabel.login">Zaloguj</string>
     <string name="login.buttonlabel.newaccount">Utwórz</string>
+    <string name="register.label.register">Zarejestruj się</string>
+    <string name="register.label.edittext.firstname">Imię</string>
+    <string name="register.label.edittext.lastname">Nazwisko</string>
+    <string name="register.label.edittext.email">E-mail</string>
+    <string name="register.label.edittext.phone">Telefon</string>
+    <string name="register.buttonlabel.register">Zarejestruj</string>
+    <string name="register.fill.all.fields">Wypełnij wszystkie pola</string>
+    <string name="register.email.exists">Podany adres e-mail już istnieje w naszej bazie</string>
+    <string name="register.ok">Rejestracja przebiegła prawidłowo</string>
     <string name="global.search">Szukaj</string>
     <string name="login.label.newaccount">Nowy użytkownik</string>
     <string name="login.label.fpassword">Nie pamiętasz hasła?</string>
@@ -25,6 +37,7 @@
     <string name="fvoting.votingcardsdistributed.label">I.4.Wydano kart do głosowania</string>
     <string name="network_check_internet_connection">Sprawdź swoje połączenie internetowe</string>
     <string name="login.error.incorrectloginorpassword">Nieprawidłowy login lub hasło</string>
+    <string name="internal.server.error">Wystąpił błąd</string>
     <string name="login.error.nointernetconnection">Brak połączenia internetowego!\nSprawdź swoje ustawienia sieciowe</string>
     <string name="filter.commissions.label.top">Wyszukaj Komisję z której przekazujesz dane</string>
     <string name="filter.commissions.label">Wpisz kod terytorialny gminy w której znajduje się Twoja komisja (znajdziesz go na protokole wyborczym)</string>

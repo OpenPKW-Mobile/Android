@@ -3,6 +3,7 @@ package pl.openpkw.openpkwmobile.network;
 import android.content.Context;
 
 import pl.openpkw.openpkwmobile.R;
+import pl.openpkw.openpkwmobile.network.exceptions.InternalServerError;
 import pl.openpkw.openpkwmobile.network.exceptions.NoInternetException;
 import pl.openpkw.openpkwmobile.network.exceptions.UnauthorizedException;
 import retrofit.ErrorHandler;
@@ -23,7 +24,10 @@ public class NetworkErrorHandler implements ErrorHandler {
         Response r = cause.getResponse();
         if (r != null && r.getStatus() == 401) {
             return new UnauthorizedException(ctx.getString(R.string.login_error_incorrectloginorpassword));
-        } else
+        } else if (r != null && r.getStatus() == 500) {
+            return new InternalServerError(ctx.getString(R.string.internal_server_error) + ", " + cause.getMessage());
+        }
+        else
             return new NoInternetException(ctx.getString(R.string.login_error_nointernetconnection));
     }
 }
