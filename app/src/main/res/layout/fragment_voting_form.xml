@@ -130,9 +130,11 @@
                         android:text="@string/fvoting.abletovote.label" />
 
                     <EditText
+                        android:id="@+id/fvoting.abletovote"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="right"
                         android:inputType="number|numberSigned"
                         android:maxLength="8" />
                 </TableRow>
@@ -148,9 +150,11 @@
                         android:text="@string/fvoting.votingcardsdistributed.label" />
 
                     <EditText
+                        android:id="@+id/fvoting.cards"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="right"
                         android:inputType="number|numberSigned"
                         android:maxLength="8" />
                 </TableRow>
@@ -166,9 +170,11 @@
                         android:text="@string/fvoting.validcards.label" />
 
                     <EditText
+                        android:id="@+id/fvoting.validcards"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="right"
                         android:inputType="number|numberSigned"
                         android:maxLength="8" />
                 </TableRow>
@@ -184,9 +190,11 @@
                         android:text="@string/fvoting.nonvalidvotes.label" />
 
                     <EditText
+                        android:id="@+id/fvoting.invalidvotes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="right"
                         android:inputType="number|numberSigned"
                         android:maxLength="8" />
                 </TableRow>
@@ -202,9 +210,11 @@
                         android:text="@string/fvoting.validvotes.label" />
 
                     <EditText
+                        android:id="@+id/fvoting.validvotes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="right"
                         android:inputType="number|numberSigned"
                         android:maxLength="8" />
                 </TableRow>
@@ -214,6 +224,7 @@
 
             <!-- Kandydaci -->
             <TextView
+                android:id="@+id/tvcoting_candidates_heading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -230,8 +241,66 @@
                 android:layout_marginRight="5dp"
                 android:stretchColumns="*"></TableLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_soft_error_container"
+                android:visibility="gone"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:padding="1dp"
+                android:background="@color/green"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:padding="5dp"
+                    android:background="@color/greenlight"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/warning"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="Ostrzeżenia!"/>
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_below="@id/warning"
+                    android:id="@+id/tvSoftError1"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/soft_validation__1"/>
+
+                    <TextView
+                        android:visibility="gone"
+                        android:layout_below="@id/tvSoftError1"
+                        android:id="@+id/tvSoftError2"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/soft_validation__2"/>
+
+                    <TextView
+                        android:visibility="gone"
+                        android:layout_below="@id/tvSoftError2"
+                        android:id="@+id/tvSoftError3"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/soft_validation__3"/>
+
+                </RelativeLayout>
+
+                </LinearLayout>
+
             <!-- Przycisk dalej -->
             <Button
+                android:id="@+id/fvoting.next.button"
                 style="@style/green_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -26,19 +26,30 @@ import retrofit.client.Response;
  * Created by fockeRR on 21.04.15.
  */
 public class LoginFragment extends Fragment {
+
     private EditText mLogin;
     private EditText mPassword;
+
+    private Button restorePasswordBtn, loginButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         mLogin = (EditText) v.findViewById(R.id.login_edittext_user);
         mPassword = (EditText) v.findViewById(R.id.login_edittext_password);
-        Button restorePasswordBtn = (Button) v.findViewById(R.id.login_textlink_fpassword);
-        Button loginButton = (Button) v.findViewById(R.id.login_button_login);
+        restorePasswordBtn = (Button) v.findViewById(R.id.login_textlink_fpassword);
+        loginButton = (Button) v.findViewById(R.id.login_button_login);
         SpannableString buttonText = new SpannableString(restorePasswordBtn.getText());
         buttonText.setSpan(new UnderlineSpan(), 0, buttonText.length(), 0);
         restorePasswordBtn.setText(buttonText);
+
+        return v;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
         restorePasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +67,6 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
-        return v;
     }
 
     @Override
@@ -67,6 +77,7 @@ public class LoginFragment extends Fragment {
 
     /**
      * Simple validation of login and password
+     *
      * @param login
      * @param password
      * @return result of validation
@@ -74,16 +85,20 @@ public class LoginFragment extends Fragment {
     private boolean validate(String login, String password) {
         if (login == null || password == null)
             return false;
+        Context ctx = getActivity().getApplicationContext();
         login = login.trim();
         password = password.trim();
-        if (login.isEmpty() || password.isEmpty())
+        if (login.isEmpty() || password.isEmpty()) {
+            Toast.makeText(ctx, ctx
+                    .getString(R.string.login_validation_login_password_empty), Toast.LENGTH_SHORT).show();
             return false;
-        else
+        } else
             return true;
     }
 
     /**
      * Method for authenticating users
+     *
      * @param login
      * @param password
      */

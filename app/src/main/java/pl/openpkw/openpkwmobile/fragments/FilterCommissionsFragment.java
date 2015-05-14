@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.activities.VotingFormActivity;
 import pl.openpkw.openpkwmobile.models.Commission;
+import pl.openpkw.openpkwmobile.models.User;
 
 /**
  * Created by Wojciech Radzioch on 09.05.15.
@@ -63,6 +64,7 @@ public class FilterCommissionsFragment extends Fragment {
             }
         });
 
+        return v;
     }
 
     @Override
