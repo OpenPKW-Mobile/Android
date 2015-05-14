@@ -70,6 +70,9 @@ public class TakePhotoFragment extends Fragment {
             bestSize = findBestPictureSize(cameraParameters, TakePhotosActivity.MAX_PICTURE_WIDTH, TakePhotosActivity.MAX_PICTURE_HEIGHT);
             cameraParameters.setPictureSize(bestSize.width, bestSize.height);
 
+            // continuous auto-focus
+            cameraParameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+
             // flash mode
             cameraParameters.setFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
 
