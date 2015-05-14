@@ -124,6 +124,14 @@ public class TakePhotoFragment extends Fragment {
         }
     };
 
+    private final Camera.AutoFocusCallback autoFocusCallback = new Camera.AutoFocusCallback() {
+        @Override
+        public void onAutoFocus(boolean success, Camera camera) {
+            Log.d(tag, "take picture... camera callback");
+            camera.takePicture(cameraShutterCallback, null, cameraPictureCallback);
+        }
+    };
+
     private boolean isInProgress;
 
     private boolean isPreviewing;
@@ -150,7 +158,7 @@ public class TakePhotoFragment extends Fragment {
             public void onClick(View v) {
                 if (!isInProgress) {
                     isInProgress = true;
-                    camera.takePicture(cameraShutterCallback, null, cameraPictureCallback);
+                    camera.autoFocus(autoFocusCallback);
                 }
             }
         });
