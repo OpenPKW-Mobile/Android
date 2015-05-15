@@ -16,6 +16,7 @@ import android.widget.Toast;
 import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.activities.FilterCommissionsActivity;
 import pl.openpkw.openpkwmobile.activities.PasswordRestoreActivity;
+import pl.openpkw.openpkwmobile.activities.RegisterActivity;
 import pl.openpkw.openpkwmobile.models.User;
 import pl.openpkw.openpkwmobile.network.RestClient;
 import retrofit.Callback;
@@ -30,7 +31,7 @@ public class LoginFragment extends Fragment {
     private EditText mLogin;
     private EditText mPassword;
 
-    private Button restorePasswordBtn, loginButton;
+    private Button restorePasswordBtn, loginButton, registerNewUserButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class LoginFragment extends Fragment {
         mPassword = (EditText) v.findViewById(R.id.login_edittext_password);
         restorePasswordBtn = (Button) v.findViewById(R.id.login_textlink_fpassword);
         loginButton = (Button) v.findViewById(R.id.login_button_login);
+        registerNewUserButton = (Button) v.findViewById(R.id.login_button_register);
         SpannableString buttonText = new SpannableString(restorePasswordBtn.getText());
         buttonText.setSpan(new UnderlineSpan(), 0, buttonText.length(), 0);
         restorePasswordBtn.setText(buttonText);
@@ -65,6 +67,13 @@ public class LoginFragment extends Fragment {
                 if (validate(login, password)) {
                     login(login, password);
                 }
+            }
+        });
+        registerNewUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent registerIntent = new Intent(getActivity(), RegisterActivity.class);
+                startActivity(registerIntent);
             }
         });
     }

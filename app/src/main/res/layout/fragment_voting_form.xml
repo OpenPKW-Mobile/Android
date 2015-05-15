@@ -100,6 +100,7 @@
             <!-- Przycisk do zmiany komisji-->
 
             <Button
+                android:id="@+id/fvoting.change.commision.button"
                 style="@style/green_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

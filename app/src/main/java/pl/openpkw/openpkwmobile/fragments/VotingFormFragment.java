@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import pl.openpkw.openpkwmobile.R;
+import pl.openpkw.openpkwmobile.activities.FilterCommissionsActivity;
 import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
 import pl.openpkw.openpkwmobile.models.Candidate;
 import pl.openpkw.openpkwmobile.models.Commission;
@@ -52,6 +53,7 @@ public class VotingFormFragment extends Fragment {
     private LinearLayout mSoftContainer;
 
     private Button mNextButton;
+    private Button mChangeCommisionBtn;
 
     private EditText mAbleToVote;
     private EditText mCards;
@@ -85,6 +87,7 @@ public class VotingFormFragment extends Fragment {
         mCommisionAddress = (TextView) v.findViewById(R.id.fvoting_commision_address);
         mGeneralData = (TableLayout) v.findViewById(R.id.fvoting_generaldata);
         mNextButton = (Button) v.findViewById(R.id.fvoting_next_button);
+        mChangeCommisionBtn = (Button) v.findViewById(R.id.fvoting_change_commision_button);
         mAbleToVote = (EditText) v.findViewById(R.id.fvoting_abletovote);
         mCards = (EditText) v.findViewById(R.id.fvoting_cards);
         mValidCards = (EditText) v.findViewById(R.id.fvoting_validcards);
@@ -96,9 +99,6 @@ public class VotingFormFragment extends Fragment {
         mSoftError1 = (TextView) v.findViewById(R.id.tvSoftError1);
         mSoftError2 = (TextView) v.findViewById(R.id.tvSoftError2);
         mSoftError3 = (TextView) v.findViewById(R.id.tvSoftError3);
-
-        mNextButton.setOnClickListener(onNextButtonListener);
-
         return v;
     }
 
@@ -116,6 +116,22 @@ public class VotingFormFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mNextButton.setOnClickListener(onNextButtonListener);
+        mChangeCommisionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo: nice to have a confirmation dialog here!
+                Intent changeCommision = new Intent(getActivity(), FilterCommissionsActivity.class);
+                changeCommision.putExtra("user", user);
+                startActivity(changeCommision);
+                getActivity().finish();
+            }
+        });
     }
 
     @Override
