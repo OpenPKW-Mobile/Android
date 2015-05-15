@@ -51,6 +51,7 @@ public class VotingFormFragment extends Fragment {
     private TextView mSoftError2;
     private TextView mSoftError3;
     private LinearLayout mSoftContainer;
+    private RelativeLayout mProgress;
 
     private Button mNextButton;
     private Button mChangeCommisionBtn;
@@ -96,6 +97,7 @@ public class VotingFormFragment extends Fragment {
         mCandidates = (TableLayout) v.findViewById(R.id.fvoting_candidates);
         mCandidatesHeader = (TextView) v.findViewById(R.id.tvcoting_candidates_heading);
         mSoftContainer = (LinearLayout) v.findViewById(R.id.ll_soft_error_container);
+        mProgress = (RelativeLayout) v.findViewById(R.id.fvoting_progress);
         mSoftError1 = (TextView) v.findViewById(R.id.tvSoftError1);
         mSoftError2 = (TextView) v.findViewById(R.id.tvSoftError2);
         mSoftError3 = (TextView) v.findViewById(R.id.tvSoftError3);
@@ -148,22 +150,28 @@ public class VotingFormFragment extends Fragment {
             if (getArguments() != null && getArguments().containsKey("commission") && getArguments().containsKey("user")) {
                 user = (User) getArguments().getSerializable("user");
                 commission = (Commission) getArguments().get("commission");
-
+                mProgress.setVisibility(View.VISIBLE);
                 RestClient.get(getActivity()).getCandidates(user.getLogin(), user.getToken(), commission.getPkwId(), new Callback<CommissionDetails>() {
                     @Override
                     public void success(CommissionDetails commissionDetails, Response response) {
                         candidatesAndCommission = commissionDetails;
                         fillLayoutWithData(candidatesAndCommission);
+                        mProgress.setVisibility(View.GONE);
+                        mScrollView.setVisibility(View.VISIBLE);
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
                         Toast.makeText(getActivity(), getString(R.string.network_check_internet_connection), Toast.LENGTH_SHORT).show();
+                        mProgress.setVisibility(View.GONE);
+                        mScrollView.setVisibility(View.VISIBLE);
                     }
                 });
             }
         } else {
             fillLayoutWithData(candidatesAndCommission);
+            mProgress.setVisibility(View.GONE);
+            mScrollView.setVisibility(View.VISIBLE);
         }
 
 

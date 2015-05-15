@@ -65,6 +65,9 @@ public class LoginFragment extends Fragment {
                 String login = mLogin.getText().toString();
                 String password = mPassword.getText().toString();
                 if (validate(login, password)) {
+                    mLogin.setEnabled(false);
+                    mPassword.setEnabled(false);
+                    loginButton.setEnabled(false);
                     login(login, password);
                 }
             }
@@ -127,6 +130,9 @@ public class LoginFragment extends Fragment {
             @Override
             public void failure(RetrofitError error) {
                 Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                mLogin.setEnabled(true);
+                mPassword.setEnabled(true);
+                loginButton.setEnabled(true);
             }
         };
 
