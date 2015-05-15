@@ -231,7 +231,10 @@ public class VotingFormFragment extends Fragment {
 
                 if (softErrorsValidation()) {
                     // Run Activity!
-                    RestClient.get(getActivity().getApplicationContext()).submitProtocol(user.getLogin(), user.getToken(), commission.getPkwId(), protocol, new Callback<Void>() {
+                    Intent takePhoto = new Intent(getActivity(), TakePhotosActivity.class);
+                    startActivity(takePhoto);
+                    getActivity().finish();
+                  /*  RestClient.get(getActivity().getApplicationContext()).submitProtocol(user.getLogin(), user.getToken(), commission.getPkwId(), protocol, new Callback<Void>() {
 
                         @Override
                         public void success(Void aVoid, Response response) {
@@ -246,7 +249,7 @@ public class VotingFormFragment extends Fragment {
                         @Override
                         public void failure(RetrofitError error) {
                         }
-                    });
+                    });*/
                     Log.d(TAG, "validForm = OK / SoftValidation OK = RUN APP");
                 } else {
                     if (click == 1) {
@@ -266,7 +269,8 @@ public class VotingFormFragment extends Fragment {
     };
 
     private boolean validateForm(Context ctx) {
-        if (areFieldsFilled(ctx)) {
+        return true;
+       /* if (areFieldsFilled(ctx)) {
             if (validation1(ctx) && validation2(ctx) && validation3(ctx) && validation4(ctx)
                     && validation5(ctx) && !validation6(ctx)) {
                 hideallErrors();
@@ -276,7 +280,7 @@ public class VotingFormFragment extends Fragment {
             }
         } else {
             return false;
-        }
+        }*/
     }
 
     /*Liczba osób, którym wydano karty do głosowania (pkt. 4),
