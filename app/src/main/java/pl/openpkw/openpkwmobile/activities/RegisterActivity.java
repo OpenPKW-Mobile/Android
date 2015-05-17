@@ -1,40 +1,46 @@
 package pl.openpkw.openpkwmobile.activities;
 
-import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Toast;
 import pl.openpkw.openpkwmobile.R;
-import pl.openpkw.openpkwmobile.fragments.RegisterFragment;
 
 /**
  * Created by Wojciech Radzioch on 12.05.15.
  */
 public class RegisterActivity extends OpenPKWActivity {
-    private static final String REGISTER_FRAGMENT_TAG = "RegisterFragment";
     private boolean doubleBackToExitPressedOnce = false;
-
+    private WebView registerWebView;
+    public static final String ua = "Mozilla/5.0 (Android; Tablet; rv:20.0) Gecko/20.0 Firefox/20.0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        registerWebView = (WebView) findViewById(R.id.register_webview);
+        WebSettings settings = registerWebView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(true);
 
-        FragmentManager fm = getSupportFragmentManager();
-        RegisterFragment registerFragment = (RegisterFragment) fm.findFragmentByTag(REGISTER_FRAGMENT_TAG);
-        if (registerFragment == null) {
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.register_fragment_container, new RegisterFragment(), REGISTER_FRAGMENT_TAG);
-            ft.commit();
-            fm.executePendingTransactions();
-        }
-    }
+        settings.setUserAgentString(ua);
+        registerWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return false;
+            }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+
+            }
+        });
+        registerWebView.loadUrl(RegisterActivity.this.getString(R.string.register_url));
     }
 
     @Override
