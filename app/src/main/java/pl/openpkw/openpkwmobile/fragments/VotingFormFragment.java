@@ -231,22 +231,7 @@ public class VotingFormFragment extends Fragment {
 
                 if (softErrorsValidation()) {
                     // Run Activity!
-                    RestClient.get(getActivity().getApplicationContext()).submitProtocol(user.getLogin(), user.getToken(), commission.getPkwId(), protocol, new Callback<Void>() {
-
-                        @Override
-                        public void success(Void aVoid, Response response) {
-                            Context ctx = getActivity().getApplicationContext();
-                            Toast.makeText(ctx, ctx.getString(R.string.fvoting_protocol_successfully_sent), Toast.LENGTH_LONG).show();
-
-                            Intent takePhoto = new Intent(getActivity(), TakePhotosActivity.class);
-                            startActivity(takePhoto);
-                            getActivity().finish();
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-                        }
-                    });
+                    runTakePhoto();
                     Log.d(TAG, "validForm = OK / SoftValidation OK = RUN APP");
                 } else {
                     if (click == 1) {
@@ -254,6 +239,7 @@ public class VotingFormFragment extends Fragment {
                         Log.d(TAG, "validForm = OK / SoftValidation NOK = WAIT");
                     } else {
                         // Run activity - soft errors were showed!
+                        runTakePhoto();
                         Log.d(TAG, "validForm = OK / SoftValidation NOK = RUN APP");
                     }
                 }
@@ -264,6 +250,25 @@ public class VotingFormFragment extends Fragment {
 
         ;
     };
+
+    private void runTakePhoto(){
+        RestClient.get(getActivity().getApplicationContext()).submitProtocol(user.getLogin(), user.getToken(), commission.getPkwId(), protocol, new Callback<Void>() {
+
+            @Override
+            public void success(Void aVoid, Response response) {
+                Context ctx = getActivity().getApplicationContext();
+                Toast.makeText(ctx, ctx.getString(R.string.fvoting_protocol_successfully_sent), Toast.LENGTH_LONG).show();
+
+                Intent takePhoto = new Intent(getActivity(), TakePhotosActivity.class);
+                startActivity(takePhoto);
+                getActivity().finish();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+            }
+        });
+    }
 
     private boolean validateForm(Context ctx) {
         if (areFieldsFilled(ctx)) {

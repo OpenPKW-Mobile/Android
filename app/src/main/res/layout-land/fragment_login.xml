@@ -64,6 +64,7 @@
             android:text="@string/login.buttonlabel.login" />
 
         <Button
+            android:visibility="gone"
             android:id="@+id/login.textlink.fpassword"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
