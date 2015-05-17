@@ -3,10 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:id="@+id/fvoting.progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Inverse"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
     <ScrollView
         android:id="@+id/fvoting.scrollview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -100,6 +113,7 @@
             <!-- Przycisk do zmiany komisji-->
 
             <Button
+                android:id="@+id/fvoting.change.commision.button"
                 style="@style/green_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -113,10 +127,10 @@
             <TableLayout
                 android:id="@+id/fvoting.generaldata"
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="5dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="20dp"
                 android:stretchColumns="1">
 
                 <TableRow
@@ -229,74 +243,75 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="30dp"
-                android:text="II.14. Kandydaci otrzymali głosów ważnych :"
+                android:text="@string/fvoting.candidates.label"
                 android:textSize="16sp" />
 
             <TableLayout
                 android:id="@+id/fvoting.candidates"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
                 android:stretchColumns="*"></TableLayout>
 
             <LinearLayout
                 android:id="@+id/ll_soft_error_container"
-                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:background="@color/green"
                 android:gravity="center"
                 android:padding="1dp"
-                android:background="@color/green"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:visibility="gone">
 
                 <RelativeLayout
-                    android:padding="5dp"
-                    android:background="@color/greenlight"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/warning"
-                    android:layout_centerInParent="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:text="Ostrzeżenia!"/>
-
-                <TextView
-                    android:visibility="gone"
-                    android:layout_below="@id/warning"
-                    android:id="@+id/tvSoftError1"
-                    android:layout_marginTop="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/soft_validation__1"/>
+                    android:layout_height="match_parent"
+                    android:background="@color/greenlight"
+                    android:padding="5dp">
 
                     <TextView
-                        android:visibility="gone"
-                        android:layout_below="@id/tvSoftError1"
+                        android:id="@+id/warning"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="Ostrzeżenia!"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tvSoftError1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/warning"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/soft_validation__1"
+                        android:visibility="gone" />
+
+                    <TextView
                         android:id="@+id/tvSoftError2"
-                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/soft_validation__2"/>
+                        android:layout_below="@id/tvSoftError1"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/soft_validation__2"
+                        android:visibility="gone" />
 
                     <TextView
-                        android:visibility="gone"
-                        android:layout_below="@id/tvSoftError2"
                         android:id="@+id/tvSoftError3"
-                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/soft_validation__3"/>
+                        android:layout_below="@id/tvSoftError2"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/soft_validation__3"
+                        android:visibility="gone" />
 
                 </RelativeLayout>
 
-                </LinearLayout>
+            </LinearLayout>
 
             <!-- Przycisk dalej -->
             <Button
@@ -305,9 +320,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:text="Dalej" />
+                android:layout_marginTop="20dp"
+                android:text="@string/fvoting.protocol.next.button.label" />
 
         </LinearLayout>
 

@@ -1,6 +1,7 @@
 package pl.openpkw.openpkwmobile.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -14,19 +15,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.HashMap;
-import java.util.Map;
-
+import android.widget.*;
 import pl.openpkw.openpkwmobile.R;
+import pl.openpkw.openpkwmobile.activities.FilterCommissionsActivity;
+import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
 import pl.openpkw.openpkwmobile.models.Candidate;
 import pl.openpkw.openpkwmobile.models.Commission;
 import pl.openpkw.openpkwmobile.models.CommissionDetails;
@@ -36,6 +28,9 @@ import pl.openpkw.openpkwmobile.views.CustomAlertDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by fockeRR on 28.04.15.
@@ -56,8 +51,10 @@ public class VotingFormFragment extends Fragment {
     private TextView mSoftError2;
     private TextView mSoftError3;
     private LinearLayout mSoftContainer;
+    private RelativeLayout mProgress;
 
     private Button mNextButton;
+    private Button mChangeCommisionBtn;
 
     private EditText mAbleToVote;
     private EditText mCards;
@@ -91,6 +88,7 @@ public class VotingFormFragment extends Fragment {
         mCommisionAddress = (TextView) v.findViewById(R.id.fvoting_commision_address);
         mGeneralData = (TableLayout) v.findViewById(R.id.fvoting_generaldata);
         mNextButton = (Button) v.findViewById(R.id.fvoting_next_button);
+        mChangeCommisionBtn = (Button) v.findViewById(R.id.fvoting_change_commision_button);
         mAbleToVote = (EditText) v.findViewById(R.id.fvoting_abletovote);
         mCards = (EditText) v.findViewById(R.id.fvoting_cards);
         mValidCards = (EditText) v.findViewById(R.id.fvoting_validcards);
@@ -99,12 +97,10 @@ public class VotingFormFragment extends Fragment {
         mCandidates = (TableLayout) v.findViewById(R.id.fvoting_candidates);
         mCandidatesHeader = (TextView) v.findViewById(R.id.tvcoting_candidates_heading);
         mSoftContainer = (LinearLayout) v.findViewById(R.id.ll_soft_error_container);
+        mProgress = (RelativeLayout) v.findViewById(R.id.fvoting_progress);
         mSoftError1 = (TextView) v.findViewById(R.id.tvSoftError1);
         mSoftError2 = (TextView) v.findViewById(R.id.tvSoftError2);
         mSoftError3 = (TextView) v.findViewById(R.id.tvSoftError3);
-
-        mNextButton.setOnClickListener(onNextButtonListener);
-
         return v;
     }
 
@@ -125,6 +121,22 @@ public class VotingFormFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mNextButton.setOnClickListener(onNextButtonListener);
+        mChangeCommisionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo: nice to have a confirmation dialog here!
+                Intent changeCommision = new Intent(getActivity(), FilterCommissionsActivity.class);
+                changeCommision.putExtra("user", user);
+                startActivity(changeCommision);
+                getActivity().finish();
+            }
+        });
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         temporarySaveProtocol();
@@ -138,22 +150,28 @@ public class VotingFormFragment extends Fragment {
             if (getArguments() != null && getArguments().containsKey("commission") && getArguments().containsKey("user")) {
                 user = (User) getArguments().getSerializable("user");
                 commission = (Commission) getArguments().get("commission");
-
+                mProgress.setVisibility(View.VISIBLE);
                 RestClient.get(getActivity()).getCandidates(user.getLogin(), user.getToken(), commission.getPkwId(), new Callback<CommissionDetails>() {
                     @Override
                     public void success(CommissionDetails commissionDetails, Response response) {
                         candidatesAndCommission = commissionDetails;
                         fillLayoutWithData(candidatesAndCommission);
+                        mProgress.setVisibility(View.GONE);
+                        mScrollView.setVisibility(View.VISIBLE);
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
                         Toast.makeText(getActivity(), getString(R.string.network_check_internet_connection), Toast.LENGTH_SHORT).show();
+                        mProgress.setVisibility(View.GONE);
+                        mScrollView.setVisibility(View.VISIBLE);
                     }
                 });
             }
         } else {
             fillLayoutWithData(candidatesAndCommission);
+            mProgress.setVisibility(View.GONE);
+            mScrollView.setVisibility(View.VISIBLE);
         }
 
 
@@ -219,6 +237,10 @@ public class VotingFormFragment extends Fragment {
                         public void success(Void aVoid, Response response) {
                             Context ctx = getActivity().getApplicationContext();
                             Toast.makeText(ctx, ctx.getString(R.string.fvoting_protocol_successfully_sent), Toast.LENGTH_LONG).show();
+
+                            Intent takePhoto = new Intent(getActivity(), TakePhotosActivity.class);
+                            startActivity(takePhoto);
+                            getActivity().finish();
                         }
 
                         @Override

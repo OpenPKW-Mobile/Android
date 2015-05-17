@@ -3,4 +3,5 @@
     <color name="rules.fragment.background">#fff</color>
     <item name="green" type="color">#FF99CC00</item>
     <color name="greenlight">#F5FAE6</color>
+    <color name="grey">#D1D1D1</color>
 </resources>
