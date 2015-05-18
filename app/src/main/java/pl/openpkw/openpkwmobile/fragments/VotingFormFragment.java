@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.activities.FilterCommissionsActivity;
+import pl.openpkw.openpkwmobile.activities.OpenPKWActivity;
 import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
 import pl.openpkw.openpkwmobile.models.Candidate;
 import pl.openpkw.openpkwmobile.models.Commission;
@@ -101,6 +102,8 @@ public class VotingFormFragment extends Fragment {
         mSoftError1 = (TextView) v.findViewById(R.id.tvSoftError1);
         mSoftError2 = (TextView) v.findViewById(R.id.tvSoftError2);
         mSoftError3 = (TextView) v.findViewById(R.id.tvSoftError3);
+
+        ((OpenPKWActivity)getActivity()).setStepNo(v.findViewById(R.id.step),4);
         return v;
     }
 

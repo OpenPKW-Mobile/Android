@@ -19,6 +19,7 @@ import java.io.InputStreamReader;
 import java.util.logging.Logger;
 
 import pl.openpkw.openpkwmobile.R;
+import pl.openpkw.openpkwmobile.activities.OpenPKWActivity;
 import pl.openpkw.openpkwmobile.activities.VotingFormActivity;
 import pl.openpkw.openpkwmobile.models.Commission;
 import pl.openpkw.openpkwmobile.models.User;
@@ -60,6 +61,7 @@ public class FilterCommissionsFragment extends Fragment {
         commissionNumberET = (EditText) v.findViewById(R.id.filter_commissions_edittext_coomission_number);
         searchCommission = (Button) v.findViewById(R.id.filter_commissions_search);
 
+        ((OpenPKWActivity)getActivity()).setStepNo(v.findViewById(R.id.step),3);
         return v;
     }
 

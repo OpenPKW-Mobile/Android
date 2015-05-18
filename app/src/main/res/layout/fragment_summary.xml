@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/summary.bar"
+        layout="@layout/summary_bar" />
+
+    <TextView
+        android:id="@+id/summary.info"
+        android:layout_below="@+id/summary.bar"
+        android:text="@string/summary.info"
+        style="@style/info_text" />
+
+    <ImageView
+        android:id="@+id/summary.pkw.logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/summary.info"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/pkw_logo" />
+
+    <TextView
+        android:id="@+id/summary.thanks"
+        android:layout_below="@+id/summary.pkw.logo"
+        android:text="@string/summary.thanks"
+        style="@style/info_text" />
+
+    <Button
+        android:id="@+id/summary.button.finish"
+        style="@style/green_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="3dp"
+        android:text="@string/summary.finish" />
+
+    <TextView
+        android:id="@+id/step"
+        style="@style/footerText"
+        android:text="@string/global.step" />
+</RelativeLayout>

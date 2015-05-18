@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import pl.openpkw.openpkwmobile.R;
+import pl.openpkw.openpkwmobile.activities.OpenPKWActivity;
 import pl.openpkw.openpkwmobile.models.UserRegister;
 import pl.openpkw.openpkwmobile.network.RestClient;
 import pl.openpkw.openpkwmobile.utils.EmailValidator;
@@ -57,6 +58,7 @@ public class RegisterFragment extends Fragment {
             }
         });
 
+        ((OpenPKWActivity)getActivity()).setStepNo(v.findViewById(R.id.step), 2);
         return v;
     }
 

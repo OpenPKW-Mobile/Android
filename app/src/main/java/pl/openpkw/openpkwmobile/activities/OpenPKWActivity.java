@@ -3,7 +3,10 @@ package pl.openpkw.openpkwmobile.activities;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import pl.openpkw.openpkwmobile.R;
 
 /**
@@ -34,5 +37,11 @@ public class OpenPKWActivity extends FragmentActivity {
                 doubleBackToExitPressedOnce = false;
             }
         }, 3000);
+    }
+
+    public void setStepNo(View view, int stepNo) {
+        if (view != null && view instanceof TextView) {
+            ((TextView) view).setText(String.format(getString(R.string.global_step), stepNo, getResources().getInteger(R.integer.steps)));
+        }
     }
 }

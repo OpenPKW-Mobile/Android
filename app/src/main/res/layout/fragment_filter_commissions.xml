@@ -72,9 +72,19 @@
             android:text="@string/global.search" />
     </LinearLayout>
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/teritory_code"/>
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/teritory_code"/>
+
+        <TextView
+            android:text="u@string/general.step"
+            android:id="@+id/step"
+            style="@style/footerText" />
+    </RelativeLayout>
 
 </LinearLayout>

@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.activities.FilterCommissionsActivity;
+import pl.openpkw.openpkwmobile.activities.OpenPKWActivity;
 import pl.openpkw.openpkwmobile.activities.PasswordRestoreActivity;
 import pl.openpkw.openpkwmobile.activities.RegisterActivity;
 import pl.openpkw.openpkwmobile.models.User;
@@ -45,6 +46,7 @@ public class LoginFragment extends Fragment {
         buttonText.setSpan(new UnderlineSpan(), 0, buttonText.length(), 0);
         restorePasswordBtn.setText(buttonText);
 
+        ((OpenPKWActivity)getActivity()).setStepNo(v.findViewById(R.id.step),1);
         return v;
     }
 
