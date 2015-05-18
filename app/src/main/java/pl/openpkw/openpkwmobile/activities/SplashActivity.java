@@ -11,7 +11,7 @@ import pl.openpkw.openpkwmobile.fragments.SplashFragment;
  */
 public class SplashActivity extends OpenPKWActivity {
 
-    public static final int SPLASH_TIME = 4000;
+    public static final int SPLASH_TIME = 6000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

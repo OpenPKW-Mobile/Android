@@ -4,7 +4,7 @@
     <string name="register.url">https://otwartapw.pl/opw/register.xhtml</string>
     <string name="api.token">b516f01b18cc4144ef39d5c1b039a250fd318cdd15aff4fd746bde9a</string>
     <string name="api.client">OpenPKWmobile-androidApp</string>
-    <string name="splash.check.it">Zajrzyj tu</string>
+    <string name="splash.check.it"><u>Zajrzyj tu</u></string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="login.label.login">Zaloguj się</string>
