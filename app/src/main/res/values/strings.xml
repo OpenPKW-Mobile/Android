@@ -63,6 +63,11 @@
     <string name="fragment.photo.preview.next.button">Kolejne</string>
     <string name="fragment.photos.header">Przesyłasz Następujące Zdjęcia:</string>
     <string name="fragment.photos.sendButton">Wyślij</string>
+
+    <string name="fragment.send.images.header.text.positive">Twoje dane zostały poprawnie przesłane na serwer</string>
+    <string name="fragment.send.images.footer.text.positive">Dziękujemy za poświęcony czas i dobrze wykonaną misję społeczną</string>
+    <string name="fragment.send.images.button.close">Zamknij</string>
+
     <string name="fvoting.toast.notalldataentered">Nie wprowadzono wszystkich danych w protokole</string>
     <string name="fvoting.toast.notallcandidatesvotesentered">Nie wprowadzono wyników głosowania dla wszystkich kandydatów</string>
 
@@ -84,4 +89,5 @@
 	<string name="fvoting.protocol.successfully.sent">Protokół został pomyślnie wysłany!</string>
     <string name="fvoting.candidates.label">II.14. Kandydaci otrzymali głosów ważnych :</string>
     <string name="fvoting.protocol.next.button.label">Dalej</string>
+
 </resources>

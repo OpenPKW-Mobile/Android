@@ -6,10 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 import pl.openpkw.openpkwmobile.R;
-import pl.openpkw.openpkwmobile.fragments.PhotoPreviewFragment;
-import pl.openpkw.openpkwmobile.fragments.PhotosFragment;
-import pl.openpkw.openpkwmobile.fragments.TakePhotoFragment;
-import pl.openpkw.openpkwmobile.fragments.TakePhotosFragment;
+import pl.openpkw.openpkwmobile.fragments.*;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -28,9 +25,9 @@ public class TakePhotosActivity extends OpenPKWActivity {
 
     public final static int THUMBNAIL_COMPRESSION = 75;
 
-    // 6 MPX 3008x2000
-    public final static int MAX_PICTURE_HEIGHT = 2000;
-    public final static int MAX_PICTURE_WIDTH = 3008;
+    // 3 MPX 2048x1536
+    public final static int MAX_PICTURE_HEIGHT = 1536;
+    public final static int MAX_PICTURE_WIDTH = 2048;
 
     public final static String COMMISSION_ID = "commissionId";
     public final static String IMAGE_DATA = "imageData";
@@ -46,6 +43,7 @@ public class TakePhotosActivity extends OpenPKWActivity {
     private TakePhotoFragment takePhotoFragment;
     private PhotoPreviewFragment photoPreviewFragment;
     private PhotosFragment photosFragment;
+    private SendImagesFragment sendImagesFragment;
 
     // get from previous activity or get from server
     private String commissionId = "12-5";
@@ -84,9 +82,25 @@ public class TakePhotosActivity extends OpenPKWActivity {
         fragmentManager.executePendingTransactions();
     }
 
+    public void switchToSendImages() {
+        Bundle bundle = new Bundle();
+        bundle.putString(COMMISSION_ID, commissionId);
+        bundle.putString(IMAGE_PATH, outDir.getAbsolutePath());
+
+        sendImagesFragment.setArguments(bundle);
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_take_photos_inner_container, sendImagesFragment, TAKEPHOTOS_INTERNAL_FRAGMENT_TAG);
+        fragmentTransaction.commit();
+        fragmentManager.executePendingTransactions();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        commissionId = getIntent().getStringExtra(COMMISSION_ID);
+
         setContentView(R.layout.activity_take_photos);
 
         prepareDirectoriy();
@@ -117,6 +131,10 @@ public class TakePhotosActivity extends OpenPKWActivity {
 
         if (photosFragment == null) {
             photosFragment = new PhotosFragment();
+        }
+
+        if (sendImagesFragment == null) {
+            sendImagesFragment = new SendImagesFragment();
         }
 
         switchToImageTake();

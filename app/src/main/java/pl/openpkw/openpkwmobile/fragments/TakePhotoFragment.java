@@ -1,5 +1,6 @@
 package pl.openpkw.openpkwmobile.fragments;
 
+import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -130,7 +131,7 @@ public class TakePhotoFragment extends Fragment {
     private final Camera.AutoFocusCallback autoFocusCallback = new Camera.AutoFocusCallback() {
         @Override
         public void onAutoFocus(boolean success, Camera camera) {
-            Log.d(tag, "take picture... camera callback");
+            Log.d(tag, "take picture... auto focus callback");
             camera.takePicture(cameraShutterCallback, null, cameraPictureCallback);
         }
     };
@@ -155,13 +156,13 @@ public class TakePhotoFragment extends Fragment {
         SurfaceHolder surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(surfaceHolderCallback);
 
-        Button takePictureButton = (Button) view.findViewById(R.id.fragment_take_photo_take_picture);
+        final Button takePictureButton = (Button) view.findViewById(R.id.fragment_take_photo_take_picture);
         takePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isInProgress) {
                     isInProgress = true;
-                    camera.autoFocus(autoFocusCallback);
+                    takeAPicture();
                 }
             }
         });
@@ -194,6 +195,20 @@ public class TakePhotoFragment extends Fragment {
         stopPreview();
         releaseCamera();
         super.onPause();
+    }
+
+    private void takeAPicture() {
+        List<String> supportedFocusModes = camera.getParameters().getSupportedFocusModes();
+        boolean hasAutoFocus = supportedFocusModes != null && supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO);
+
+        if (hasAutoFocus) {
+            Log.d(tag, "take a picture with auto focus");
+            camera.autoFocus(autoFocusCallback);
+        }
+        else {
+            Log.d(tag, "take a picture without auto focus");
+            camera.takePicture(cameraShutterCallback, null, cameraPictureCallback);
+        }
     }
 
     private void startPreview() {

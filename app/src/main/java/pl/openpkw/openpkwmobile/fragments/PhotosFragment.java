@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import pl.openpkw.openpkwmobile.R;
@@ -35,6 +36,14 @@ public class PhotosFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_photos, container, false);
+
+        Button sendButton = (Button) view.findViewById(R.id.fragment_photos_sendButton);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((TakePhotosActivity) getActivity()).switchToSendImages();
+            }
+        });
 
         GridView gridView = (GridView) view.findViewById(R.id.fragment_photos_gridView);
 

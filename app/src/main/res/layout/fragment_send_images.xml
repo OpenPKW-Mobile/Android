@@ -3,35 +3,52 @@
                 android:layout_height="match_parent">
 
     <TextView
-            android:id="@+id/fragment_photo_preview_textView"
+            android:id="@+id/fragment_send_images_header_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="@string/fragment.photo.preview.header.label"
+            android:text="@string/fragment.send.images.header.text.positive"
             android:textSize="15sp"/>
 
-    <LinearLayout
+    <RelativeLayout
+            android:id="@+id/fragment_send_images_center_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal|center_vertical"
-            android:layout_below="@+id/fragment_photo_preview_textView"
-            android:layout_above="@+id/fragment_photo_preview_linearLayout">
+            android:layout_below="@+id/fragment_send_images_header_text"
+            android:layout_above="@+id/fragment_send_images_footer_text">
 
         <ImageView
-                android:id="@+id/fragment_photo_preview_imageView"
+                android:id="@+id/fragment_send_images_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <ProgressBar
+                android:id="@+id/fragment_send_images_progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-    </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+    <TextView
+            android:id="@+id/fragment_send_images_footer_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_above="@+id/fragment_send_images_buttons_linear_layout"
+            android:text="@string/fragment.send.images.footer.text.positive"/>
 
     <LinearLayout
-            android:id="@+id/fragment_photo_preview_linearLayout"
+            android:id="@+id/fragment_send_images_buttons_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal|center_vertical"
             android:layout_alignParentBottom="true">
 
         <Button
-                android:id="@+id/fragment_photo_preview_repeat_button"
+                android:id="@+id/fragment_send_images_no_button"
                 style="@style/green_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -42,7 +59,7 @@
                 android:text="@string/fragment.photo.preview.repeat.button"/>
         <!-- TODO baslow: change button! -->
         <Button
-                android:id="@+id/fragment_photo_preview_next_button"
+                android:id="@+id/fragment_send_images_yes_button"
                 style="@style/green_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,20 +67,13 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:padding="10dp"
-                android:text="@string/fragment.photo.preview.next.button"/>
+                android:text="@string/fragment.send.images.button.close"/>
     </LinearLayout>
 
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <ProgressBar
-                android:id="@+id/fragment_photo_preview_progressBar"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>
 
