@@ -46,7 +46,7 @@ public class VotingFormFragment extends Fragment {
     private TextView mCommisionAddress;
     private TextView mCandidatesHeader;
     private TableLayout mCandidates;
-    private TableLayout mGeneralData;
+    private LinearLayout mGeneralData;
     private TextView mSoftError1;
     private TextView mSoftError2;
     private TextView mSoftError3;
@@ -86,7 +86,7 @@ public class VotingFormFragment extends Fragment {
         mCommisionId = (TextView) v.findViewById(R.id.fvoting_commision_id);
         mCommisionName = (TextView) v.findViewById(R.id.fvoting_commision_name);
         mCommisionAddress = (TextView) v.findViewById(R.id.fvoting_commision_address);
-        mGeneralData = (TableLayout) v.findViewById(R.id.fvoting_generaldata);
+        mGeneralData = (LinearLayout) v.findViewById(R.id.fvoting_generaldata);
         mNextButton = (Button) v.findViewById(R.id.fvoting_next_button);
         mChangeCommisionBtn = (Button) v.findViewById(R.id.fvoting_change_commision_button);
         mAbleToVote = (EditText) v.findViewById(R.id.fvoting_abletovote);
@@ -332,7 +332,6 @@ public class VotingFormFragment extends Fragment {
         }
     }
 
-    //TODO: Check This Validation with Przemek J. Remove if not valid.
     /*P8 Suma głosów oddanych na wszystkich kandydatów
     (pkt. 14 pole RAZEM) nie może być różna od sumy głosów oddanych
      na poszczególnych kandydatów (w pkt. 14).	*/

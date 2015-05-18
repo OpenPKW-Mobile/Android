@@ -30,4 +30,6 @@
     <dimen name="rules.link.margin.top">10dp</dimen>
     <dimen name="height.votingform.min.header">120dp</dimen>
     <dimen name="height.votingform.max.header">300dp</dimen>
+    <dimen name="votingFragmentTextWidth">250dp</dimen>
+    <dimen name="votingFragmentValueWidth">100dp</dimen>
 </resources>

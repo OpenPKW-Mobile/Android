@@ -8,4 +8,5 @@
     </integer-array>
 
     <integer name="max_values">3000</integer>
+    <integer name="maxDigitsVotingFragment">4</integer>
 </resources>

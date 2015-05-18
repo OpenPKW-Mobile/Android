@@ -30,11 +30,11 @@
     <string name="toast.prestore.emailvalid">Na podany adres e-mail został wysłany link do zresetowania hasła. Sprawdź swoją skrzynkę pocztową.</string>
     <string name="fvoting.commision.label">Obwodowa komisja wyborcza</string>
     <string name="fvoting.changecommision.button.label">Zmień komisję</string>
-    <string name="fvoting.abletovote.label">I.1.Uprawnionych do głosowania</string>
-    <string name="fvoting.validcards.label">II.11. Kart ważnych</string>
-    <string name="fvoting.nonvalidvotes.label">II.12 Głosów nieważnych</string>
-    <string name="fvoting.validvotes.label">II.13. Głosów ważnych</string>
-    <string name="fvoting.votingcardsdistributed.label">I.4.Wydano kart do głosowania</string>
+    <string name="fvoting.abletovote.label">I.1.Liczba wyborców uprawnionych do głosowania: </string>
+    <string name="fvoting.validcards.label">II.11. Liczba kart ważnych: </string>
+    <string name="fvoting.nonvalidvotes.label">II.12 Liczba głosów nieważnych \n (z kart ważnych): </string>
+    <string name="fvoting.validvotes.label">II.13. Liczba głosów ważnych oddanych łącznie na wszystkich kandydatów \n (z kart ważnych): </string>
+    <string name="fvoting.votingcardsdistributed.label">I.4. Liczba wyborców którym wydano karty do głosowania: </string>
     <string name="network_check_internet_connection">Sprawdź swoje połączenie internetowe</string>
     <string name="login.error.incorrectloginorpassword">Nieprawidłowy login lub hasło</string>
     <string name="internal.server.error">Wystąpił błąd</string>

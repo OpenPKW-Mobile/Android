@@ -1,8 +1,10 @@
 package pl.openpkw.openpkwmobile.activities;
 
 import android.graphics.Bitmap;
+import android.net.http.SslError;
 import android.os.Bundle;
 import android.os.Handler;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -15,7 +17,7 @@ import pl.openpkw.openpkwmobile.R;
 public class RegisterActivity extends OpenPKWActivity {
     private boolean doubleBackToExitPressedOnce = false;
     private WebView registerWebView;
-    public static final String ua = "Mozilla/5.0 (Android; Tablet; rv:20.0) Gecko/20.0 Firefox/20.0";
+//    public static final String ua = "Mozilla/5.0 (Android; Tablet; rv:20.0) Gecko/20.0 Firefox/20.0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,7 @@ public class RegisterActivity extends OpenPKWActivity {
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
 
-        settings.setUserAgentString(ua);
+//        settings.setUserAgentString(ua);
         registerWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -39,7 +41,16 @@ public class RegisterActivity extends OpenPKWActivity {
                 super.onPageStarted(view, url, favicon);
 
             }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+//                super.onReceivedSslError(view, handler, error);
+                handler.proceed(); // Ignore SSL certificate errors
+            }
         });
+
+
+
         registerWebView.loadUrl(RegisterActivity.this.getString(R.string.register_url));
     }
 }

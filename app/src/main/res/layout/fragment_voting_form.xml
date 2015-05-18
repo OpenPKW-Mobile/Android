@@ -19,7 +19,7 @@
         android:id="@+id/fvoting.scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -124,44 +124,50 @@
                 android:text="@string/fvoting.changecommision.button.label" />
 
 
-            <TableLayout
+            <LinearLayout
                 android:id="@+id/fvoting.generaldata"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="20dp"
-                android:stretchColumns="1">
+                android:stretchColumns="1"
+                android:orientation="vertical">
 
-                <TableRow
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
 
-                    <TextView
+                    <RelativeLayout
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/tvvoting.abletovote"
+                        android:layout_width="@dimen/votingFragmentTextWidth"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/fvoting.abletovote.label" />
+                        android:text="@string/fvoting.abletovote.label"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true" />
 
                     <EditText
                         android:id="@+id/fvoting.abletovote"
-                        android:layout_width="match_parent"
+                        android:layout_width="@dimen/votingFragmentValueWidth"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:gravity="right"
                         android:inputType="number|numberSigned"
-                        android:maxLength="8" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-
+                        android:maxLength="@integer/maxDigitsVotingFragment"
+                        android:layout_centerInParent="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_toEndOf="@id/tvvoting.abletovote"
+                        android:layout_toRightOf="@id/tvvoting.abletovote"/>
+                    </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
                     <TextView
-                        android:layout_width="match_parent"
+                        android:id="@+id/tvvoting.votingcardsdistributed"
+                        android:layout_width="@dimen/votingFragmentTextWidth"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/fvoting.votingcardsdistributed.label" />
+                        android:text="@string/fvoting.votingcardsdistributed.label"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerInParent="true" />
 
                     <EditText
                         android:id="@+id/fvoting.cards"
@@ -170,18 +176,24 @@
                         android:layout_weight="1"
                         android:gravity="right"
                         android:inputType="number|numberSigned"
-                        android:maxLength="8" />
-                </TableRow>
+                        android:maxLength="@integer/maxDigitsVotingFragment"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:layout_toEndOf="@id/tvvoting.votingcardsdistributed"
+                        android:layout_toRightOf="@id/tvvoting.votingcardsdistributed"/>
+                </RelativeLayout>
 
-                <TableRow
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
                     <TextView
-                        android:layout_width="match_parent"
+                        android:id="@+id/tvvoting.validcards"
+                        android:layout_width="@dimen/votingFragmentTextWidth"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/fvoting.validcards.label" />
+                        android:text="@string/fvoting.validcards.label"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerInParent="true" />
 
                     <EditText
                         android:id="@+id/fvoting.validcards"
@@ -190,38 +202,47 @@
                         android:layout_weight="1"
                         android:gravity="right"
                         android:inputType="number|numberSigned"
-                        android:maxLength="8" />
-                </TableRow>
+                        android:maxLength="@integer/maxDigitsVotingFragment"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:layout_toEndOf="@id/tvvoting.validcards"
+                        android:layout_toRightOf="@id/tvvoting.validcards"/>
+                </RelativeLayout>
 
-                <TableRow
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
                     <TextView
-                        android:layout_width="match_parent"
+                        android:id="@+id/tvvoting.nonvalidvotes"
+                        android:layout_width="@dimen/votingFragmentTextWidth"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/fvoting.nonvalidvotes.label" />
+                        android:text="@string/fvoting.nonvalidvotes.label"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerInParent="true" />
 
                     <EditText
                         android:id="@+id/fvoting.invalidvotes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:gravity="right"
                         android:inputType="number|numberSigned"
-                        android:maxLength="8" />
-                </TableRow>
+                        android:maxLength="@integer/maxDigitsVotingFragment"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:layout_toEndOf="@id/tvvoting.nonvalidvotes"
+                        android:layout_toRightOf="@id/tvvoting.nonvalidvotes"/>
+                </RelativeLayout>
 
-                <TableRow
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
                     <TextView
-                        android:layout_width="match_parent"
+                        android:id="@+id/tvvoting.validvote"
+                        android:layout_width="@dimen/votingFragmentTextWidth"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/fvoting.validvotes.label" />
+                        android:text="@string/fvoting.validvotes.label"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerInParent="true" />
 
                     <EditText
                         android:id="@+id/fvoting.validvotes"
@@ -230,10 +251,13 @@
                         android:layout_weight="1"
                         android:gravity="right"
                         android:inputType="number|numberSigned"
-                        android:maxLength="8" />
-                </TableRow>
-
-            </TableLayout>
+                        android:maxLength="@integer/maxDigitsVotingFragment"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:layout_toEndOf="@id/tvvoting.validvote"
+                        android:layout_toRightOf="@id/tvvoting.validvote"/>
+                </RelativeLayout>
+            </LinearLayout>
 
 
             <!-- Kandydaci -->
