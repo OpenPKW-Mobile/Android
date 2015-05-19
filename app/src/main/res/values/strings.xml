@@ -87,7 +87,10 @@
 
 
     <string name="global.step" formatted="false">Krok %s z %s</string>
-    <string name="summary.finish">ZAKOŃCZ</string>
-    <string name="summary.info">Twoje Dane zostały poprawnie przesłane na Serwer</string>
-    <string name="summary.thanks">Dziękujemy za poświęcony czas i dobrze wykonaną misję społeczną :*</string>
+    <string name="summary.finish">Zakończ</string>
+    <string name="summary.retry">Spróbuj Ponownie</string>
+    <string name="summary.info.success">Twoje Dane zostały poprawnie przesłane na Serwer</string>
+    <string name="summary.info.failed">Twoje Dane nie zostały przesłane na Serwer</string>
+    <string name="summary.detail.success">Dziękujemy za poświęcony czas i dobrze wykonaną misję społeczną :*</string>
+    <string name="summary.detail.failed">Sprawdź ustawienia czy jesteś połączony z Internetem i spróbuj ponownie.</string>
 </resources>

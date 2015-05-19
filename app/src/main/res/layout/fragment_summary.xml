@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/summary.info"
         android:layout_below="@+id/summary.bar"
-        android:text="@string/summary.info"
+        android:text="@string/summary.info.success"
         style="@style/info_text" />
 
     <ImageView
@@ -21,9 +21,9 @@
         android:src="@drawable/pkw_logo" />
 
     <TextView
-        android:id="@+id/summary.thanks"
+        android:id="@+id/summary.detail"
         android:layout_below="@+id/summary.pkw.logo"
-        android:text="@string/summary.thanks"
+        android:text="@string/summary.detail.success"
         style="@style/info_text" />
 
     <Button
