@@ -16,9 +16,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
 import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.activities.FilterCommissionsActivity;
 import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
+import pl.openpkw.openpkwmobile.concurrent.GetCommisionDetailsCallback;
+import pl.openpkw.openpkwmobile.concurrent.GetCommissionDetailsAT;
 import pl.openpkw.openpkwmobile.models.Candidate;
 import pl.openpkw.openpkwmobile.models.Commission;
 import pl.openpkw.openpkwmobile.models.CommissionDetails;
@@ -67,6 +70,7 @@ public class VotingFormFragment extends Fragment {
     private Commission commission = null;
     private Map<Integer, Integer> votes = null;
     private Map<String, Integer> protocol = null;
+    private GetCommisionDetailsCallback callback;
 
     private int ableToVote;
     private int cards;
@@ -134,6 +138,42 @@ public class VotingFormFragment extends Fragment {
                 getActivity().finish();
             }
         });
+
+        /**
+         * callback which handles data passed from the called asynctask below}
+         */
+        callback = new GetCommisionDetailsCallback() {
+            @Override
+            public void onError(Exception e) {
+                Toast.makeText(getActivity(), getString(R.string.network_check_internet_connection), Toast.LENGTH_SHORT).show();
+                mProgress.setVisibility(View.GONE);
+                mScrollView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onSuccess(CommissionDetails commissionDetails) {
+                candidatesAndCommission = commissionDetails;
+                fillLayoutWithData(candidatesAndCommission);
+                mProgress.setVisibility(View.GONE);
+                mScrollView.setVisibility(View.VISIBLE);
+            }
+        };
+
+        click = 0;
+        if (candidatesAndCommission == null) {
+            if (getArguments() != null && getArguments().containsKey("commission") && getArguments().containsKey("user")) {
+                user = (User) getArguments().getSerializable("user");
+                commission = (Commission) getArguments().get("commission");
+                mProgress.setVisibility(View.VISIBLE);
+                // executing background job
+                GetCommissionDetailsAT backgroundJob = new GetCommissionDetailsAT(getActivity().getApplicationContext(), user, commission.getPkwId(), callback);
+                backgroundJob.execute();
+            }
+        } else {
+            fillLayoutWithData(candidatesAndCommission);
+            mProgress.setVisibility(View.GONE);
+            mScrollView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -145,37 +185,9 @@ public class VotingFormFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        click = 0;
-        if (candidatesAndCommission == null) {
-            if (getArguments() != null && getArguments().containsKey("commission") && getArguments().containsKey("user")) {
-                user = (User) getArguments().getSerializable("user");
-                commission = (Commission) getArguments().get("commission");
-                mProgress.setVisibility(View.VISIBLE);
-                RestClient.get(getActivity()).getCandidates(user.getLogin(), user.getToken(), commission.getPkwId(), new Callback<CommissionDetails>() {
-                    @Override
-                    public void success(CommissionDetails commissionDetails, Response response) {
-                        candidatesAndCommission = commissionDetails;
-                        fillLayoutWithData(candidatesAndCommission);
-                        mProgress.setVisibility(View.GONE);
-                        mScrollView.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Toast.makeText(getActivity(), getString(R.string.network_check_internet_connection), Toast.LENGTH_SHORT).show();
-                        mProgress.setVisibility(View.GONE);
-                        mScrollView.setVisibility(View.VISIBLE);
-                    }
-                });
-            }
-        } else {
-            fillLayoutWithData(candidatesAndCommission);
-            mProgress.setVisibility(View.GONE);
-            mScrollView.setVisibility(View.VISIBLE);
-        }
-
 
     }
+
 
     private void fillLayoutWithData(CommissionDetails cDetails) {
         mCommisionNumber.setText(cDetails.getOkregowa().getName());
@@ -251,7 +263,7 @@ public class VotingFormFragment extends Fragment {
         ;
     };
 
-    private void runTakePhoto(){
+    private void runTakePhoto() {
         RestClient.get(getActivity().getApplicationContext()).submitProtocol(user.getLogin(), user.getToken(), commission.getPkwId(), protocol, new Callback<Void>() {
 
             @Override

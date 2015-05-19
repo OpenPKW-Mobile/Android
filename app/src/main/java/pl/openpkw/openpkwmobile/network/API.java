@@ -18,7 +18,7 @@ import retrofit.http.Path;
  */
 public interface API {
     /**
-     * a method to authenticate the user and obtain a token to use for other REST request as X-OPW-token header
+     * an asynchronous method to authenticate the user and obtain a token to use for other REST request as X-OPW-token header
      *
      * @param login
      * @param password
@@ -28,7 +28,14 @@ public interface API {
     void login(@Header("X-OPW-login") String login, @Header("X-OPW-password") String password,
                Callback<User> callback);
 
-
+    /**
+     * a synchronous method to authenticate the user and obtain a token to use for other REST request as X-OPW-token header
+     *
+     * @param login
+     * @param password
+     */
+    @GET("/user/login")
+    User login(@Header("X-OPW-login") String login, @Header("X-OPW-password") String password);
 
     @GET("/available/{email}")
     void checkIsEmailExists(@Path("email") String email, Callback<String> callback);
@@ -37,9 +44,29 @@ public interface API {
     @POST("/user/register")
     void register(@Header("X-OPW-API-client") String apiClient, @Header("X-OPW-API-token") String apiToken, @Body UserRegister userRegister, Callback<String> callback);
 
+    /**
+     * an async method to get commission details with candidates list from the API
+     *
+     * @param login
+     * @param token
+     * @param pkwId
+     * @param callback
+     */
+
     @GET("/komisja/{pkwId}")
     void getCandidates(@Header("X-OPW-login") String login, @Header("X-OPW-token") String token, @Path("pkwId") String pkwId,
                        Callback<CommissionDetails> callback);
+
+    /**
+     * a synchronous method to get commission details with candidates list from the API
+     *
+     * @param login
+     * @param token
+     * @param pkwId
+     * @return
+     */
+    @GET("/komisja/{pkwId}")
+    CommissionDetails getCandidates(@Header("X-OPW-login") String login, @Header("X-OPW-token") String token, @Path("pkwId") String pkwId);
 
     /**
      * a method to send protocol to backend
