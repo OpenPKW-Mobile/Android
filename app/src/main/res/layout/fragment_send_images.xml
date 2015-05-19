@@ -27,8 +27,10 @@
                 android:id="@+id/fragment_send_images_progressBar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"/>
+                android:layout_height="55dp"
+                android:layout_alignParentBottom="true"
+                android:minHeight="55dp"
+                android:maxHeight="55dp"/>
 
     </RelativeLayout>
 

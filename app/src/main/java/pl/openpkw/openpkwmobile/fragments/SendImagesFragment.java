@@ -1,12 +1,16 @@
 package pl.openpkw.openpkwmobile.fragments;
 
 
+import android.app.IntentService;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.text.style.LineHeightSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,13 +31,19 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
+import pl.openpkw.openpkwmobile.utils.SendImagesService;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Bartlomiej 'baslow' Slowik on 2015.05.17.
@@ -42,10 +52,10 @@ public class SendImagesFragment extends Fragment {
 
     private final String tag = getClass().getSimpleName();
 
+    private File[] images;
+
     private String commissionId;
     private String imgsDir;
-
-    private File[] images;
 
     private TextView headerTextView;
     private ImageView imageView;
@@ -64,7 +74,34 @@ public class SendImagesFragment extends Fragment {
         progressBar = (ProgressBar) view.findViewById(R.id.fragment_send_images_progressBar);
         footerTextView = (TextView) view.findViewById(R.id.fragment_send_images_footer_text);
         noButton = (Button) view.findViewById(R.id.fragment_send_images_no_button);
+        noButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (windowMode) {
+                    case SENDED:
+
+                        break;
+                }
+            }
+        });
         yesButton = (Button) view.findViewById(R.id.fragment_send_images_yes_button);
+        yesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (windowMode) {
+                    case SENDED:
+                        getActivity().finish();
+                        System.exit(0);
+                        break;
+                }
+            }
+        });
+
+        IntentFilter filter = new IntentFilter(ACTION_RESPONSE);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        TestReceiver receiver = new TestReceiver();
+        getActivity().registerReceiver(receiver, filter);
+
         return view;
     }
 
@@ -76,8 +113,15 @@ public class SendImagesFragment extends Fragment {
 
         if (!isNullOrEmpty(commissionId) && !isNullOrEmpty(imgsDir)) {
             images = listImages();
+            setImage(0);
             progressBar.setMax(images.length);
-            new SendImages().execute();
+
+            // new SendImages().execute();
+            Log.d(tag, "starting service");
+            Intent sendImagesServiceIntent = new Intent(getActivity(), SendImagesService.class);
+            sendImagesServiceIntent.putExtra(SendImagesService.COMMISSIONID_EXTRA, commissionId);
+            sendImagesServiceIntent.putExtra(SendImagesService.IMAGESLIST_EXTRA, toPathsArray(images));
+            getActivity().startService(sendImagesServiceIntent);
         } else {
             // TODO @baslow: add toast message
         }
@@ -113,13 +157,21 @@ public class SendImagesFragment extends Fragment {
         });
     }
 
+    private static String[] toPathsArray(File[] images) {
+        String[] pathsArray = new String[images.length];
+        for (int i = 0; i < images.length; i++) {
+            pathsArray[i] = images[i].getAbsolutePath();
+        }
+        return pathsArray;
+    }
+
     private void setWindowLook() {
         switch (windowMode) {
             case SENDING:
                 headerTextView.setText("Trwa przesyłanie zdjęć");
                 footerTextView.setText("Proszę czekać");
                 noButton.setVisibility(View.GONE);
-                yesButton.setVisibility(View.GONE);
+                yesButton.setVisibility(View.INVISIBLE);
                 break;
             case SENDED:
                 headerTextView.setText(R.string.fragment_send_images_header_text_positive);
@@ -130,140 +182,59 @@ public class SendImagesFragment extends Fragment {
         }
     }
 
-    private class SendImages extends AsyncTask<Void, Integer, Boolean> {
-
-        private final static String PKWID_KEY = "pkwId";
-        private final static String FILENAME_KEY = "fileName";
-
-        private final HttpClient httpClient = new DefaultHttpClient();
-
-        private int imgCounter = 1;
-
-        @Override
-        protected void onPreExecute() {
-            setImage(0);
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            return sendImages(images);
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            int index = values[0];
-            setImage(index);
-            progressBar.setProgress(index);
-        }
-
-        /**
-         * change texts on window
-         * @param aBoolean
-         */
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            if (aBoolean == true) {
-                windowMode = WndMode.SENDED;
-            }
-            else {
-                windowMode = WndMode.ERROR;
-            }
-            setWindowLook();
-        }
-
-        private void setImage(int index) {
-            if (index < images.length) {
-                Bitmap bmp = BitmapFactory.decodeFile(getThumbnailPath(images[index].getAbsolutePath()));
-                imageView.setImageBitmap(bmp);
-            }
-            else {
-                imageView.setImageBitmap(null);
-            }
-        }
-
-        private String getThumbnailPath(String imagePath) {
-            return imagePath.replace(TakePhotosActivity.IMAGE_EXTENSION, TakePhotosActivity.THUMBNAIL_EXTENSION);
-        }
-
-        private HttpResponse sendHttpRequest(HttpPost httpPost, AbstractHttpEntity entity) throws IOException {
-            httpPost.setEntity(entity);
-            return httpClient.execute(httpPost);
-        }
-
-        private JSONObject makeMetadataJson() throws JSONException {
-            JSONObject json = new JSONObject();
-            json.put(PKWID_KEY, commissionId);
-            json.put(FILENAME_KEY, "image_" + commissionId + "_" + imgCounter + TakePhotosActivity.IMAGE_EXTENSION);
-            return json;
-        }
-
-        /**
-         * Send single image
-         */
-        private boolean sendImage(File imagePath) {
-            boolean ret = false;
-            try {
-                JSONObject metadataJson = makeMetadataJson();
-                String metadataJsonString = metadataJson.toString();
-                Log.d(tag, "metadata request json: " + metadataJsonString);
-
-                StringEntity entity = new StringEntity(metadataJsonString);
-                entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-
-                HttpResponse response = sendHttpRequest(new HttpPost("http://openpkw.nazwa.pl/api/image-metadata.php"), entity);
-                String responseString = EntityUtils.toString(response.getEntity());
-                Log.d(tag, "response: " + responseString);
-
-                JSONObject jsonResp = new JSONObject(responseString);
-                String uploadUrl = jsonResp.getString("uploadUrl");
-                Log.d(tag, "uploadURL: " + uploadUrl);
-
-                // -----
-
-                FileEntity imgEntity = new FileEntity(imagePath.getAbsoluteFile(), "image/jpeg");
-
-                HttpResponse uploadResponse = sendHttpRequest(new HttpPost(uploadUrl), imgEntity);
-                String uploadResponseString = EntityUtils.toString(uploadResponse.getEntity());
-                Log.d(tag, "upload response: " + uploadResponseString);
-
-                JSONObject uploadJsonResp = new JSONObject(uploadResponseString);
-                int bytes = uploadJsonResp.getInt("bytesCount");
-                int imgLen = (int) imagePath.length();
-                Log.d(tag, "uploaded bytes: " + bytes + " image length: " + imgLen);
-                if (imgLen == bytes) {
-                    ret = true;
-                }
-            }
-            catch (JSONException | IOException ex) {
-                Log.e(tag, "Nie można uploadować zdjęć na serwer", ex);
-            }
-            return ret;
-        }
-
-        /**
-         * Send all images
-         */
-        private boolean sendImages(File[] filesToSend) {
-            boolean ret = true;
-            for (File fileToSend : filesToSend) {
-                ret = sendImage(fileToSend);
-                if (ret == false) {
-                    break;
-                }
-                publishProgress(imgCounter);
-                imgCounter++;
-            }
-            if (ret == true) {
-                // TODO @baslow: delete all files and directory
-            }
-            return ret;
-        }
-    }
-
     private enum WndMode {
         SENDING,
         SENDED,
         ERROR,
         SAVED,
     }
+
+    private void setImage(int index) {
+        if (index < images.length) {
+            Bitmap bmp = BitmapFactory.decodeFile(getThumbnailPath(images[index].getAbsolutePath()));
+            imageView.setImageBitmap(bmp);
+        }
+        else {
+            imageView.setImageBitmap(null);
+        }
+    }
+
+    private String getThumbnailPath(String imagePath) {
+        return imagePath.replace(TakePhotosActivity.IMAGE_EXTENSION, TakePhotosActivity.THUMBNAIL_EXTENSION);
+    }
+
+    public static final String ACTION_RESPONSE = "pl.openpkw.openpkwmobile.SEND_IMAGES";
+
+
+    private class TestReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            boolean finished = intent.getBooleanExtra(SendImagesService.FINISHED_EXTRA, false);
+            boolean success = intent.getBooleanExtra(SendImagesService.FINISHEDSUCCESS_EXTRA, false);
+            int count = intent.getIntExtra(SendImagesService.IMAGECOUNTER_EXTRA, -1);
+
+            Log.d(tag, "received... finished:" + finished + " success:" + success + " counter:" + count);
+
+            if (finished == false) {
+                progressBar.setProgress(count);
+                setImage(count);
+            }
+
+            if (finished == true) {
+                if (success == true) {
+                    windowMode = WndMode.SENDED;
+                } else {
+                    windowMode = WndMode.ERROR;
+                }
+            }
+            setWindowLook();
+        }
+    }
+
+
+
+
+
 }

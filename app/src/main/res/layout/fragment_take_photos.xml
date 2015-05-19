@@ -36,7 +36,7 @@
             <TextView
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="4"
                     android:gravity="center"
                     android:text="@string/fvoting.commision.label"
                     android:textSize="15sp"/>
@@ -45,11 +45,11 @@
                     android:id="@+id/fragment_take_photos_commission_id"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:gravity="center"
                     android:textStyle="bold"
                     android:background="@color/green"
-                    android:text="5"
+                    android:text="123456-789"
                     android:textSize="15sp"/>
         </TableRow>
     </TableLayout>

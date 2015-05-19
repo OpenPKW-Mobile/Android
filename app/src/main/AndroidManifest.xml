@@ -39,6 +39,9 @@
             android:name=".activities.TakePhotosActivity"
             android:label="@string/empty.string"
             android:screenOrientation="portrait" />
+        <service
+            android:name=".utils.SendImagesService"
+            android:exported="false" />
     </application>
 
 </manifest>
