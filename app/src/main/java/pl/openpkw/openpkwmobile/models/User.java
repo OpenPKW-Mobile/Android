@@ -13,6 +13,7 @@ public class User implements Serializable {
     private String lastname;
     private String login;
     private String token;
+    private String password;
     private boolean sessionActive;
     private String sessionTimeout;
 
@@ -78,5 +79,13 @@ public class User implements Serializable {
 
     public void setSessionTimeout(String sessionTimeout) {
         this.sessionTimeout = sessionTimeout;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

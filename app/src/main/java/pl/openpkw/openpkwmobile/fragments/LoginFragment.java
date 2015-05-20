@@ -17,6 +17,7 @@ import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.activities.FilterCommissionsActivity;
 import pl.openpkw.openpkwmobile.activities.PasswordRestoreActivity;
 import pl.openpkw.openpkwmobile.activities.RegisterActivity;
+import pl.openpkw.openpkwmobile.managers.OfflineStorage;
 import pl.openpkw.openpkwmobile.models.User;
 import pl.openpkw.openpkwmobile.network.RestClient;
 import retrofit.Callback;
@@ -114,7 +115,7 @@ public class LoginFragment extends Fragment {
      * @param login
      * @param password
      */
-    private void login(String login, String password) {
+    private void login(String login, final String password) {
 
         //creating callback which runs in the main thread
         Callback<User> loginCallback = new Callback<User>() {
@@ -123,6 +124,8 @@ public class LoginFragment extends Fragment {
                 //TODO: change to for other activity ChooseCommisionActivity or similar if implemented
                 Intent fvIntent = new Intent(getActivity(), FilterCommissionsActivity.class);
                 fvIntent.putExtra("user",user);
+                user.setPassword(password);
+                OfflineStorage.setLoggedInUser(user, getActivity().getApplicationContext());
                 startActivity(fvIntent);
                 getActivity().finish();
             }

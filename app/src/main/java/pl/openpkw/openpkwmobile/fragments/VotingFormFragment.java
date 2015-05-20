@@ -22,9 +22,11 @@ import pl.openpkw.openpkwmobile.activities.FilterCommissionsActivity;
 import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
 import pl.openpkw.openpkwmobile.concurrent.GetCommisionDetailsCallback;
 import pl.openpkw.openpkwmobile.concurrent.GetCommissionDetailsAT;
+import pl.openpkw.openpkwmobile.managers.OfflineStorage;
 import pl.openpkw.openpkwmobile.models.Candidate;
 import pl.openpkw.openpkwmobile.models.Commission;
 import pl.openpkw.openpkwmobile.models.CommissionDetails;
+import pl.openpkw.openpkwmobile.models.Protocol;
 import pl.openpkw.openpkwmobile.models.User;
 import pl.openpkw.openpkwmobile.network.RestClient;
 import pl.openpkw.openpkwmobile.views.CustomAlertDialog;
@@ -278,6 +280,13 @@ public class VotingFormFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
+                OfflineStorage.addProtocolForUpload(getActivity().getApplicationContext(), new Protocol(protocol, commission.getPkwId()));
+                Context ctx = getActivity().getApplicationContext();
+                Toast.makeText(ctx, ctx.getString(R.string.fvoting_protocol_send_later), Toast.LENGTH_LONG).show();
+
+                Intent takePhoto = new Intent(getActivity(), TakePhotosActivity.class);
+                startActivity(takePhoto);
+                getActivity().finish();
             }
         });
     }

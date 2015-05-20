@@ -82,6 +82,7 @@
     <string name="soft_validation__3">Liczba kart ważnych nie powinna być  większa od liczby wyborców uprawnionych do głosowania.</string>
     <string name="error_limit">Wartoś powinna być mniejsza niż</string>
 	<string name="fvoting.protocol.successfully.sent">Protokół został pomyślnie wysłany!</string>
+    <string name="fvoting.protocol.send.later">Protokół zostanie wysłany po ustanowieniu połączenia internetowego</string>
     <string name="fvoting.candidates.label">II.14. Kandydaci otrzymali głosów ważnych :</string>
     <string name="fvoting.protocol.next.button.label">Dalej</string>
 </resources>

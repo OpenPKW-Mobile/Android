@@ -76,4 +76,14 @@ public interface API {
     @POST("/komisja/{pkwId}/protokol")
     void submitProtocol(@Header("X-OPW-login") String login, @Header("X-OPW-token") String token,
                         @Path("pkwId") String pkwId, @Body Map<String, Integer> map, Callback<Void> callback);
+
+    /**
+     * a synchronous method to send protocol to backend
+     *
+     * @param login
+     * @param token
+     */
+    @POST("/komisja/{pkwId}/protokol")
+    Void submitProtocol(@Header("X-OPW-login") String login, @Header("X-OPW-token") String token,
+                        @Path("pkwId") String pkwId, @Body Map<String, Integer> map);
 }

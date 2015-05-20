@@ -1,5 +1,8 @@
 package pl.openpkw.openpkwmobile.models;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by michalu on 05.05.15.
  */
@@ -24,49 +27,48 @@ public class Protocol {
      "uprawnionych":661
      }
      */
-    private int glosowWaznych;
-    private int glosujacych;
-    private int glosowNieWaznych;
-    private int kartWaznych;
-    private int uprawnionych;
 
-    public int getGlosowWaznych() {
-        return glosowWaznych;
+    public Protocol(Map<String, Integer> results, String pkwId) {
+        this.results = results;
+        this.pkwId = pkwId;
     }
 
-    public void setGlosowWaznych(int glosowWaznych) {
-        this.glosowWaznych = glosowWaznych;
+    private Map<String, Integer> results;
+    private String pkwId;
+
+    public Map<String, Integer> getResults() {
+        return results;
     }
 
-    public int getGlosujacych() {
-        return glosujacych;
+    public void setResults(Map<String, Integer> results) {
+        this.results = results;
     }
 
-    public void setGlosujacych(int glosujacych) {
-        this.glosujacych = glosujacych;
+    public String getPkwId() {
+        return pkwId;
     }
 
-    public int getGlosowNieWaznych() {
-        return glosowNieWaznych;
+    public void setPkwId(String pkwId) {
+        this.pkwId = pkwId;
     }
 
-    public void setGlosowNieWaznych(int glosowNieWaznych) {
-        this.glosowNieWaznych = glosowNieWaznych;
-    }
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof Protocol)) return false;
 
-    public int getKartWaznych() {
-        return kartWaznych;
-    }
-
-    public void setKartWaznych(int kartWaznych) {
-        this.kartWaznych = kartWaznych;
-    }
-
-    public int getUprawnionych() {
-        return uprawnionych;
-    }
-
-    public void setUprawnionych(int uprawnionych) {
-        this.uprawnionych = uprawnionych;
+        if (this.pkwId.equals(((Protocol) other).getPkwId())) {
+            for (String k : this.results.keySet()) {
+                Integer value = this.results.get(k);
+                if (((Protocol) other).results.containsKey(k)) {
+                    if (!((Protocol) other).results.get(k).equals(value)) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        } else
+            return false;
     }
 }
