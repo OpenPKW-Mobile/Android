@@ -17,7 +17,7 @@
         android:label="@string/app.name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activities.SplashActivity"
+            android:name=".activities.SummaryActivity"
             android:label="@string/app.name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

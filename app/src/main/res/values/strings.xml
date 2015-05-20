@@ -93,4 +93,6 @@
     <string name="summary.info.failed">Twoje Dane nie zostały przesłane na Serwer</string>
     <string name="summary.detail.success">Dziękujemy za poświęcony czas i dobrze wykonaną misję społeczną :*</string>
     <string name="summary.detail.failed">Sprawdź ustawienia czy jesteś połączony z Internetem i spróbuj ponownie.</string>
+    <string name="summary_info_fialure">Twoje zostały zapisane w pamięci telefonu.</string>
+    <string name="summary_detail_failure">Zostaną one przesłane na serwer automatycznie gdy połączysz się z internetem.</string>
 </resources>

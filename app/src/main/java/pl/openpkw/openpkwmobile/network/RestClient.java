@@ -14,8 +14,14 @@ import retrofit.client.OkClient;
 public class RestClient {
 
     private static API REST_CLIENT;
-    private static String ROOT =
-            "http://91.250.114.134/rest-api/service";
+    //DEV
+    private static String ROOT = "http://dev.otwartapw.pl/opw/service";
+
+    //PROD
+//    private static String ROOT = "https://otwartapw.pl/opw/service";
+
+    //OLD
+    //private static String ROOT = "http://91.250.114.134/rest-api/service";
 
 
     private RestClient() {

@@ -33,6 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:layout_margin="3dp"
         android:text="@string/summary.finish" />
 
