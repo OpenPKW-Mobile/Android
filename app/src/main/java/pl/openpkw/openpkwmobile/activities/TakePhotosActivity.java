@@ -29,6 +29,7 @@ public class TakePhotosActivity extends OpenPKWActivity {
     public final static int MAX_PICTURE_HEIGHT = 1536;
     public final static int MAX_PICTURE_WIDTH = 2048;
 
+    public final static String PKW_ID = "pkwId";
     public final static String COMMISSION_ID = "commissionId";
     public final static String IMAGE_DATA = "imageData";
     public final static String IMAGE_PATH = "imagePath";
@@ -46,7 +47,8 @@ public class TakePhotosActivity extends OpenPKWActivity {
     private SendImagesFragment sendImagesFragment;
 
     // get from previous activity or get from server
-    private String commissionId = "12-5";
+    private String commissionId = "789";
+    private String pkwId = "123456-789";
 
     private File outDir;
 
@@ -84,6 +86,7 @@ public class TakePhotosActivity extends OpenPKWActivity {
 
     public void switchToSendImages() {
         Bundle bundle = new Bundle();
+        bundle.putString(PKW_ID, pkwId);
         bundle.putString(COMMISSION_ID, commissionId);
         bundle.putString(IMAGE_PATH, outDir.getAbsolutePath());
 
@@ -99,6 +102,7 @@ public class TakePhotosActivity extends OpenPKWActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        pkwId = getIntent().getStringExtra(PKW_ID);
         commissionId = getIntent().getStringExtra(COMMISSION_ID);
 
         setContentView(R.layout.activity_take_photos);
@@ -112,6 +116,7 @@ public class TakePhotosActivity extends OpenPKWActivity {
             takePhotosFragmentContainer = new TakePhotosFragment();
 
             Bundle bundle = new Bundle();
+            bundle.putString(PKW_ID, pkwId);
             bundle.putString(COMMISSION_ID, commissionId);
             takePhotosFragmentContainer.setArguments(bundle);
 

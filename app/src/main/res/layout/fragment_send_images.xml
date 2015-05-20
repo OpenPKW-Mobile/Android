@@ -10,29 +10,41 @@
             android:text="@string/fragment.send.images.header.text.positive"
             android:textSize="15sp"/>
 
-    <RelativeLayout
+    <TableLayout
             android:id="@+id/fragment_send_images_center_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_horizontal|center_vertical"
             android:layout_below="@+id/fragment_send_images_header_text"
             android:layout_above="@+id/fragment_send_images_footer_text">
 
-        <ImageView
-                android:id="@+id/fragment_send_images_imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        <ProgressBar
-                android:id="@+id/fragment_send_images_progressBar"
-                style="?android:attr/progressBarStyleHorizontal"
+        <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_alignParentBottom="true"
-                android:minHeight="55dp"
-                android:maxHeight="55dp"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:padding="10dp">
+            <ImageView
+                    android:id="@+id/fragment_send_images_imageView"
+                    android:layout_weight="4"
+                    android:layout_gravity="center|bottom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </TableRow>
 
-    </RelativeLayout>
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center|top"
+                android:padding="10dp">
+            <ProgressBar
+                    android:id="@+id/fragment_send_images_progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+        </TableRow>
+    </TableLayout>
 
     <TextView
             android:id="@+id/fragment_send_images_footer_text"
@@ -71,12 +83,5 @@
                 android:padding="10dp"
                 android:text="@string/fragment.send.images.button.close"/>
     </LinearLayout>
-
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-    </RelativeLayout>
 
 </RelativeLayout>

@@ -1,7 +1,8 @@
 package pl.openpkw.openpkwmobile.fragments;
 
 
-import android.app.IntentService;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,41 +10,20 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.AbstractHttpEntity;
-import org.apache.http.entity.FileEntity;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.widget.*;
 import pl.openpkw.openpkwmobile.R;
+import pl.openpkw.openpkwmobile.activities.FilterCommissionsActivity;
 import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
 import pl.openpkw.openpkwmobile.utils.SendImagesService;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Bartlomiej 'baslow' Slowik on 2015.05.17.
@@ -55,6 +35,7 @@ public class SendImagesFragment extends Fragment {
     private File[] images;
 
     private String commissionId;
+    private String pkwId;
     private String imgsDir;
 
     private TextView headerTextView;
@@ -63,6 +44,8 @@ public class SendImagesFragment extends Fragment {
     private TextView footerTextView;
     private Button noButton;
     private Button yesButton;
+
+    private SendImageReceiver receiver;
 
     private WndMode windowMode = WndMode.SENDING;
 
@@ -79,7 +62,12 @@ public class SendImagesFragment extends Fragment {
             public void onClick(View v) {
                 switch (windowMode) {
                     case SENDED:
-
+                        Intent commissionIntent = new Intent(getActivity(), FilterCommissionsActivity.class);
+                        startActivity(commissionIntent);
+                        getActivity().finish();
+                        break;
+                    case ERROR:
+                        startService();
                         break;
                 }
             }
@@ -91,16 +79,22 @@ public class SendImagesFragment extends Fragment {
                 switch (windowMode) {
                     case SENDED:
                         getActivity().finish();
-                        System.exit(0);
+                        break;
+                    case ERROR:
+                        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+                        Intent intent = new Intent(getActivity(), SendImageReceiver.class);
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
+
+                        alarmManager.setRepeating(
+                                AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                                SystemClock.elapsedRealtime() + 1 * 60 * 1000,
+                                1 * 60 * 1000,
+                                pendingIntent);
+                        Log.d(tag, "alarm has been set");
                         break;
                 }
             }
         });
-
-        IntentFilter filter = new IntentFilter(ACTION_RESPONSE);
-        filter.addCategory(Intent.CATEGORY_DEFAULT);
-        TestReceiver receiver = new TestReceiver();
-        getActivity().registerReceiver(receiver, filter);
 
         return view;
     }
@@ -108,32 +102,56 @@ public class SendImagesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        // register receiver
+        IntentFilter filter = new IntentFilter(ACTION_RESPONSE);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        receiver = new SendImageReceiver();
+        getActivity().registerReceiver(receiver, filter);
+
         getFromArguments();
         setWindowLook();
 
-        if (!isNullOrEmpty(commissionId) && !isNullOrEmpty(imgsDir)) {
-            images = listImages();
-            setImage(0);
-            progressBar.setMax(images.length);
+        if (!isNullOrEmpty(pkwId) && !isNullOrEmpty(commissionId) && !isNullOrEmpty(imgsDir)) {
 
-            // new SendImages().execute();
-            Log.d(tag, "starting service");
-            Intent sendImagesServiceIntent = new Intent(getActivity(), SendImagesService.class);
-            sendImagesServiceIntent.putExtra(SendImagesService.COMMISSIONID_EXTRA, commissionId);
-            sendImagesServiceIntent.putExtra(SendImagesService.IMAGESLIST_EXTRA, toPathsArray(images));
-            getActivity().startService(sendImagesServiceIntent);
+
+            startService();
         } else {
             // TODO @baslow: add toast message
         }
     }
 
+    private void startService() {
+        Log.d(tag, "starting service");
+        images = listImages();
+        setImage(0);
+        progressBar.setProgress(0);
+        progressBar.setMax(images.length);
+        windowMode = WndMode.SENDING;
+        setWindowLook();
+
+        Intent sendImagesServiceIntent = new Intent(getActivity(), SendImagesService.class);
+        sendImagesServiceIntent.putExtra(SendImagesService.COMMISSIONID_EXTRA, commissionId);
+        sendImagesServiceIntent.putExtra(SendImagesService.PKWID_EXTRA, pkwId);
+        sendImagesServiceIntent.putExtra(SendImagesService.IMAGESLIST_EXTRA, toPathsArray(images));
+        getActivity().startService(sendImagesServiceIntent);
+    }
+
+    @Override
+    public void onPause() {
+        getActivity().unregisterReceiver(receiver);
+        super.onPause();
+    }
+
     private void getFromArguments() {
         // PKW ID
+        pkwId = getArguments().getString(TakePhotosActivity.PKW_ID);
+        // COMMISSION ID
         commissionId = getArguments().getString(TakePhotosActivity.COMMISSION_ID);
         // pictures directory
         imgsDir = getArguments().getString(TakePhotosActivity.IMAGE_PATH);
         // LOG
-        Log.d(tag, "Send images, arguments: [" + commissionId + "] [" + imgsDir + "]");
+        Log.d(tag, "Send images, arguments: [" + pkwId + "] [" + commissionId + "] [" + imgsDir + "]");
     }
 
     private static boolean isNullOrEmpty(String str) {
@@ -170,15 +188,25 @@ public class SendImagesFragment extends Fragment {
             case SENDING:
                 headerTextView.setText("Trwa przesyłanie zdjęć");
                 footerTextView.setText("Proszę czekać");
-                noButton.setVisibility(View.GONE);
+                noButton.setVisibility(View.INVISIBLE);
                 yesButton.setVisibility(View.INVISIBLE);
                 break;
             case SENDED:
                 headerTextView.setText(R.string.fragment_send_images_header_text_positive);
                 footerTextView.setText(R.string.fragment_send_images_footer_text_positive);
-                noButton.setVisibility(View.GONE);
+                noButton.setText("Wybierz komisję");
+                noButton.setVisibility(View.VISIBLE);
                 yesButton.setText("Zakończ");
                 yesButton.setVisibility(View.VISIBLE);
+                break;
+            case ERROR:
+                headerTextView.setVisibility(View.INVISIBLE);
+                footerTextView.setText("Sprawdz ustawienia czy jesteś połączony z Internetem i spróbuj ponownie");
+                noButton.setText("Spróbuj ponownie");
+                noButton.setVisibility(View.VISIBLE);
+                yesButton.setText("Zapisz");
+                yesButton.setVisibility(View.VISIBLE);
+                break;
         }
     }
 
@@ -186,7 +214,7 @@ public class SendImagesFragment extends Fragment {
         SENDING,
         SENDED,
         ERROR,
-        SAVED,
+        POST_ERROR,
     }
 
     private void setImage(int index) {
@@ -206,7 +234,7 @@ public class SendImagesFragment extends Fragment {
     public static final String ACTION_RESPONSE = "pl.openpkw.openpkwmobile.SEND_IMAGES";
 
 
-    private class TestReceiver extends BroadcastReceiver {
+    private class SendImageReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -227,6 +255,7 @@ public class SendImagesFragment extends Fragment {
                     windowMode = WndMode.SENDED;
                 } else {
                     windowMode = WndMode.ERROR;
+                    Toast.makeText(getActivity(), "Nie można wysłać zdjęć na serwer", Toast.LENGTH_LONG).show();
                 }
             }
             setWindowLook();

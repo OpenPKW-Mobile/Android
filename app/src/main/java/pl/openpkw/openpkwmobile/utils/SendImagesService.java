@@ -20,6 +20,7 @@ import pl.openpkw.openpkwmobile.fragments.SendImagesFragment;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Bartlomiej 'baslow' Slowik on 2015.05.18.
@@ -28,6 +29,7 @@ public class SendImagesService extends IntentService {
 
     public final static String IMAGESLIST_EXTRA = "imagesList";
     public final static String COMMISSIONID_EXTRA = "commissionId";
+    public final static String PKWID_EXTRA = "pkwId";
 
     public static final String IMAGECOUNTER_EXTRA = "imageCounter";
     public static final String FINISHED_EXTRA = "finished";
@@ -38,8 +40,8 @@ public class SendImagesService extends IntentService {
 
     private final HttpClient httpClient = new DefaultHttpClient();
 
+    private String pkwId;
     private String commissionId;
-
 
     private int imgCounter = 1;
 
@@ -51,6 +53,7 @@ public class SendImagesService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        pkwId = intent.getStringExtra(PKWID_EXTRA);
         commissionId = intent.getStringExtra(COMMISSIONID_EXTRA);
         String[] paths = intent.getStringArrayExtra(IMAGESLIST_EXTRA);
         File[] images = new File[paths.length];
@@ -71,8 +74,8 @@ public class SendImagesService extends IntentService {
 
     private JSONObject makeMetadataJson() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put(PKWID_KEY, commissionId);
-        json.put(FILENAME_KEY, "image_" + commissionId + "_" + imgCounter + TakePhotosActivity.IMAGE_EXTENSION);
+        json.put(PKWID_KEY, pkwId);
+        json.put(FILENAME_KEY, "image_" + pkwId + "_" + imgCounter + TakePhotosActivity.IMAGE_EXTENSION);
         return json;
     }
 
@@ -111,6 +114,12 @@ public class SendImagesService extends IntentService {
             Log.d(tag, "uploaded bytes: " + bytes + " image length: " + imgLen);
             if (imgLen == bytes) {
                 ret = true;
+                // TODO baslow: for tests only!!
+//                try {
+//                    TimeUnit.SECONDS.sleep(5);
+//                }
+//                catch (InterruptedException ex) {
+//                }
             }
         } catch (JSONException | IOException ex) {
             Log.e(tag, "Nie można uploadować zdjęć na serwer", ex);

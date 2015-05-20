@@ -84,27 +84,43 @@ public class TakePhotoFragment extends Fragment {
             camera.setDisplayOrientation(90);
         }
 
-        private Camera.Size findBestPreviewSize(Camera.Parameters cameraParameters, int maxWidth, int maxHeight) {
+        private Camera.Size findBestPreviewSize(Camera.Parameters cameraParameters, int width, int height) {
             List<Camera.Size> sizes = cameraParameters.getSupportedPreviewSizes();
-            Camera.Size bestSize = sizes.remove(0);
+            Camera.Size bestSize = null;
             for (Camera.Size size : sizes) {
-                if ((size.width * size.height) > (bestSize.width * bestSize.height)
-                        && (size.width <= maxWidth) && (size.height <= maxHeight)) {
-                    bestSize = size;
+                if ((size.width <= width && size.height <= height) || (size.height <= width && size.width <= height)) {
+                    if (bestSize == null) {
+                        bestSize = size;
+                    }
+                    else {
+                        int resultArea = bestSize.width * bestSize.height;
+                        int newArea = size.width * size.height;
+
+                        if (newArea > resultArea) {
+                            bestSize = size;
+                        }
+                    }
                 }
             }
+
             return bestSize;
         }
 
         private Camera.Size findBestPictureSize(Camera.Parameters cameraParameters, int maxWidth, int maxHeight) {
             List<Camera.Size> sizes = cameraParameters.getSupportedPictureSizes();
-            Camera.Size bestSize = sizes.remove(0);
-            float bestRatio = (float) maxWidth / maxHeight;
+            Camera.Size bestSize = null;
             for (Camera.Size size : sizes) {
-                int sizeArea = size.width * size.height;
-                float sizeRatio = (float) size.width / size.height;
-                if (sizeArea > (bestSize.width * bestSize.height) && sizeArea <= (maxWidth * maxHeight) && sizeRatio <= bestRatio) {
-                    bestSize = size;
+                if ((size.width <= maxWidth && size.height <= maxHeight) || (size.height <= maxWidth && size.width <= maxHeight)) {
+                    if (bestSize == null) {
+                        bestSize = size;
+                    }
+                    else {
+                        int bestArea = bestSize.width * bestSize.height;
+                        int newArea = size.width * size.height;
+                        if (newArea > bestArea) {
+                            bestSize = size;
+                        }
+                    }
                 }
             }
             return bestSize;
