@@ -284,8 +284,7 @@ public class VotingFormFragment extends Fragment {
 
     private boolean validateForm(Context ctx) {
         if (areFieldsFilled(ctx)) {
-            if (validation1(ctx) && validation2(ctx) && validation3(ctx) && validation4(ctx)
-                    && validation5(ctx) && !validation6(ctx)) {
+            if (validation1(ctx) && validation3(ctx) && validation5(ctx)) {
                 hideallErrors();
                 return true;
             } else {
