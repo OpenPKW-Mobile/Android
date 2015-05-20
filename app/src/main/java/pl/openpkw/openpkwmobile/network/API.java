@@ -1,7 +1,6 @@
 package pl.openpkw.openpkwmobile.network;
 
 import java.util.Map;
-
 import pl.openpkw.openpkwmobile.models.CommissionDetails;
 import pl.openpkw.openpkwmobile.models.User;
 import pl.openpkw.openpkwmobile.models.UserRegister;
@@ -37,8 +36,8 @@ public interface API {
     @GET("/user/login")
     User login(@Header("X-OPW-login") String login, @Header("X-OPW-password") String password);
 
-    @GET("/available/{email}")
-    void checkIsEmailExists(@Path("email") String email, Callback<String> callback);
+    @GET("/user/available/{email}")
+    void checkIsEmailExists(@Header("X-OPW-API-client") String apiClient, @Header("X-OPW-API-token") String apiToken, @Path("email") String email, Callback<String> callback);
 
     @Headers("Content-Type: application/json")
     @POST("/user/register")

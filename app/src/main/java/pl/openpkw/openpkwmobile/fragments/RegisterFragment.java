@@ -26,6 +26,7 @@ public class RegisterFragment extends Fragment {
     private EditText firstNameET, lastNameET, emailET, phoneET;
     private Button registerBT;
     private Context appContext;
+    private String apiToken, apiClient;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,6 +37,8 @@ public class RegisterFragment extends Fragment {
         emailET = (EditText) v.findViewById(R.id.register_edittext_email);
         phoneET = (EditText) v.findViewById(R.id.register_edittext_phone);
         registerBT = (Button) v.findViewById(R.id.register_button_register);
+        apiToken = getActivity().getString(R.string.api_token);
+        apiClient = getActivity().getString(R.string.api_client);
 
         registerBT.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,21 +78,15 @@ public class RegisterFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-                Response r = error.getResponse();
-                if (r != null && r.getStatus() == 409) {
-                    Toast.makeText(getActivity(), getActivity().getString(R.string.register_email_exists), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         };
 
-        RestClient.get(appContext).checkIsEmailExists(email, checkEmailCallback);
+        RestClient.get(appContext).checkIsEmailExists(apiClient, apiToken, email, checkEmailCallback);
     }
 
     private void register(String firstName, String lastName, String email, String phone) {
-        String apiToken = getActivity().getString(R.string.api_token);
-        String apiClient = getActivity().getString(R.string.api_client);
+
         UserRegister userRegister = new UserRegister();
         userRegister.setFirstname(firstName);
         userRegister.setLastname(lastName);

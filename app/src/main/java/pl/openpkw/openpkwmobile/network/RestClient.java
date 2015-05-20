@@ -1,9 +1,7 @@
 package pl.openpkw.openpkwmobile.network;
 
 import android.content.Context;
-
 import com.squareup.okhttp.OkHttpClient;
-
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
@@ -15,7 +13,7 @@ public class RestClient {
 
     private static API REST_CLIENT;
     private static String ROOT =
-            "http://91.250.114.134/rest-api/service";
+            "http://dev.otwartapw.pl/opw/service";
 
 
     private RestClient() {

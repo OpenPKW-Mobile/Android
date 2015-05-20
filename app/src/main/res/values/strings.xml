@@ -2,8 +2,8 @@
     <string name="app.name">OpenPKW-Mobile</string>
     <string name="rules.url">http://android.open-pkw.pl</string>
     <string name="register.url">https://otwartapw.pl/opw/register.xhtml</string>
-    <string name="api.token">b516f01b18cc4144ef39d5c1b039a250fd318cdd15aff4fd746bde9a</string>
-    <string name="api.client">OpenPKWmobile-androidApp</string>
+    <string name="api.token">b516f01b18cc4144ef39d5c1b039a250fd318cdd15aff4fd746bde9ac9aacd51</string>
+    <string name="api.client">client.register.php</string>
     <string name="splash.check.it"><u>Zajrzyj tu</u></string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
