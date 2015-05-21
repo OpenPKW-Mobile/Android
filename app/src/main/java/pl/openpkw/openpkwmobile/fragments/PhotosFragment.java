@@ -1,6 +1,8 @@
 package pl.openpkw.openpkwmobile.fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import pl.openpkw.openpkwmobile.R;
@@ -37,6 +40,14 @@ public class PhotosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_photos, container, false);
 
+        Button sendButton = (Button) view.findViewById(R.id.fragment_photos_sendButton);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((TakePhotosActivity) getActivity()).switchToSendImages();
+            }
+        });
+
         GridView gridView = (GridView) view.findViewById(R.id.fragment_photos_gridView);
 
         photosAdapter = new PhotosAdapter(view.getContext());
@@ -50,6 +61,24 @@ public class PhotosFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getAllImages();
+
+        if (photosAdapter.getCount() == 0) {
+            // dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.fragment_photo_preview_dont_have_images).
+                    setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    }).
+                    setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ((TakePhotosActivity) getActivity()).switchToImageTake();
+                        }
+                    });
+            builder.create().show();
+        }
     }
 
     private void getAllImages() {

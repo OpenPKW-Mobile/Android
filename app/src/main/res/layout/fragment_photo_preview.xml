@@ -3,7 +3,7 @@
                 android:layout_height="match_parent">
 
     <TextView
-            android:id="@+id/fragment_photo_preview.textView"
+            android:id="@+id/fragment_photo_preview_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -14,24 +14,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal|center_vertical"
-            android:layout_below="@+id/fragment_photo_preview.textView"
-            android:layout_above="@+id/fragment_photo_preview.linearLayout">
+            android:layout_below="@+id/fragment_photo_preview_textView"
+            android:layout_above="@+id/fragment_photo_preview_linearLayout">
 
         <ImageView
-                android:id="@+id/fragment_photo_preview.imageView"
+                android:id="@+id/fragment_photo_preview_imageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
     </LinearLayout>
 
     <LinearLayout
-            android:id="@+id/fragment_photo_preview.linearLayout"
+            android:id="@+id/fragment_photo_preview_linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal|center_vertical"
             android:layout_alignParentBottom="true">
 
         <Button
-                android:id="@+id/fragment_photo_preview.repeat_button"
+                android:id="@+id/fragment_photo_preview_repeat_button"
                 style="@style/green_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
                 android:text="@string/fragment.photo.preview.repeat.button"/>
         <!-- TODO baslow: change button! -->
         <Button
-                android:id="@+id/fragment_photo_preview.next_button"
+                android:id="@+id/fragment_photo_preview_next_button"
                 style="@style/green_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             android:layout_height="match_parent">
 
         <ProgressBar
-                android:id="@+id/fragment.photo.preview.progressBar"
+                android:id="@+id/fragment_photo_preview_progressBar"
                 style="?android:attr/progressBarStyleLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -46,7 +46,7 @@ public class VotingFormFragment extends Fragment {
     public static final String TAG = "VotingFormFragment";
 
     private ScrollView mScrollView;
-    private TextView mCommisionNumber;
+//    private TextView mCommisionNumber;
     private TextView mCommisionId;
     private TextView mCommisionName;
     private TextView mCommisionAddress;
@@ -89,7 +89,7 @@ public class VotingFormFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_voting_form, container, false);
         mScrollView = (ScrollView) v.findViewById(R.id.fvoting_scrollview);
-        mCommisionNumber = (TextView) v.findViewById(R.id.fvoting_commision_number);
+//        mCommisionNumber = (TextView) v.findViewById(R.id.fvoting_commision_number);
         mCommisionId = (TextView) v.findViewById(R.id.fvoting_commision_id);
         mCommisionName = (TextView) v.findViewById(R.id.fvoting_commision_name);
         mCommisionAddress = (TextView) v.findViewById(R.id.fvoting_commision_address);
@@ -195,7 +195,7 @@ public class VotingFormFragment extends Fragment {
 
 
     private void fillLayoutWithData(CommissionDetails cDetails) {
-        mCommisionNumber.setText(cDetails.getOkregowa().getName());
+       // mCommisionNumber.setText(cDetails.getOkregowa().getName());
         mCommisionId.setText(cDetails.getPkwId());
         mCommisionName.setText(cDetails.getName());
         mCommisionAddress.setText(cDetails.getAddress());
@@ -277,6 +277,8 @@ public class VotingFormFragment extends Fragment {
                 Toast.makeText(ctx, ctx.getString(R.string.fvoting_protocol_successfully_sent), Toast.LENGTH_LONG).show();
 
                 Intent takePhoto = new Intent(getActivity(), TakePhotosActivity.class);
+                takePhoto.putExtra(TakePhotosActivity.COMMISSION_ID, commission.getCommissionNumber());
+                takePhoto.putExtra(TakePhotosActivity.PKW_ID, commission.getPkwId());
                 startActivity(takePhoto);
                 getActivity().finish();
             }

@@ -37,7 +37,7 @@ public class PhotoPreviewFragment extends Fragment {
     private ProgressBar progressBar;
     private ImageView imageView;
 
-    private volatile boolean isButtonLock;
+    private boolean isButtonLock;
     private AsyncTask<Void, Void, Void> saveImageTask;
 
     @Override

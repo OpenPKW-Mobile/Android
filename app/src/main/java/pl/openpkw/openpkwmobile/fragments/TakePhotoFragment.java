@@ -1,5 +1,6 @@
 package pl.openpkw.openpkwmobile.fragments;
 
+import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -83,27 +84,43 @@ public class TakePhotoFragment extends Fragment {
             camera.setDisplayOrientation(90);
         }
 
-        private Camera.Size findBestPreviewSize(Camera.Parameters cameraParameters, int maxWidth, int maxHeight) {
+        private Camera.Size findBestPreviewSize(Camera.Parameters cameraParameters, int width, int height) {
             List<Camera.Size> sizes = cameraParameters.getSupportedPreviewSizes();
-            Camera.Size bestSize = sizes.remove(0);
+            Camera.Size bestSize = null;
             for (Camera.Size size : sizes) {
-                if ((size.width * size.height) > (bestSize.width * bestSize.height)
-                        && (size.width <= maxWidth) && (size.height <= maxHeight)) {
-                    bestSize = size;
+                if ((size.width <= width && size.height <= height) || (size.height <= width && size.width <= height)) {
+                    if (bestSize == null) {
+                        bestSize = size;
+                    }
+                    else {
+                        int resultArea = bestSize.width * bestSize.height;
+                        int newArea = size.width * size.height;
+
+                        if (newArea > resultArea) {
+                            bestSize = size;
+                        }
+                    }
                 }
             }
+
             return bestSize;
         }
 
         private Camera.Size findBestPictureSize(Camera.Parameters cameraParameters, int maxWidth, int maxHeight) {
             List<Camera.Size> sizes = cameraParameters.getSupportedPictureSizes();
-            Camera.Size bestSize = sizes.remove(0);
-            float bestRatio = (float) maxWidth / maxHeight;
+            Camera.Size bestSize = null;
             for (Camera.Size size : sizes) {
-                int sizeArea = size.width * size.height;
-                float sizeRatio = (float) size.width / size.height;
-                if (sizeArea > (bestSize.width * bestSize.height) && sizeArea <= (maxWidth * maxHeight) && sizeRatio <= bestRatio) {
-                    bestSize = size;
+                if ((size.width <= maxWidth && size.height <= maxHeight) || (size.height <= maxWidth && size.width <= maxHeight)) {
+                    if (bestSize == null) {
+                        bestSize = size;
+                    }
+                    else {
+                        int bestArea = bestSize.width * bestSize.height;
+                        int newArea = size.width * size.height;
+                        if (newArea > bestArea) {
+                            bestSize = size;
+                        }
+                    }
                 }
             }
             return bestSize;
@@ -130,7 +147,7 @@ public class TakePhotoFragment extends Fragment {
     private final Camera.AutoFocusCallback autoFocusCallback = new Camera.AutoFocusCallback() {
         @Override
         public void onAutoFocus(boolean success, Camera camera) {
-            Log.d(tag, "take picture... camera callback");
+            Log.d(tag, "take picture... auto focus callback");
             camera.takePicture(cameraShutterCallback, null, cameraPictureCallback);
         }
     };
@@ -155,13 +172,13 @@ public class TakePhotoFragment extends Fragment {
         SurfaceHolder surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(surfaceHolderCallback);
 
-        Button takePictureButton = (Button) view.findViewById(R.id.fragment_take_photo_take_picture);
+        final Button takePictureButton = (Button) view.findViewById(R.id.fragment_take_photo_take_picture);
         takePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isInProgress) {
                     isInProgress = true;
-                    camera.autoFocus(autoFocusCallback);
+                    takeAPicture();
                 }
             }
         });
@@ -194,6 +211,20 @@ public class TakePhotoFragment extends Fragment {
         stopPreview();
         releaseCamera();
         super.onPause();
+    }
+
+    private void takeAPicture() {
+        List<String> supportedFocusModes = camera.getParameters().getSupportedFocusModes();
+        boolean hasAutoFocus = supportedFocusModes != null && supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO);
+
+        if (hasAutoFocus) {
+            Log.d(tag, "take a picture with auto focus");
+            camera.autoFocus(autoFocusCallback);
+        }
+        else {
+            Log.d(tag, "take a picture without auto focus");
+            camera.takePicture(cameraShutterCallback, null, cameraPictureCallback);
+        }
     }
 
     private void startPreview() {

@@ -2,9 +2,9 @@
     <string name="app.name">OpenPKW-Mobile</string>
     <string name="rules.url">http://android.open-pkw.pl</string>
     <string name="register.url">https://otwartapw.pl/opw/register.xhtml</string>
-    <string name="api.token">b516f01b18cc4144ef39d5c1b039a250fd318cdd15aff4fd746bde9a</string>
-    <string name="api.client">OpenPKWmobile-androidApp</string>
-    <string name="splash.check.it"><u>Zajrzyj tu</u></string>
+    <string name="api.token">b516f01b18cc4144ef39d5c1b039a250fd318cdd15aff4fd746bde9ac9aacd51</string>
+    <string name="api.client">client.register.php</string>
+    <string name="splash.check.it"><u>O projekcie</u></string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="login.label.login">Zaloguj się</string>
@@ -63,6 +63,30 @@
     <string name="fragment.photo.preview.next.button">Kolejne</string>
     <string name="fragment.photos.header">Przesyłasz Następujące Zdjęcia:</string>
     <string name="fragment.photos.sendButton">Wyślij</string>
+
+    <string name="fragment.send.images.header.in.progress">Trwa przesyłanie zdjęć</string>
+    <string name="fragment.send.images.footer.in.progress">Proszę czekać</string>
+
+    <string name="fragment.send.images.header.text.positive">Twoje dane zostały poprawnie przesłane na serwer</string>
+    <string name="fragment.send.images.footer.text.positive">Dziękujemy za poświęcony czas i dobrze wykonaną misję społeczną</string>
+    <string name="fragment.send.images.next.commission">Wybierz komisję</string>
+    <string name="fragment.send.images.finish">Zakończ</string>
+
+    <string name="fragment.send.images.header.connection.error">Sprawdz ustawienia czy jesteś połączony z Internetem i spróbuj ponownie</string>
+    <string name="fragment.send.images.try.next.time">Spróbuj ponownie</string>
+    <string name="fragment.send.images.save">Zapisz</string>
+
+    <string name="fragment.send.images.saved">Twoje dane zostały zapisane w pamięci telefonu</string>
+    <string name="fragment.send.images.will.send.later">Zostaną one przesłane na serwer automatycznie gdy połączysz się z Internetem</string>
+
+    <string name="fragment.send.images.final.text.with.results">Wyniki przekażemy na:\notwartapw.pl</string>
+
+    <string name="fragment.photo.preview.dont.have.images">Nie wykonałeś żadnych zdjęć. Czy chcesz kontynuować.</string>
+    <string name="dialog.ok">Ok</string>
+    <string name="dialog.cancel">Anuluj</string>
+
+    <string name="fragment.send.images.button.close">Zamknij</string>
+
     <string name="fvoting.toast.notalldataentered">Nie wprowadzono wszystkich danych w protokole</string>
     <string name="fvoting.toast.notallcandidatesvotesentered">Nie wprowadzono wyników głosowania dla wszystkich kandydatów</string>
 
