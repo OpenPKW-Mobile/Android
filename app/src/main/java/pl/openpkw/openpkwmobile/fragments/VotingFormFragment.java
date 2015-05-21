@@ -274,6 +274,8 @@ public class VotingFormFragment extends Fragment {
                 Toast.makeText(ctx, ctx.getString(R.string.fvoting_protocol_successfully_sent), Toast.LENGTH_LONG).show();
 
                 Intent takePhoto = new Intent(getActivity(), TakePhotosActivity.class);
+                takePhoto.putExtra(TakePhotosActivity.COMMISSION_ID, commission.getCommissionNumber());
+                takePhoto.putExtra(TakePhotosActivity.PKW_ID, commission.getPkwId());
                 startActivity(takePhoto);
                 getActivity().finish();
             }

@@ -49,7 +49,7 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:background="@color/green"
-                    android:text="5"
+                    android:text="789"
                     android:textSize="15sp"/>
         </TableRow>
     </TableLayout>
