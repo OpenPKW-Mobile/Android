@@ -79,6 +79,12 @@
     <string name="fragment.send.images.saved">Twoje dane zostały zapisane w pamięci telefonu</string>
     <string name="fragment.send.images.will.send.later">Zostaną one przesłane na serwer automatycznie gdy połączysz się z Internetem</string>
 
+    <string name="fragment.send.images.final.text.with.results">Wyniki przekażemy na:\notwartapw.pl</string>
+
+    <string name="fragment.photo.preview.dont.have.images">Nie wykonałeś żadnych zdjęć. Czy chcesz kontynuować.</string>
+    <string name="dialog.ok">Ok</string>
+    <string name="dialog.cancel">Anuluj</string>
+
     <string name="fragment.send.images.button.close">Zamknij</string>
 
     <string name="fvoting.toast.notalldataentered">Nie wprowadzono wszystkich danych w protokole</string>

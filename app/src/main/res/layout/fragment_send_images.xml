@@ -84,4 +84,19 @@
                 android:text="@string/fragment.send.images.button.close"/>
     </LinearLayout>
 
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_send_images_header_text"
+            android:layout_above="@+id/fragment_send_images_footer_text">
+        <TextView
+                android:visibility="invisible"
+                android:id="@+id/fragment_send_images_final_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/fragment.send.images.final.text.with.results"
+                android:gravity="center_horizontal|center_vertical"
+                android:textSize="20dp"/>
+    </RelativeLayout>
+
 </RelativeLayout>

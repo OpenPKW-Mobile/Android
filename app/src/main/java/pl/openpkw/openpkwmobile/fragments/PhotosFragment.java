@@ -1,6 +1,8 @@
 package pl.openpkw.openpkwmobile.fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -57,6 +59,24 @@ public class PhotosFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getAllImages();
+
+        if (photosAdapter.getCount() == 0) {
+            // dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.fragment_photo_preview_dont_have_images).
+                    setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    }).
+                    setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ((TakePhotosActivity) getActivity()).switchToImageTake();
+                        }
+                    });
+            builder.create().show();
+        }
     }
 
     private void getAllImages() {

@@ -1,6 +1,7 @@
 package pl.openpkw.openpkwmobile.fragments;
 
 
+import android.animation.Animator;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -16,6 +17,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.*;
 import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.activities.FilterCommissionsActivity;
@@ -47,6 +52,7 @@ public class SendImagesFragment extends Fragment {
     private TextView footerTextView;
     private Button noButton;
     private Button yesButton;
+    private TextView finalText;
 
     private SendImageReceiver receiver;
 
@@ -59,6 +65,7 @@ public class SendImagesFragment extends Fragment {
         imageView = (ImageView) view.findViewById(R.id.fragment_send_images_imageView);
         progressBar = (ProgressBar) view.findViewById(R.id.fragment_send_images_progressBar);
         footerTextView = (TextView) view.findViewById(R.id.fragment_send_images_footer_text);
+        finalText = (TextView) view.findViewById(R.id.fragment_send_images_final_text);
         noButton = (Button) view.findViewById(R.id.fragment_send_images_no_button);
         noButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,6 +198,7 @@ public class SendImagesFragment extends Fragment {
     private void setWindowLook() {
         switch (windowMode) {
             case SENDING:
+                finalText.setVisibility(View.INVISIBLE);
                 headerTextView.setVisibility(View.VISIBLE);
                 headerTextView.setText(R.string.fragment_send_images_header_in_progress);
                 footerTextView.setVisibility(View.VISIBLE);
@@ -199,6 +207,7 @@ public class SendImagesFragment extends Fragment {
                 yesButton.setVisibility(View.INVISIBLE);
                 break;
             case SENDED:
+                finalText.setVisibility(View.VISIBLE);
                 headerTextView.setVisibility(View.VISIBLE);
                 headerTextView.setText(R.string.fragment_send_images_header_text_positive);
                 footerTextView.setVisibility(View.VISIBLE);
@@ -209,6 +218,7 @@ public class SendImagesFragment extends Fragment {
                 yesButton.setVisibility(View.VISIBLE);
                 break;
             case ERROR:
+                finalText.setVisibility(View.INVISIBLE);
                 headerTextView.setVisibility(View.INVISIBLE);
                 footerTextView.setVisibility(View.VISIBLE);
                 footerTextView.setText(R.string.fragment_send_images_header_connection_error);
@@ -218,6 +228,7 @@ public class SendImagesFragment extends Fragment {
                 yesButton.setText(R.string.fragment_send_images_save);
                 break;
             case POST_ERROR:
+                finalText.setVisibility(View.VISIBLE);
                 headerTextView.setVisibility(View.VISIBLE);
                 headerTextView.setText(R.string.fragment_send_images_saved);
                 footerTextView.setVisibility(View.VISIBLE);
@@ -281,9 +292,5 @@ public class SendImagesFragment extends Fragment {
             setWindowLook();
         }
     }
-
-
-
-
 
 }
