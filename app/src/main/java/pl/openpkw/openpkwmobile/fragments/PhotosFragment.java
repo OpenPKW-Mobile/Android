@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import pl.openpkw.openpkwmobile.R;
+import pl.openpkw.openpkwmobile.activities.OpenPKWActivity;
 import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
 
 import java.io.File;
@@ -41,6 +42,7 @@ public class PhotosFragment extends Fragment {
         photosAdapter = new PhotosAdapter(view.getContext());
         gridView.setAdapter(photosAdapter);
 
+        ((OpenPKWActivity)getActivity()).setStepNo(view.findViewById(R.id.step), 5);
         return view;
     }
 

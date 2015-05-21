@@ -32,4 +32,5 @@
     <dimen name="height.votingform.max.header">300dp</dimen>
     <dimen name="votingFragmentTextWidth">250dp</dimen>
     <dimen name="votingFragmentValueWidth">100dp</dimen>
+    <dimen name="footerTextPadding">5dp</dimen>
 </resources>

@@ -2,9 +2,9 @@
     <string name="app.name">OpenPKW-Mobile</string>
     <string name="rules.url">http://android.open-pkw.pl</string>
     <string name="register.url">https://otwartapw.pl/opw/register.xhtml</string>
-    <string name="api.token">b516f01b18cc4144ef39d5c1b039a250fd318cdd15aff4fd746bde9ac9aacd51</string>
-    <string name="api.client">client.register.php</string>
-    <string name="splash.check.it"><u>O projekcie</u></string>
+    <string name="api.token">b516f01b18cc4144ef39d5c1b039a250fd318cdd15aff4fd746bde9a</string>
+    <string name="api.client">OpenPKWmobile-androidApp</string>
+    <string name="splash.check.it"><u>Zajrzyj tu</u></string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="login.label.login">Zaloguj się</string>
@@ -81,8 +81,16 @@
     <string name="soft_validation__2">Liczba wyborców uprawnionych do głosowania nie powinna być mniejsza niż liczba kart ważnych.</string>
     <string name="soft_validation__3">Liczba kart ważnych nie powinna być  większa od liczby wyborców uprawnionych do głosowania.</string>
     <string name="error_limit">Wartoś powinna być mniejsza niż</string>
-	<string name="fvoting.protocol.successfully.sent">Protokół został pomyślnie wysłany!</string>
-    <string name="fvoting.protocol.send.later">Protokół zostanie wysłany po ustanowieniu połączenia internetowego</string>
+    <string name="fvoting.protocol.successfully.sent">Protokół został pomyślnie wysłany!</string>
     <string name="fvoting.candidates.label">II.14. Kandydaci otrzymali głosów ważnych :</string>
     <string name="fvoting.protocol.next.button.label">Dalej</string>
+
+
+    <string name="global.step" formatted="false">Krok %s z %s</string>
+    <string name="summary.finish">Zakończ</string>
+    <string name="summary.retry">Spróbuj Ponownie</string>
+    <string name="summary.info.success">Twoje Dane zostały poprawnie przesłane na Serwer</string>
+    <string name="summary.info.failed">Twoje Dane nie zostały przesłane na Serwer</string>
+    <string name="summary.detail.success">Dziękujemy za poświęcony czas i dobrze wykonaną misję społeczną :*</string>
+    <string name="summary.detail.failed">Sprawdź ustawienia czy jesteś połączony z Internetem i spróbuj ponownie.</string>
 </resources>

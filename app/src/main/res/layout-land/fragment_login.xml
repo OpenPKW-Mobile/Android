@@ -117,6 +117,13 @@
             android:layout_marginLeft="@dimen/margin.login.button.register.left"
             android:layout_marginTop="@dimen/margin.login.button.register.top"
             android:text="@string/login.buttonlabel.newaccount" />
+        <TextView
+            android:text="@string/global.step"
+            android:id="@+id/step"
+            style="@style/footerText"
+            android:layout_gravity="bottom|right"
+            android:layout_height="fill_parent"
+            android:gravity="bottom" />
     </LinearLayout>
 
 </LinearLayout>
