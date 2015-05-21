@@ -45,7 +45,8 @@
             android:name=".utils.SendImagesService"
             android:exported="false" />
         <receiver
-            android:name=".utils.SendImagesReceiver" />
+            android:name=".utils.SendImagesLaterReceiver">
+        </receiver>
     </application>
 
 </manifest>

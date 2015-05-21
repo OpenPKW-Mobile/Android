@@ -20,6 +20,7 @@ import android.widget.*;
 import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.activities.FilterCommissionsActivity;
 import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
+import pl.openpkw.openpkwmobile.utils.SendImagesLaterReceiver;
 import pl.openpkw.openpkwmobile.utils.SendImagesService;
 
 import java.io.File;
@@ -29,6 +30,8 @@ import java.io.FileFilter;
  * Created by Bartlomiej 'baslow' Slowik on 2015.05.17.
  */
 public class SendImagesFragment extends Fragment {
+
+    private final static int ALARM_PERIOD = 1 * 60 * 1000;
 
     private final String tag = getClass().getSimpleName();
 
@@ -62,6 +65,7 @@ public class SendImagesFragment extends Fragment {
             public void onClick(View v) {
                 switch (windowMode) {
                     case SENDED:
+                    case POST_ERROR:
                         Intent commissionIntent = new Intent(getActivity(), FilterCommissionsActivity.class);
                         startActivity(commissionIntent);
                         getActivity().finish();
@@ -78,19 +82,29 @@ public class SendImagesFragment extends Fragment {
             public void onClick(View v) {
                 switch (windowMode) {
                     case SENDED:
+                    case POST_ERROR:
                         getActivity().finish();
                         break;
                     case ERROR:
-                        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-                        Intent intent = new Intent(getActivity(), SendImageReceiver.class);
-                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
 
-                        alarmManager.setRepeating(
-                                AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                                SystemClock.elapsedRealtime() + 1 * 60 * 1000,
-                                1 * 60 * 1000,
-                                pendingIntent);
-                        Log.d(tag, "alarm has been set");
+                        Intent intent = new Intent(getActivity(), SendImagesLaterReceiver.class);
+
+                        if (PendingIntent.getBroadcast(getActivity(), 0, intent, PendingIntent.FLAG_NO_CREATE) == null) {
+                            AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+                            PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
+                            alarmManager.setRepeating(
+                                    AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                                    SystemClock.elapsedRealtime() + ALARM_PERIOD,
+                                    ALARM_PERIOD,
+                                    pendingIntent);
+                            Log.d(tag, "alarm has been set");
+                        } else {
+                            Log.d(tag, "alarm already set");
+                        }
+
+                        windowMode = WndMode.POST_ERROR;
+                        setWindowLook();
+
                         break;
                 }
             }
@@ -131,9 +145,8 @@ public class SendImagesFragment extends Fragment {
         setWindowLook();
 
         Intent sendImagesServiceIntent = new Intent(getActivity(), SendImagesService.class);
-        sendImagesServiceIntent.putExtra(SendImagesService.COMMISSIONID_EXTRA, commissionId);
         sendImagesServiceIntent.putExtra(SendImagesService.PKWID_EXTRA, pkwId);
-        sendImagesServiceIntent.putExtra(SendImagesService.IMAGESLIST_EXTRA, toPathsArray(images));
+        sendImagesServiceIntent.putExtra(SendImagesService.IMAGESLIST_EXTRA, imgsDir);
         getActivity().startService(sendImagesServiceIntent);
     }
 
@@ -175,36 +188,43 @@ public class SendImagesFragment extends Fragment {
         });
     }
 
-    private static String[] toPathsArray(File[] images) {
-        String[] pathsArray = new String[images.length];
-        for (int i = 0; i < images.length; i++) {
-            pathsArray[i] = images[i].getAbsolutePath();
-        }
-        return pathsArray;
-    }
-
     private void setWindowLook() {
         switch (windowMode) {
             case SENDING:
-                headerTextView.setText("Trwa przesyłanie zdjęć");
-                footerTextView.setText("Proszę czekać");
+                headerTextView.setVisibility(View.VISIBLE);
+                headerTextView.setText(R.string.fragment_send_images_header_in_progress);
+                footerTextView.setVisibility(View.VISIBLE);
+                footerTextView.setText(R.string.fragment_send_images_footer_in_progress);
                 noButton.setVisibility(View.INVISIBLE);
                 yesButton.setVisibility(View.INVISIBLE);
                 break;
             case SENDED:
+                headerTextView.setVisibility(View.VISIBLE);
                 headerTextView.setText(R.string.fragment_send_images_header_text_positive);
+                footerTextView.setVisibility(View.VISIBLE);
                 footerTextView.setText(R.string.fragment_send_images_footer_text_positive);
-                noButton.setText("Wybierz komisję");
+                noButton.setText(R.string.fragment_send_images_next_commission);
                 noButton.setVisibility(View.VISIBLE);
-                yesButton.setText("Zakończ");
+                yesButton.setText(R.string.fragment_send_images_finish);
                 yesButton.setVisibility(View.VISIBLE);
                 break;
             case ERROR:
                 headerTextView.setVisibility(View.INVISIBLE);
-                footerTextView.setText("Sprawdz ustawienia czy jesteś połączony z Internetem i spróbuj ponownie");
-                noButton.setText("Spróbuj ponownie");
+                footerTextView.setVisibility(View.VISIBLE);
+                footerTextView.setText(R.string.fragment_send_images_header_connection_error);
                 noButton.setVisibility(View.VISIBLE);
-                yesButton.setText("Zapisz");
+                noButton.setText(R.string.fragment_send_images_try_next_time);
+                yesButton.setVisibility(View.VISIBLE);
+                yesButton.setText(R.string.fragment_send_images_save);
+                break;
+            case POST_ERROR:
+                headerTextView.setVisibility(View.VISIBLE);
+                headerTextView.setText(R.string.fragment_send_images_saved);
+                footerTextView.setVisibility(View.VISIBLE);
+                footerTextView.setText(R.string.fragment_send_images_will_send_later);
+                noButton.setText(R.string.fragment_send_images_next_commission);
+                noButton.setVisibility(View.VISIBLE);
+                yesButton.setText(R.string.fragment_send_images_finish);
                 yesButton.setVisibility(View.VISIBLE);
                 break;
         }

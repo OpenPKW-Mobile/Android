@@ -19,6 +19,7 @@ import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
 import pl.openpkw.openpkwmobile.fragments.SendImagesFragment;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -41,7 +42,7 @@ public class SendImagesService extends IntentService {
     private final HttpClient httpClient = new DefaultHttpClient();
 
     private String pkwId;
-    private String commissionId;
+    private File imgsDir;
 
     private int imgCounter = 1;
 
@@ -54,14 +55,17 @@ public class SendImagesService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         pkwId = intent.getStringExtra(PKWID_EXTRA);
-        commissionId = intent.getStringExtra(COMMISSIONID_EXTRA);
-        String[] paths = intent.getStringArrayExtra(IMAGESLIST_EXTRA);
-        File[] images = new File[paths.length];
-        for (int i = 0; i < images.length; i++) {
-            images[i] = new File(paths[i]);
-        }
+        String path = intent.getStringExtra(IMAGESLIST_EXTRA);
 
-        Log.d(tag, "service started, commissionId: " + commissionId + " images count: " + images.length);
+        imgsDir = new File(path);
+        File[] images = imgsDir.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return !pathname.getAbsolutePath().endsWith(TakePhotosActivity.THUMBNAIL_EXTENSION);
+            }
+        });
+
+        Log.d(tag, "service started, images count: " + images.length);
 
         boolean ret = sendImages(images);
         publishFinished(ret);
@@ -114,12 +118,6 @@ public class SendImagesService extends IntentService {
             Log.d(tag, "uploaded bytes: " + bytes + " image length: " + imgLen);
             if (imgLen == bytes) {
                 ret = true;
-                // TODO baslow: for tests only!!
-//                try {
-//                    TimeUnit.SECONDS.sleep(5);
-//                }
-//                catch (InterruptedException ex) {
-//                }
             }
         } catch (JSONException | IOException ex) {
             Log.e(tag, "Nie można uploadować zdjęć na serwer", ex);
@@ -141,7 +139,13 @@ public class SendImagesService extends IntentService {
             imgCounter++;
         }
         if (ret == true) {
-            // TODO @baslow: delete all files and directory
+            if (imgsDir != null) {
+                File[] list = imgsDir.listFiles();
+                for (File file : list) {
+                    file.delete();
+                }
+                imgsDir.delete();
+            }
         }
         return ret;
     }

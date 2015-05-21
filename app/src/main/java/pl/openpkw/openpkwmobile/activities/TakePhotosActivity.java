@@ -149,7 +149,7 @@ public class TakePhotosActivity extends OpenPKWActivity {
 
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
 
-            String dirName = NAME_FORMAT.format(new Date(System.currentTimeMillis()));
+            String dirName = pkwId + "_" + NAME_FORMAT.format(new Date(System.currentTimeMillis()));
             outDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), dirName);
             boolean dirExist = outDir.exists();
 
