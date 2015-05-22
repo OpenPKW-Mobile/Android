@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Logger;
@@ -23,6 +23,7 @@ import pl.openpkw.openpkwmobile.activities.OpenPKWActivity;
 import pl.openpkw.openpkwmobile.activities.VotingFormActivity;
 import pl.openpkw.openpkwmobile.models.Commission;
 import pl.openpkw.openpkwmobile.models.User;
+import pl.openpkw.openpkwmobile.network.NetworkManager;
 
 /**
  * Created by Wojciech Radzioch on 09.05.15.
@@ -61,7 +62,7 @@ public class FilterCommissionsFragment extends Fragment {
         commissionNumberET = (EditText) v.findViewById(R.id.filter_commissions_edittext_coomission_number);
         searchCommission = (Button) v.findViewById(R.id.filter_commissions_search);
 
-        ((OpenPKWActivity)getActivity()).setStepNo(v.findViewById(R.id.step),3);
+        ((OpenPKWActivity) getActivity()).setStepNo(v.findViewById(R.id.step), 3);
         return v;
     }
 
@@ -119,10 +120,10 @@ public class FilterCommissionsFragment extends Fragment {
                         commission = new Commission();
                         commission.setCommissionCity(commissionRow[2]);
                         commission.setCommissionNumber(commissionRow[1]);
-                        if (commissionRow[0].trim().length()>6) {
-                            commission.setPkwId(commissionRow[0].trim().substring(1)+"-"+commissionRow[1].trim());
+                        if (commissionRow[0].trim().length() > 6) {
+                            commission.setPkwId(commissionRow[0].trim().substring(1) + "-" + commissionRow[1].trim());
                         } else {
-                            commission.setPkwId(commissionRow[0].trim()+"-"+commissionRow[1].trim());
+                            commission.setPkwId(commissionRow[0].trim() + "-" + commissionRow[1].trim());
                         }
 
                         commission.setName(commissionRow[7]);
@@ -159,15 +160,21 @@ public class FilterCommissionsFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Commission commission) {
-            if (progressDialog!=null) {
+            if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            if (commission!=null) {
-                Intent votingFormActivity = new Intent(getActivity(), VotingFormActivity.class);
-                votingFormActivity.putExtra(COMMISSION_EXTRA, commission);
-                votingFormActivity.putExtra(USER_EXTRA, user);
-                startActivity(votingFormActivity);
-                getActivity().finish();
+            if (commission != null) {
+                if (getActivity() != null && NetworkManager.isOnline(getActivity().getApplicationContext())) {
+                    Intent votingFormActivity = new Intent(getActivity(), VotingFormActivity.class);
+                    votingFormActivity.putExtra(COMMISSION_EXTRA, commission);
+                    votingFormActivity.putExtra(USER_EXTRA, user);
+                    startActivity(votingFormActivity);
+                    getActivity().finish();
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            getActivity().getString(R.string.network_check_internet_connection),
+                            Toast.LENGTH_SHORT).show();
+                }
             } else {
                 Toast.makeText(getActivity().getApplicationContext(), getActivity().getString(R.string.filter_commissions_no_commission_found), Toast.LENGTH_SHORT).show();
             }
