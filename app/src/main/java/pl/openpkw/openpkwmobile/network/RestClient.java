@@ -33,7 +33,7 @@ public class RestClient {
         };
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.NONE)
                 .setEndpoint(ROOT)
                 .setClient(new OkClient(new OkHttpClient()))
                 .setRequestInterceptor(requestInterceptor)
