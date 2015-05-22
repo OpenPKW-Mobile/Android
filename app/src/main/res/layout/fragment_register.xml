@@ -21,50 +21,91 @@
         android:layout_marginTop="@dimen/margin.login.separator.top"
         android:background="@color/green" />
 
+    <TextView
+        android:id="@+id/register.textview.firstname"
+        android:layout_width="match_parent"
+        android:layout_below="@id/login.separator.top"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/fontsize.login.edittext"
+        android:text="@string/register.label.edittext.firstname"
+        android:layout_marginTop="@dimen/margin.login.edittext.user.top"
+        android:layout_marginLeft="@dimen/margin.login.edittext.user.left"
+        android:layout_marginRight="@dimen/margin.login.edittext.user.right" />
+
     <EditText
         android:id="@+id/register.edittext.firstname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/login.separator.top"
+        android:layout_below="@id/register.textview.firstname"
         android:layout_marginLeft="@dimen/margin.login.edittext.user.left"
         android:layout_marginRight="@dimen/margin.login.edittext.user.right"
         android:layout_marginTop="@dimen/margin.login.edittext.user.top"
-        android:hint="@string/register.label.edittext.firstname"
         android:textSize="@dimen/fontsize.login.edittext" />
+
+    <TextView
+        android:id="@+id/register.textview.lastname"
+        android:layout_width="match_parent"
+        android:layout_below="@id/register.edittext.firstname"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/fontsize.login.edittext"
+        android:text="@string/register.label.edittext.lastname"
+        android:layout_marginTop="@dimen/margin.login.edittext.user.top"
+        android:layout_marginLeft="@dimen/margin.login.edittext.user.left"
+        android:layout_marginRight="@dimen/margin.login.edittext.user.right" />
+
 
     <EditText
         android:id="@+id/register.edittext.lastname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/register.edittext.firstname"
+        android:layout_below="@id/register.textview.lastname"
         android:layout_marginLeft="@dimen/margin.login.edittext.password.left"
         android:layout_marginRight="@dimen/margin.login.edittext.password.right"
         android:layout_marginTop="@dimen/margin.login.edittext.password.top"
-        android:hint="@string/register.label.edittext.lastname"
         android:textSize="@dimen/fontsize.login.edittext" />
+
+    <TextView
+        android:id="@+id/register.textview.email"
+        android:layout_width="match_parent"
+        android:layout_below="@id/register.edittext.lastname"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/fontsize.login.edittext"
+        android:text="@string/register.label.edittext.email"
+        android:layout_marginTop="@dimen/margin.login.edittext.user.top"
+        android:layout_marginLeft="@dimen/margin.login.edittext.user.left"
+        android:layout_marginRight="@dimen/margin.login.edittext.user.right" />
 
     <EditText
         android:id="@+id/register.edittext.email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/register.edittext.lastname"
+        android:layout_below="@id/register.textview.email"
         android:layout_marginLeft="@dimen/margin.login.edittext.password.left"
         android:layout_marginRight="@dimen/margin.login.edittext.password.right"
         android:layout_marginTop="@dimen/margin.login.edittext.password.top"
         android:inputType="textEmailAddress"
-        android:hint="@string/register.label.edittext.email"
         android:textSize="@dimen/fontsize.login.edittext" />
+
+    <TextView
+        android:id="@+id/register.textview.phone"
+        android:layout_width="match_parent"
+        android:layout_below="@id/register.edittext.email"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/fontsize.login.edittext"
+        android:text="@string/register.label.edittext.phone"
+        android:layout_marginTop="@dimen/margin.login.edittext.user.top"
+        android:layout_marginLeft="@dimen/margin.login.edittext.user.left"
+        android:layout_marginRight="@dimen/margin.login.edittext.user.right" />
 
     <EditText
         android:id="@+id/register.edittext.phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/register.edittext.email"
+        android:layout_below="@id/register.textview.phone"
         android:layout_marginLeft="@dimen/margin.login.edittext.password.left"
         android:layout_marginRight="@dimen/margin.login.edittext.password.right"
         android:layout_marginTop="@dimen/margin.login.edittext.password.top"
         android:inputType="number"
-        android:hint="@string/register.label.edittext.phone"
         android:textSize="@dimen/fontsize.login.edittext" />
 
     <Button

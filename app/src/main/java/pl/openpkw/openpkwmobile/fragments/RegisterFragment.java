@@ -49,7 +49,7 @@ public class RegisterFragment extends Fragment {
                 String email = emailET.getText().toString();
                 String phone = phoneET.getText().toString();
 
-                if(firstName.length()>0 && lastName.length()>0 && email.length()>0 && phone.length()>0) {
+                if(firstName.length()>0 && lastName.length()>0 && email.length()>0) {
                     if (EmailValidator.isEmailValid(email)) {
                         checkIsEmailExists(firstName, lastName, email, phone);
                     } else {
@@ -88,17 +88,19 @@ public class RegisterFragment extends Fragment {
     }
 
     private void register(String firstName, String lastName, String email, String phone) {
-
         UserRegister userRegister = new UserRegister();
         userRegister.setFirstname(firstName);
         userRegister.setLastname(lastName);
         userRegister.setEmail(email);
-        userRegister.setPhone(phone);
+        if (!phone.equals("")) {
+            userRegister.setPhone(phone);
+        }
 
         Callback<String> registerCallback = new Callback<String>() {
             @Override
             public void success(String responseString, Response response) {
-                Toast.makeText(getActivity(), getActivity().getString(R.string.register_ok), Toast.LENGTH_SHORT).show();
+                getActivity().finish();
+                Toast.makeText(getActivity(), getActivity().getString(R.string.register_ok), Toast.LENGTH_LONG).show();
             }
 
             @Override
