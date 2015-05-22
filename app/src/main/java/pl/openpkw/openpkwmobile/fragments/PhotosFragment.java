@@ -44,7 +44,7 @@ public class PhotosFragment extends Fragment {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TakePhotosActivity) getActivity()).switchToSendImages();
+                ((TakePhotosActivity) getActivity()).switchToSendImages(SendImagesFragment.WndMode.SENDING);
             }
         });
 
@@ -64,11 +64,12 @@ public class PhotosFragment extends Fragment {
 
         if (photosAdapter.getCount() == 0) {
             // dialog
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(R.string.fragment_photo_preview_dont_have_images).
+            new AlertDialog.Builder(getActivity()).
+                    setMessage(R.string.fragment_photo_preview_dont_have_images).
                     setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            ((TakePhotosActivity) getActivity()).switchToSendImages(SendImagesFragment.WndMode.SENDED);
                         }
                     }).
                     setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
@@ -76,8 +77,13 @@ public class PhotosFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             ((TakePhotosActivity) getActivity()).switchToImageTake();
                         }
-                    });
-            builder.create().show();
+                    }).
+                    setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            ((TakePhotosActivity) getActivity()).switchToImageTake();
+                        }
+                    }).create().show();
         }
     }
 

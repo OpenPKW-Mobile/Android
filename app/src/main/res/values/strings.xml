@@ -81,9 +81,12 @@
 
     <string name="fragment.send.images.final.text.with.results">Wyniki przekażemy na:\notwartapw.pl</string>
 
-    <string name="fragment.photo.preview.dont.have.images">Nie wykonałeś żadnych zdjęć. Czy chcesz kontynuować.</string>
-    <string name="dialog.ok">Ok</string>
-    <string name="dialog.cancel">Anuluj</string>
+    <string name="fragment.photo.preview.dont.have.images">Nie wykonałeś żadnych zdjęć. Czy chcesz kontynuować bez wysyłania fotografii protokołu wyborczego.</string>
+    <string name="dialog.ok">Tak</string>
+    <string name="dialog.cancel">Nie</string>
+
+    <string name="fragment.send.images.ok">Zdjęcia zostały poprawnie wysłane na serrwer</string>
+    <string name="fragment.send.images.failed">Nie można wysłać zdjęć na serwer</string>
 
     <string name="fragment.send.images.button.close">Zamknij</string>
 

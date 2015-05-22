@@ -1,11 +1,13 @@
 package pl.openpkw.openpkwmobile.fragments;
 
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Display;
@@ -129,11 +131,14 @@ public class PhotoPreviewFragment extends Fragment {
                 options.inJustDecodeBounds = false;
 
                 Bitmap bitmap = BitmapFactory.decodeByteArray(params[0], 0, params[0].length, options);
+                Bitmap bmp = bitmap;
 
-                Matrix matrix = new Matrix();
-                matrix.postRotate(90);
+                if (bitmap.getWidth() > bitmap.getHeight()) {
+                    Matrix matrix = new Matrix();
+                    matrix.postRotate(90);
+                    bmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                }
 
-                Bitmap bmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
                 return bmp;
             }
 

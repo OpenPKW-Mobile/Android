@@ -1,7 +1,6 @@
 package pl.openpkw.openpkwmobile.fragments;
 
 
-import android.animation.Animator;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -17,15 +16,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.*;
-
 import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.activities.FilterCommissionsActivity;
-import pl.openpkw.openpkwmobile.activities.OpenPKWActivity;
 import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
 import pl.openpkw.openpkwmobile.utils.SendImagesLaterReceiver;
 import pl.openpkw.openpkwmobile.utils.SendImagesService;
@@ -38,7 +31,7 @@ import java.io.FileFilter;
  */
 public class SendImagesFragment extends Fragment {
 
-    private final static int ALARM_PERIOD = 1 * 60 * 1000;
+    private final static int ALARM_PERIOD = 10 * 60 * 1000;
 
     private final String tag = getClass().getSimpleName();
 
@@ -73,11 +66,9 @@ public class SendImagesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 switch (windowMode) {
+                    case SENDING:
                     case SENDED:
                     case POST_ERROR:
-                        Intent commissionIntent = new Intent(getActivity(), FilterCommissionsActivity.class);
-                        startActivity(commissionIntent);
-                        getActivity().finish();
                         break;
                     case ERROR:
                         startService();
@@ -110,10 +101,8 @@ public class SendImagesFragment extends Fragment {
                         } else {
                             Log.d(tag, "alarm already set");
                         }
-
                         windowMode = WndMode.POST_ERROR;
                         setWindowLook();
-
                         break;
                 }
             }
@@ -135,8 +124,6 @@ public class SendImagesFragment extends Fragment {
         setWindowLook();
 
         if (!isNullOrEmpty(pkwId) && !isNullOrEmpty(commissionId) && !isNullOrEmpty(imgsDir)) {
-
-
             startService();
         } else {
             // TODO @baslow: add toast message
@@ -171,6 +158,8 @@ public class SendImagesFragment extends Fragment {
         commissionId = getArguments().getString(TakePhotosActivity.COMMISSION_ID);
         // pictures directory
         imgsDir = getArguments().getString(TakePhotosActivity.IMAGE_PATH);
+        // wnd mode
+        windowMode = WndMode.valueOf(getArguments().getString(TakePhotosActivity.FINAL_WINDOW_MODE));
         // LOG
         Log.d(tag, "Send images, arguments: [" + pkwId + "] [" + commissionId + "] [" + imgsDir + "]");
     }
@@ -204,7 +193,7 @@ public class SendImagesFragment extends Fragment {
                 headerTextView.setText(R.string.fragment_send_images_header_in_progress);
                 footerTextView.setVisibility(View.VISIBLE);
                 footerTextView.setText(R.string.fragment_send_images_footer_in_progress);
-                noButton.setVisibility(View.INVISIBLE);
+                noButton.setVisibility(View.GONE);
                 yesButton.setVisibility(View.INVISIBLE);
                 break;
             case SENDED:
@@ -213,8 +202,7 @@ public class SendImagesFragment extends Fragment {
                 headerTextView.setText(R.string.fragment_send_images_header_text_positive);
                 footerTextView.setVisibility(View.VISIBLE);
                 footerTextView.setText(R.string.fragment_send_images_footer_text_positive);
-                noButton.setText(R.string.fragment_send_images_next_commission);
-                noButton.setVisibility(View.VISIBLE);
+                noButton.setVisibility(View.GONE);
                 yesButton.setText(R.string.fragment_send_images_finish);
                 yesButton.setVisibility(View.VISIBLE);
                 break;
@@ -234,15 +222,14 @@ public class SendImagesFragment extends Fragment {
                 headerTextView.setText(R.string.fragment_send_images_saved);
                 footerTextView.setVisibility(View.VISIBLE);
                 footerTextView.setText(R.string.fragment_send_images_will_send_later);
-                noButton.setText(R.string.fragment_send_images_next_commission);
-                noButton.setVisibility(View.VISIBLE);
+                noButton.setVisibility(View.GONE);
                 yesButton.setText(R.string.fragment_send_images_finish);
                 yesButton.setVisibility(View.VISIBLE);
                 break;
         }
     }
 
-    private enum WndMode {
+    public enum WndMode {
         SENDING,
         SENDED,
         ERROR,
@@ -264,7 +251,6 @@ public class SendImagesFragment extends Fragment {
 
     public static final String ACTION_RESPONSE = "pl.openpkw.openpkwmobile.SEND_IMAGES";
 
-
     private class SendImageReceiver extends BroadcastReceiver {
 
         @Override
@@ -284,13 +270,13 @@ public class SendImagesFragment extends Fragment {
             if (finished == true) {
                 if (success == true) {
                     windowMode = WndMode.SENDED;
+                    Toast.makeText(getActivity(), R.string.fragment_send_images_ok, Toast.LENGTH_LONG).show();
                 } else {
                     windowMode = WndMode.ERROR;
-                    Toast.makeText(getActivity(), "Nie można wysłać zdjęć na serwer", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), R.string.fragment_send_images_failed, Toast.LENGTH_LONG).show();
                 }
             }
             setWindowLook();
         }
     }
-
 }

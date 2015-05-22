@@ -17,10 +17,18 @@
             android:layout_below="@+id/fragment_take_photo_header_label"
             android:layout_above="@+id/fragment_take_photo_linearLayout">
 
-        <SurfaceView
-                android:id="@+id/fragment_take_photo.surfaceView"
+        <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
+
+            <SurfaceView
+                    android:id="@+id/fragment_take_photo.surfaceView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+        </RelativeLayout>
+
     </LinearLayout>
 
     <LinearLayout

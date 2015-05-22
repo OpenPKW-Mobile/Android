@@ -33,6 +33,7 @@ public class TakePhotosActivity extends OpenPKWActivity {
     public final static String COMMISSION_ID = "commissionId";
     public final static String IMAGE_DATA = "imageData";
     public final static String IMAGE_PATH = "imagePath";
+    public final static String FINAL_WINDOW_MODE = "finalWindowMode";
 
     public final static SimpleDateFormat NAME_FORMAT = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US);
 
@@ -84,11 +85,12 @@ public class TakePhotosActivity extends OpenPKWActivity {
         fragmentManager.executePendingTransactions();
     }
 
-    public void switchToSendImages() {
+    public void switchToSendImages(SendImagesFragment.WndMode wndMode) {
         Bundle bundle = new Bundle();
         bundle.putString(PKW_ID, pkwId);
         bundle.putString(COMMISSION_ID, commissionId);
         bundle.putString(IMAGE_PATH, outDir.getAbsolutePath());
+        bundle.putString(FINAL_WINDOW_MODE, wndMode.name());
 
         sendImagesFragment.setArguments(bundle);
 

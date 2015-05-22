@@ -6,8 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.*;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.*;
 import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
 
@@ -66,8 +65,9 @@ public class TakePhotoFragment extends Fragment {
             Camera.Size bestSize = findBestPreviewSize(cameraParameters, surfaceWidth, surfaceHeight);
             cameraParameters.setPreviewSize(bestSize.width, bestSize.height);
 
+            setSurfaceSize(bestSize, surfaceWidth, surfaceHeight);
+
             // image size
-            bestSize = null;
             bestSize = findBestPictureSize(cameraParameters, TakePhotosActivity.MAX_PICTURE_WIDTH, TakePhotosActivity.MAX_PICTURE_HEIGHT);
             cameraParameters.setPictureSize(bestSize.width, bestSize.height);
 
@@ -84,10 +84,35 @@ public class TakePhotoFragment extends Fragment {
             camera.setDisplayOrientation(90);
         }
 
+        private void setSurfaceSize(Camera.Size size, int maxWidth, int maxHeight) {
+
+            int bestWidth = size.height;
+            int bestHeight = size.width;
+
+            float widthRatio = (float) bestWidth / maxWidth;
+            float heightRatio = (float) bestHeight / maxHeight;
+
+            float ratio = widthRatio;
+            if (heightRatio > widthRatio) {
+                ratio = heightRatio;
+            }
+
+            int width = (int) (bestWidth / ratio);
+            int height = (int) (bestHeight / ratio);
+
+            RelativeLayout.LayoutParams layProp = new RelativeLayout.LayoutParams(width, height);
+            surfaceView.setLayoutParams(layProp);
+        }
+
         private Camera.Size findBestPreviewSize(Camera.Parameters cameraParameters, int width, int height) {
             List<Camera.Size> sizes = cameraParameters.getSupportedPreviewSizes();
             Camera.Size bestSize = null;
             for (Camera.Size size : sizes) {
+                int cameraWidth = size.height;
+                int camerHeight = size.width;
+
+                Log.d(tag, "Preview size: " + size.width + "x" + size.height + " ratio: " + ((float) width / height) + " available: " + width + "x" + height);
+
                 if ((size.width <= width && size.height <= height) || (size.height <= width && size.width <= height)) {
                     if (bestSize == null) {
                         bestSize = size;
@@ -102,6 +127,7 @@ public class TakePhotoFragment extends Fragment {
                     }
                 }
             }
+            Log.d(tag, "Preview size selected: " + bestSize.width + "x" + bestSize.height);
 
             return bestSize;
         }
@@ -158,6 +184,8 @@ public class TakePhotoFragment extends Fragment {
 
     private Camera camera;
 
+    private SurfaceView surfaceView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,7 +196,7 @@ public class TakePhotoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_take_photo, container, false);
 
-        SurfaceView surfaceView = (SurfaceView) view.findViewById(R.id.fragment_take_photo_surfaceView);
+        surfaceView = (SurfaceView) view.findViewById(R.id.fragment_take_photo_surfaceView);
         SurfaceHolder surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(surfaceHolderCallback);
 
