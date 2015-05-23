@@ -2,6 +2,7 @@ package pl.openpkw.openpkwmobile.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.activities.OpenPKWActivity;
 import pl.openpkw.openpkwmobile.models.UserRegister;
 import pl.openpkw.openpkwmobile.network.RestClient;
+import pl.openpkw.openpkwmobile.utils.CustomToast;
 import pl.openpkw.openpkwmobile.utils.EmailValidator;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -53,7 +55,7 @@ public class RegisterFragment extends Fragment {
                     if (EmailValidator.isEmailValid(email)) {
                         checkIsEmailExists(firstName, lastName, email, phone);
                     } else {
-                        Toast.makeText(getActivity(), getActivity().getString(R.string.toast_prestore_emailnotvalid), Toast.LENGTH_SHORT).show();
+                       Toast.makeText(getActivity(), getActivity().getString(R.string.toast_prestore_emailnotvalid), Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(getActivity(), getActivity().getString(R.string.register_fill_all_fields), Toast.LENGTH_SHORT).show();
@@ -80,7 +82,7 @@ public class RegisterFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                CustomToast.showToast(error.getMessage(), 5, getActivity());
             }
         };
 
@@ -100,7 +102,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void success(String responseString, Response response) {
                 getActivity().finish();
-                Toast.makeText(getActivity(), getActivity().getString(R.string.register_ok), Toast.LENGTH_LONG).show();
+                CustomToast.showToast(getActivity().getString(R.string.register_ok), 9, getActivity());
             }
 
             @Override
