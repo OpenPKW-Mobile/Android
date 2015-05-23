@@ -279,10 +279,12 @@ public class VotingFormFragment extends Fragment {
     };
 
     private void runTakePhoto() {
+        mNextButton.setEnabled(false);
         RestClient.get(getActivity().getApplicationContext()).submitProtocol(user.getLogin(), user.getToken(), commission.getPkwId(), protocol, new Callback<Void>() {
 
             @Override
             public void success(Void aVoid, Response response) {
+                mNextButton.setEnabled(true);
                 Context ctx = getActivity().getApplicationContext();
                 Toast.makeText(ctx, ctx.getString(R.string.fvoting_protocol_successfully_sent), Toast.LENGTH_LONG).show();
 
@@ -295,11 +297,14 @@ public class VotingFormFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
+                mNextButton.setEnabled(true);
                 OfflineStorage.addProtocolForUpload(getActivity().getApplicationContext(), new Protocol(protocol, commission.getPkwId()));
                 Context ctx = getActivity().getApplicationContext();
                 Toast.makeText(ctx, ctx.getString(R.string.fvoting_protocol_send_later), Toast.LENGTH_LONG).show();
 
                 Intent takePhoto = new Intent(getActivity(), TakePhotosActivity.class);
+                takePhoto.putExtra(TakePhotosActivity.COMMISSION_ID, commission.getCommissionNumber());
+                takePhoto.putExtra(TakePhotosActivity.PKW_ID, commission.getPkwId());
                 startActivity(takePhoto);
                 getActivity().finish();
             }

@@ -133,16 +133,23 @@ public class SendImagesFragment extends Fragment {
     private void startService() {
         Log.d(tag, "starting service");
         images = listImages();
-        setImage(0);
-        progressBar.setProgress(0);
-        progressBar.setMax(images.length);
-        windowMode = WndMode.SENDING;
+        if (images != null && images.length > 0) {
+            setImage(0);
+            progressBar.setProgress(0);
+            progressBar.setMax(images.length);
+            windowMode = WndMode.SENDING;
+        }
+        else {
+            windowMode = WndMode.SENDED;
+        }
         setWindowLook();
 
-        Intent sendImagesServiceIntent = new Intent(getActivity(), SendImagesService.class);
-        sendImagesServiceIntent.putExtra(SendImagesService.PKWID_EXTRA, pkwId);
-        sendImagesServiceIntent.putExtra(SendImagesService.IMAGESLIST_EXTRA, imgsDir);
-        getActivity().startService(sendImagesServiceIntent);
+        if (images != null && images.length > 0) {
+            Intent sendImagesServiceIntent = new Intent(getActivity(), SendImagesService.class);
+            sendImagesServiceIntent.putExtra(SendImagesService.PKWID_EXTRA, pkwId);
+            sendImagesServiceIntent.putExtra(SendImagesService.IMAGESLIST_EXTRA, imgsDir);
+            getActivity().startService(sendImagesServiceIntent);
+        }
     }
 
     @Override
@@ -237,7 +244,7 @@ public class SendImagesFragment extends Fragment {
     }
 
     private void setImage(int index) {
-        if (index < images.length) {
+        if (images != null && index < images.length) {
             Bitmap bmp = BitmapFactory.decodeFile(getThumbnailPath(images[index].getAbsolutePath()));
             imageView.setImageBitmap(bmp);
         } else {
@@ -270,7 +277,9 @@ public class SendImagesFragment extends Fragment {
             if (finished == true) {
                 if (success == true) {
                     windowMode = WndMode.SENDED;
-                    Toast.makeText(getActivity(), R.string.fragment_send_images_ok, Toast.LENGTH_LONG).show();
+                    if (images != null && images.length != 0) {
+                        Toast.makeText(getActivity(), R.string.fragment_send_images_ok, Toast.LENGTH_LONG).show();
+                    }
                 } else {
                     windowMode = WndMode.ERROR;
                     Toast.makeText(getActivity(), R.string.fragment_send_images_failed, Toast.LENGTH_LONG).show();

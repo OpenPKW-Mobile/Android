@@ -1,100 +1,100 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/fragment_send_images_header_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/fragment.send.images.header.text.positive"
-        android:textSize="15sp" />
-
-    <TableLayout
-        android:id="@+id/fragment_send_images_center_linear_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/fragment_send_images_footer_text"
-        android:layout_below="@+id/fragment_send_images_header_text">
-
-        <TableRow
+            android:id="@+id/fragment_send_images_header_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:gravity="center"
-            android:padding="10dp">
+            android:gravity="center_horizontal"
+            android:text="@string/fragment.send.images.header.text.positive"
+            android:textSize="15sp"/>
+
+    <TableLayout
+            android:id="@+id/fragment_send_images_center_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/fragment_send_images_footer_text"
+            android:layout_below="@+id/fragment_send_images_header_text">
+
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:padding="10dp">
 
             <ImageView
-                android:id="@+id/fragment_send_images_imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|bottom"
-                android:layout_weight="4" />
+                    android:id="@+id/fragment_send_images_imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|bottom"
+                    android:layout_weight="4"/>
         </TableRow>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center|top"
-            android:padding="10dp">
-
-            <ProgressBar
-                android:id="@+id/fragment_send_images_progressBar"
-                style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="center|top"
+                android:padding="10dp">
+
+            <ProgressBar
+                    android:id="@+id/fragment_send_images_progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
         </TableRow>
     </TableLayout>
 
     <TextView
-        android:id="@+id/fragment_send_images_footer_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/fragment_send_images_buttons_linear_layout"
-        android:gravity="center_horizontal"
-        android:text="@string/fragment.send.images.footer.text.positive" />
+            android:id="@+id/fragment_send_images_footer_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/fragment_send_images_buttons_linear_layout"
+            android:gravity="center_horizontal"
+            android:text="@string/fragment.send.images.footer.text.positive"/>
 
     <LinearLayout
-        android:id="@+id/fragment_send_images_buttons_linear_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_horizontal|center_vertical">
+            android:id="@+id/fragment_send_images_buttons_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal|center_vertical">
 
         <Button
-            android:id="@+id/fragment_send_images_no_button"
-            style="@style/green_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
-            android:text="@string/fragment.photo.preview.repeat.button" />
+                android:id="@+id/fragment_send_images_no_button"
+                style="@style/green_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:text="@string/fragment.photo.preview.repeat.button"/>
         <!-- TODO baslow: change button! -->
         <Button
-            android:id="@+id/fragment_send_images_yes_button"
-            style="@style/green_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
-            android:text="@string/fragment.send.images.button.close" />
+                android:id="@+id/fragment_send_images_yes_button"
+                style="@style/green_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:text="@string/fragment.send.images.button.close"/>
     </LinearLayout>
 
     <RelativeLayout
-        android:visibility="invisible"
-        android:id="@+id/fragment_send_images_final"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/fragment_send_images_footer_text"
-        android:layout_below="@+id/fragment_send_images_header_text"
-        android:gravity="center_vertical|center_horizontal"
-        android:background="@color/rules.fragment.background">
+            android:visibility="invisible"
+            android:id="@+id/fragment_send_images_final"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/fragment_send_images_footer_text"
+            android:layout_below="@+id/fragment_send_images_header_text"
+            android:gravity="center_vertical|center_horizontal"
+            android:background="@color/rules.fragment.background">
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -106,15 +106,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"
-                    android:src="@drawable/urna" />
+                    android:src="@drawable/urna"/>
 
             <TextView
-                android:id="@+id/fragment_send_images_final_text"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal|top"
-                android:text="@string/fragment.send.images.final.text.with.results"
-                android:textSize="20dp"/>
+                    android:id="@+id/fragment_send_images_final_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal|top"
+                    android:text="@string/fragment.send.images.final.text.with.results"
+                    android:textSize="20dp"/>
+
+            <TextView
+                    android:id="@+id/fragment_send_images_final_text_link"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal|top"
+                    android:autoLink="web"
+                    android:text="@string/fragment.send.images.final.text.with.results.link"
+                    android:textSize="20dp"/>
 
         </LinearLayout>
 
