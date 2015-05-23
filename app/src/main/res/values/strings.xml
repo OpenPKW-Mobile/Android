@@ -34,13 +34,13 @@
     <string name="fvoting.validcards.label">II.11. Liczba kart ważnych: </string>
     <string name="fvoting.nonvalidvotes.label">II.12 Liczba głosów nieważnych \n (z kart ważnych): </string>
     <string name="fvoting.validvotes.label">II.13. Liczba głosów ważnych oddanych łącznie na wszystkich kandydatów \n (z kart ważnych): </string>
-    <string name="fvoting.votingcardsdistributed.label">I.4. Liczba wyborców którym wydano karty do głosowania: </string>
+    <string name="fvoting.votingcardsdistributed.label">I.4. Liczba wyborców, którym wydano karty do głosowania: </string>
     <string name="network_check_internet_connection">Sprawdź swoje połączenie internetowe</string>
     <string name="login.error.incorrectloginorpassword">Nieprawidłowy login lub hasło</string>
     <string name="internal.server.error">Wystąpił błąd</string>
     <string name="login.error.nointernetconnection">Brak połączenia internetowego!\nSprawdź swoje ustawienia sieciowe</string>
-    <string name="filter.commissions.label.top">Wyszukaj Komisję z której przekazujesz dane</string>
-    <string name="filter.commissions.label">Wpisz kod terytorialny gminy w której znajduje się Twoja komisja (znajdziesz go na protokole wyborczym)</string>
+    <string name="filter.commissions.label.top">Wyszukaj komisję, z której przekazujesz dane</string>
+    <string name="filter.commissions.label">Wpisz kod terytorialny gminy, w której znajduje się Twoja komisja (znajdziesz go na protokole wyborczym)</string>
     <string name="filter.commissions.edittext.teritorial.code">Kod terytorialny</string>
     <string name="filter.commissions.edittext.commission.number">Nr obwodu</string>
     <string name="filter.commissions.edittext.no.teritorial.code">Wprowadź kod terytorialny</string>
@@ -52,16 +52,16 @@
     <string name="empty.string"></string>
     <string name="activity.take.photos.error.message.cannot.create.directory">Nie można utworzyć katalogu docelowego</string>
     <string name="activity.take.photos.error.message.no.external.memory">Brak pamięci zewnętrznej</string>
-    <string name="fragment.take.photos.header.label">Wprowadzasz Dane Dla</string>
-    <string name="fragment.take.photo.header.label">Zrób Zdjęcie Każdej Pojedynczej i Kolejnej stronie\nPROTOKOŁU WYBORCZEGO</string>
+    <string name="fragment.take.photos.header.label">Wprowadzasz dane dla</string>
+    <string name="fragment.take.photo.header.label">Zrób zdjęcie każdej pojedynczej i kolejnej stronie\nPROTOKOŁU WYBORCZEGO</string>
     <string name="fragment.take.photo.finish.button">Koniec zdjęć</string>
     <string name="fragment.take.photo.get.image.button">Zrób zdjęcie</string>
     <string name="fragment.take.photo.error.cannot.start.preview">Nie można ustawić podglądu</string>
     <string name="fragment.take.photo.error.cannot.start.camera">Nie można uruchomić kamery</string>
-    <string name="fragment.photo.preview.header.label">Czy zdjęcje jest wyraźne i dobrze wykadrowane?\nJeśli Nie Ponów Próbę</string>
+    <string name="fragment.photo.preview.header.label">Czy zdjęcje jest wyraźne i dobrze wykadrowane?\nJeśli nie ponów próbę</string>
     <string name="fragment.photo.preview.repeat.button">Ponów</string>
     <string name="fragment.photo.preview.next.button">Kolejne</string>
-    <string name="fragment.photos.header">Przesyłasz Następujące Zdjęcia:</string>
+    <string name="fragment.photos.header">Przesyłasz następujące zdjęcia:</string>
     <string name="fragment.photos.sendButton">Wyślij</string>
 
     <string name="fragment.send.images.header.in.progress">Trwa przesyłanie zdjęć</string>
@@ -108,7 +108,7 @@
     <string name="soft_validation__1">Liczba wyborców, którym wydano karty do głosowania nie powinna przekraczać 90% liczby wyborców uprawnionych do  głosowania</string>
     <string name="soft_validation__2">Liczba wyborców uprawnionych do głosowania nie powinna być mniejsza niż liczba kart ważnych.</string>
     <string name="soft_validation__3">Liczba kart ważnych nie powinna być  większa od liczby wyborców uprawnionych do głosowania.</string>
-    <string name="error_limit">Wartoś powinna być mniejsza niż</string>
+    <string name="error_limit">Wartość powinna być mniejsza niż</string>
 	<string name="fvoting.protocol.successfully.sent">Protokół został pomyślnie wysłany!</string>
     <string name="fvoting.protocol.send.later">Protokół zostanie wysłany po ustanowieniu połączenia internetowego</string>
     <string name="fvoting.candidates.label">II.14. Kandydaci otrzymali głosów ważnych :</string>
@@ -117,9 +117,9 @@
 
     <string name="global.step" formatted="false">Krok %s z %s</string>
     <string name="summary.finish">Zakończ</string>
-    <string name="summary.retry">Spróbuj Ponownie</string>
-    <string name="summary.info.success">Twoje Dane zostały poprawnie przesłane na Serwer</string>
-    <string name="summary.info.failed">Twoje Dane nie zostały przesłane na Serwer</string>
-    <string name="summary.detail.success">Dziękujemy za poświęcony czas i dobrze wykonaną misję społeczną :*</string>
+    <string name="summary.retry">Spróbuj ponownie</string>
+    <string name="summary.info.success">Twoje dane zostały poprawnie przesłane na serwer</string>
+    <string name="summary.info.failed">Twoje dane nie zostały przesłane na serwer</string>
+    <string name="summary.detail.success">Dziękujemy za poświęcony czas i dobrze wykonaną misję społeczną</string>
     <string name="summary.detail.failed">Sprawdź ustawienia czy jesteś połączony z Internetem i spróbuj ponownie.</string>
 </resources>
