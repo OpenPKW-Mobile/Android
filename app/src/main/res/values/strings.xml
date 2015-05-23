@@ -55,7 +55,7 @@
     <string name="fragment.take.photos.header.label">Wprowadzasz Dane Dla</string>
     <string name="fragment.take.photo.header.label">Zrób Zdjęcie Każdej Pojedynczej i Kolejnej stronie\nPROTOKOŁU WYBORCZEGO</string>
     <string name="fragment.take.photo.finish.button">Koniec zdjęć</string>
-    <string name="fragment.take.photo.get.image.button">Dalej</string>
+    <string name="fragment.take.photo.get.image.button">Zrób zdjęcie</string>
     <string name="fragment.take.photo.error.cannot.start.preview">Nie można ustawić podglądu</string>
     <string name="fragment.take.photo.error.cannot.start.camera">Nie można uruchomić kamery</string>
     <string name="fragment.photo.preview.header.label">Czy zdjęcje jest wyraźne i dobrze wykadrowane?\nJeśli Nie Ponów Próbę</string>
@@ -79,7 +79,8 @@
     <string name="fragment.send.images.saved">Twoje dane zostały zapisane w pamięci telefonu</string>
     <string name="fragment.send.images.will.send.later">Zostaną one przesłane na serwer automatycznie gdy połączysz się z Internetem</string>
 
-    <string name="fragment.send.images.final.text.with.results">Wyniki przekażemy na:\notwartapw.pl</string>
+    <string name="fragment.send.images.final.text.with.results">Wyniki przekażemy na:</string>
+    <string name="fragment.send.images.final.text.with.results.link">otwartapw.pl</string>
 
     <string name="fragment.photo.preview.dont.have.images">Nie wykonałeś żadnych zdjęć. Czy chcesz kontynuować bez wysyłania fotografii protokołu wyborczego.</string>
     <string name="dialog.ok">Tak</string>

@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.activities.OpenPKWActivity;
 import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
+import pl.openpkw.openpkwmobile.network.NetworkManager;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -29,6 +30,7 @@ import java.util.List;
 public class PhotosFragment extends Fragment {
 
     private PhotosAdapter photosAdapter;
+    private AlertDialog alertDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,11 @@ public class PhotosFragment extends Fragment {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TakePhotosActivity) getActivity()).switchToSendImages(SendImagesFragment.WndMode.SENDING);
+                SendImagesFragment.WndMode mode = SendImagesFragment.WndMode.ERROR;
+                if (NetworkManager.isOnline(getActivity())) {
+                    mode = SendImagesFragment.WndMode.SENDING;
+                }
+                ((TakePhotosActivity) getActivity()).switchToSendImages(mode);
             }
         });
 
@@ -52,6 +58,28 @@ public class PhotosFragment extends Fragment {
 
         photosAdapter = new PhotosAdapter(view.getContext());
         gridView.setAdapter(photosAdapter);
+
+        alertDialog = new AlertDialog.Builder(getActivity()).
+                setMessage(R.string.fragment_photo_preview_dont_have_images).
+                setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ((TakePhotosActivity) getActivity()).switchToSendImages(SendImagesFragment.WndMode.SENDED);
+                    }
+                }).
+                setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ((TakePhotosActivity) getActivity()).switchToImageTake();
+                    }
+                }).
+                setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        ((TakePhotosActivity) getActivity()).switchToImageTake();
+                    }
+                }).
+                create();
 
         ((OpenPKWActivity)getActivity()).setStepNo(view.findViewById(R.id.step), 5);
         return view;
@@ -62,28 +90,9 @@ public class PhotosFragment extends Fragment {
         super.onResume();
         getAllImages();
 
-        if (photosAdapter.getCount() == 0) {
+        if (photosAdapter.getCount() == 0 && !alertDialog.isShowing()) {
             // dialog
-            new AlertDialog.Builder(getActivity()).
-                    setMessage(R.string.fragment_photo_preview_dont_have_images).
-                    setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ((TakePhotosActivity) getActivity()).switchToSendImages(SendImagesFragment.WndMode.SENDED);
-                        }
-                    }).
-                    setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ((TakePhotosActivity) getActivity()).switchToImageTake();
-                        }
-                    }).
-                    setOnCancelListener(new DialogInterface.OnCancelListener() {
-                        @Override
-                        public void onCancel(DialogInterface dialog) {
-                            ((TakePhotosActivity) getActivity()).switchToImageTake();
-                        }
-                    }).create().show();
+            alertDialog.show();
         }
     }
 
