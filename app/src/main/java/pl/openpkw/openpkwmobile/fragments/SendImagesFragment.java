@@ -195,6 +195,8 @@ public class SendImagesFragment extends Fragment {
     private void setWindowLook() {
         switch (windowMode) {
             case SENDING:
+                imageView.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
                 rlfinal.setVisibility(View.INVISIBLE);
                 headerTextView.setVisibility(View.VISIBLE);
                 headerTextView.setText(R.string.fragment_send_images_header_in_progress);
@@ -204,6 +206,8 @@ public class SendImagesFragment extends Fragment {
                 yesButton.setVisibility(View.INVISIBLE);
                 break;
             case SENDED:
+                imageView.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
                 rlfinal.setVisibility(View.VISIBLE);
                 headerTextView.setVisibility(View.VISIBLE);
                 headerTextView.setText(R.string.fragment_send_images_header_text_positive);
@@ -214,6 +218,8 @@ public class SendImagesFragment extends Fragment {
                 yesButton.setVisibility(View.VISIBLE);
                 break;
             case ERROR:
+                imageView.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
                 rlfinal.setVisibility(View.INVISIBLE);
                 headerTextView.setVisibility(View.INVISIBLE);
                 footerTextView.setVisibility(View.VISIBLE);
@@ -224,6 +230,8 @@ public class SendImagesFragment extends Fragment {
                 yesButton.setText(R.string.fragment_send_images_save);
                 break;
             case POST_ERROR:
+                imageView.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
                 rlfinal.setVisibility(View.VISIBLE);
                 headerTextView.setVisibility(View.VISIBLE);
                 headerTextView.setText(R.string.fragment_send_images_saved);

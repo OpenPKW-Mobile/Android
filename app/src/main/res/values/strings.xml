@@ -74,7 +74,7 @@
 
     <string name="fragment.send.images.header.connection.error">Sprawdz ustawienia czy jesteś połączony z Internetem i spróbuj ponownie</string>
     <string name="fragment.send.images.try.next.time">Spróbuj ponownie</string>
-    <string name="fragment.send.images.save">Zapisz</string>
+    <string name="fragment.send.images.save">Wyślij później</string>
 
     <string name="fragment.send.images.saved">Twoje dane zostały zapisane w pamięci telefonu</string>
     <string name="fragment.send.images.will.send.later">Zostaną one przesłane na serwer automatycznie gdy połączysz się z Internetem</string>
@@ -86,7 +86,7 @@
     <string name="dialog.ok">Tak</string>
     <string name="dialog.cancel">Nie</string>
 
-    <string name="fragment.send.images.ok">Zdjęcia zostały poprawnie wysłane na serrwer</string>
+    <string name="fragment.send.images.ok">Zdjęcia zostały poprawnie wysłane na serwer</string>
     <string name="fragment.send.images.failed">Nie można wysłać zdjęć na serwer</string>
 
     <string name="fragment.send.images.button.close">Zamknij</string>

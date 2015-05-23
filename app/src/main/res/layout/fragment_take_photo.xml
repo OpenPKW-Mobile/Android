@@ -46,6 +46,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
                 android:padding="10dp"
                 android:text="@string/fragment.take.photo.finish.button"/>
         <!-- TODO baslow: change button! -->
@@ -57,6 +58,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
                 android:padding="10dp"
                 android:text="@string/fragment.take.photo.get.image.button"/>
 
