@@ -242,14 +242,18 @@ public class TakePhotoFragment extends Fragment {
     }
 
     private void takeAPicture() {
-        List<String> supportedFocusModes = camera.getParameters().getSupportedFocusModes();
-        boolean hasAutoFocus = supportedFocusModes != null && supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO);
+        boolean hasAutoFocus = false;
+        if (getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_AUTOFOCUS)) {
+            List<String> supportedFocusModes = camera.getParameters().getSupportedFocusModes();
+            hasAutoFocus = supportedFocusModes != null && supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO);
+        }
+
+        Log.d(tag, "has auto focus? " + hasAutoFocus);
 
         if (hasAutoFocus) {
             Log.d(tag, "take a picture with auto focus");
             camera.autoFocus(autoFocusCallback);
-        }
-        else {
+        } else {
             Log.d(tag, "take a picture without auto focus");
             camera.takePicture(cameraShutterCallback, null, cameraPictureCallback);
         }
