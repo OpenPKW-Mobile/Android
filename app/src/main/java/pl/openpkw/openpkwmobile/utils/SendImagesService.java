@@ -91,18 +91,15 @@ public class SendImagesService extends IntentService {
         try {
             JSONObject metadataJson = makeMetadataJson();
             String metadataJsonString = metadataJson.toString();
-            Log.d(tag, "metadata request json: " + metadataJsonString);
 
             StringEntity entity = new StringEntity(metadataJsonString);
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
             HttpResponse response = sendHttpRequest(new HttpPost("http://openpkw.nazwa.pl/api/image-metadata.php"), entity);
             String responseString = EntityUtils.toString(response.getEntity());
-            Log.d(tag, "response: " + responseString);
 
             JSONObject jsonResp = new JSONObject(responseString);
             String uploadUrl = jsonResp.getString("uploadUrl");
-            Log.d(tag, "uploadURL: " + uploadUrl);
 
             // -----
 
@@ -110,7 +107,6 @@ public class SendImagesService extends IntentService {
 
             HttpResponse uploadResponse = sendHttpRequest(new HttpPost(uploadUrl), imgEntity);
             String uploadResponseString = EntityUtils.toString(uploadResponse.getEntity());
-            Log.d(tag, "upload response: " + uploadResponseString);
 
             JSONObject uploadJsonResp = new JSONObject(uploadResponseString);
             int bytes = uploadJsonResp.getInt("bytesCount");
