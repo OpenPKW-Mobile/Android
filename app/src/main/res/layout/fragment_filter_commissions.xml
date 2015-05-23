@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/filter.commissions.label"
+        android:gravity="center_vertical|center_horizontal"
         android:padding="10dp" />
 
     <LinearLayout
@@ -82,10 +83,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/filter.commissions.example.label"
+                android:paddingBottom="10dp"
+                android:layout_above="@+id/fragment_filter_commissions_protocol_image" />
+
         <ImageView
+            android:id="@+id/fragment_filter_commissions_protocol_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/protokol_wyborczy"/>
+            android:adjustViewBounds="true"
+            android:src="@drawable/protokol_wyborczy"
+            android:layout_above="@+id/step"/>
 
         <TextView
             android:text="u@string/general.step"

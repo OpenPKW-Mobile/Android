@@ -20,7 +20,7 @@
     <string name="register.buttonlabel.register">Zarejestruj</string>
     <string name="register.fill.all.fields">Wypełnij wszystkie pola</string>
     <string name="register.email.exists">Podany adres e-mail już istnieje w naszej bazie</string>
-    <string name="register.ok">Rejestracja przebiegła prawidłowo, na podany adres e-mail zostanie wysłana informacja z dalszymi krokami</string>
+    <string name="register.ok">Rejestracja przebiegła prawidłowo, na podany adres e-mail w dniu 24.05.2015 ok godziny 18:00 zostanie wysłana informacja z dalszymi krokami</string>
     <string name="global.search">Szukaj</string>
     <string name="login.label.newaccount">Nowy użytkownik</string>
     <string name="login.label.fpassword">Nie pamiętasz hasła?</string>
@@ -40,7 +40,8 @@
     <string name="internal.server.error">Wystąpił błąd</string>
     <string name="login.error.nointernetconnection">Brak połączenia internetowego!\nSprawdź swoje ustawienia sieciowe</string>
     <string name="filter.commissions.label.top">Wyszukaj komisję, z której przekazujesz dane</string>
-    <string name="filter.commissions.label">Wpisz kod terytorialny i nr obwodu z protokołu wyborczego dla Twojej komisji lokalnej (a nie z ilustracji poniżej)</string>
+    <string name="filter.commissions.label">Wpisz kod terytorialny gminy i nr obwodu głosowania z protokołu wyborczego dla Twojej komisji lokalnej</string>
+    <string name="filter.commissions.example.label">Przykladowe dane w ramkach:</string>
     <string name="filter.commissions.edittext.teritorial.code">Kod terytorialny</string>
     <string name="filter.commissions.edittext.commission.number">Nr obwodu</string>
     <string name="filter.commissions.edittext.no.teritorial.code">Wprowadź kod terytorialny</string>

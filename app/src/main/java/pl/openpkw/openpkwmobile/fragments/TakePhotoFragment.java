@@ -47,7 +47,6 @@ public class TakePhotoFragment extends Fragment {
                 setCameraParameters(holder.getSurfaceFrame().width(), holder.getSurfaceFrame().height());
 
                 try {
-                    Log.d(tag, "Setting preview...");
                     camera.setPreviewDisplay(holder);
                 } catch (IOException ex) {
                     Toast.makeText(getActivity(), R.string.fragment_take_photo_error_cannot_start_preview, Toast.LENGTH_LONG).show();
@@ -111,8 +110,6 @@ public class TakePhotoFragment extends Fragment {
                 int cameraWidth = size.height;
                 int camerHeight = size.width;
 
-                Log.d(tag, "Preview size: " + size.width + "x" + size.height + " ratio: " + ((float) width / height) + " available: " + width + "x" + height);
-
                 if ((size.width <= width && size.height <= height) || (size.height <= width && size.width <= height)) {
                     if (bestSize == null) {
                         bestSize = size;
@@ -127,7 +124,6 @@ public class TakePhotoFragment extends Fragment {
                     }
                 }
             }
-            Log.d(tag, "Preview size selected: " + bestSize.width + "x" + bestSize.height);
 
             return bestSize;
         }
@@ -235,7 +231,6 @@ public class TakePhotoFragment extends Fragment {
 
     @Override
     public void onPause() {
-        Log.d(tag, "onPause");
         stopPreview();
         releaseCamera();
         super.onPause();
@@ -247,8 +242,6 @@ public class TakePhotoFragment extends Fragment {
             List<String> supportedFocusModes = camera.getParameters().getSupportedFocusModes();
             hasAutoFocus = supportedFocusModes != null && supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO);
         }
-
-        Log.d(tag, "has auto focus? " + hasAutoFocus);
 
         if (hasAutoFocus) {
             Log.d(tag, "take a picture with auto focus");
