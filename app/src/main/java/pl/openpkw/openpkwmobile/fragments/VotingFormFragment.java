@@ -15,7 +15,18 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.activities.FilterCommissionsActivity;
@@ -35,9 +46,6 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by fockeRR on 28.04.15.
  */
@@ -46,7 +54,7 @@ public class VotingFormFragment extends Fragment {
     public static final String TAG = "VotingFormFragment";
 
     private ScrollView mScrollView;
-//    private TextView mCommisionNumber;
+    //    private TextView mCommisionNumber;
     private TextView mCommisionId;
     private TextView mCommisionName;
     private TextView mCommisionAddress;
@@ -109,7 +117,7 @@ public class VotingFormFragment extends Fragment {
         mSoftError2 = (TextView) v.findViewById(R.id.tvSoftError2);
         mSoftError3 = (TextView) v.findViewById(R.id.tvSoftError3);
 
-        ((OpenPKWActivity)getActivity()).setStepNo(v.findViewById(R.id.step),4);
+        ((OpenPKWActivity) getActivity()).setStepNo(v.findViewById(R.id.step), 4);
         return v;
     }
 
@@ -169,7 +177,9 @@ public class VotingFormFragment extends Fragment {
             if (getArguments() != null && getArguments().containsKey("commission") && getArguments().containsKey("user")) {
                 user = (User) getArguments().getSerializable("user");
                 commission = (Commission) getArguments().get("commission");
+                mScrollView.setVisibility(View.GONE);
                 mProgress.setVisibility(View.VISIBLE);
+
                 // executing background job
                 GetCommissionDetailsAT backgroundJob = new GetCommissionDetailsAT(getActivity().getApplicationContext(), user, commission.getPkwId(), callback);
                 backgroundJob.execute();
@@ -195,7 +205,7 @@ public class VotingFormFragment extends Fragment {
 
 
     private void fillLayoutWithData(CommissionDetails cDetails) {
-       // mCommisionNumber.setText(cDetails.getOkregowa().getName());
+        // mCommisionNumber.setText(cDetails.getOkregowa().getName());
         mCommisionId.setText(cDetails.getPkwId());
         mCommisionName.setText(cDetails.getName());
         mCommisionAddress.setText(cDetails.getAddress());
