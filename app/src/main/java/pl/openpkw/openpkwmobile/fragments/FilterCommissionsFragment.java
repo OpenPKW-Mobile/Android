@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -176,7 +177,9 @@ public class FilterCommissionsFragment extends Fragment {
                             Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(getActivity().getApplicationContext(), getActivity().getString(R.string.filter_commissions_no_commission_found), Toast.LENGTH_SHORT).show();
+                Toast toast = Toast.makeText(getActivity().getApplicationContext(), getActivity().getString(R.string.filter_commissions_no_commission_found), Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             }
         }
     }

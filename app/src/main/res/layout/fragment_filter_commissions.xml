@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_gravity="center"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/filter.commissions.label.top"
         android:layout_width="match_parent"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:textStyle="bold"
         android:layout_height="wrap_content"
         android:background="@drawable/border"
@@ -30,9 +31,12 @@
             android:id="@+id/filter.commissions.edittext.teritorial.code"
             android:layout_weight="0.5"
             android:layout_width="0dp"
+            android:background="@drawable/filter_commission_teryt_border"
             android:gravity="right"
+            android:padding="8dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin.login.edittext.user.left"
+            android:layout_marginLeft="10dp"
+            android:nextFocusDown="@+id/filter.commissions.edittext.coomission.number"
             android:maxLength="6"
             android:hint="@string/filter.commissions.edittext.teritorial.code"
             android:inputType="number"
@@ -49,10 +53,12 @@
             android:layout_weight="0.5"
             android:layout_width="0dp"
             android:maxLength="4"
+            android:padding="8dp"
+            android:background="@drawable/filter_commission_number_border"
             android:inputType="number"
             android:hint="@string/filter.commissions.edittext.commission.number"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin.login.edittext.user.right"
+            android:layout_marginRight="10dp"
             android:textSize="@dimen/fontsize.login.edittext" />
 
     </LinearLayout>
@@ -79,7 +85,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/protokol_wyborczy_kompresja"/>
+            android:src="@drawable/protokol_wyborczy"/>
 
         <TextView
             android:text="u@string/general.step"

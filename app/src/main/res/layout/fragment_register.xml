@@ -47,7 +47,6 @@
                 android:layout_below="@id/register.textview.firstname"
                 android:layout_marginLeft="@dimen/margin.login.edittext.user.left"
                 android:layout_marginRight="@dimen/margin.login.edittext.user.right"
-                android:layout_marginTop="@dimen/margin.login.edittext.user.top"
                 android:textSize="@dimen/fontsize.login.edittext" />
 
             <TextView
@@ -69,7 +68,6 @@
                 android:layout_below="@id/register.textview.lastname"
                 android:layout_marginLeft="@dimen/margin.login.edittext.password.left"
                 android:layout_marginRight="@dimen/margin.login.edittext.password.right"
-                android:layout_marginTop="@dimen/margin.login.edittext.password.top"
                 android:textSize="@dimen/fontsize.login.edittext" />
 
             <TextView
@@ -90,7 +88,6 @@
                 android:layout_below="@id/register.textview.email"
                 android:layout_marginLeft="@dimen/margin.login.edittext.password.left"
                 android:layout_marginRight="@dimen/margin.login.edittext.password.right"
-                android:layout_marginTop="@dimen/margin.login.edittext.password.top"
                 android:inputType="textEmailAddress"
                 android:textSize="@dimen/fontsize.login.edittext" />
 
@@ -112,7 +109,6 @@
                 android:layout_below="@id/register.textview.phone"
                 android:layout_marginLeft="@dimen/margin.login.edittext.password.left"
                 android:layout_marginRight="@dimen/margin.login.edittext.password.right"
-                android:layout_marginTop="@dimen/margin.login.edittext.password.top"
                 android:inputType="number"
                 android:textSize="@dimen/fontsize.login.edittext" />
 
