@@ -13,7 +13,7 @@ public class RestClient {
 
     private static API REST_CLIENT;
     private static String ROOT =
-            "http://dev.otwartapw.pl/opw/service";
+            "https://k.otwartapw.pl/opw/service";
 
 
     private RestClient() {
