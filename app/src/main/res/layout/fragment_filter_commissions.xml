@@ -1,46 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_gravity="center"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/filter.commissions.label.top"
         android:layout_width="match_parent"
-        android:gravity="center_horizontal"
-        android:textStyle="bold"
         android:layout_height="wrap_content"
         android:background="@drawable/border"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
         android:text="@string/filter.commissions.label.top"
-        android:padding="10dp" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/filter.commissions.label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/filter.commissions.label"
         android:gravity="center_vertical|center_horizontal"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:text="@string/filter.commissions.label" />
+
+
+    <Button
+        android:id="@+id/filter.commissions.scan.button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/filter.commissions.scan.button"
+        style="@style/orange_button"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:padding="10dp"
+        android:text="lub wprowadź ręcznie kod terytorialny" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/filter.commissions.edittext.teritorial.code"
-            android:layout_weight="0.5"
             android:layout_width="0dp"
-            android:background="@drawable/filter_commission_teryt_border"
-            android:gravity="right"
-            android:padding="8dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:nextFocusDown="@+id/filter.commissions.edittext.coomission.number"
-            android:maxLength="6"
+            android:layout_weight="0.5"
+            android:background="@drawable/filter_commission_teryt_border"
+            android:gravity="right"
             android:hint="@string/filter.commissions.edittext.teritorial.code"
             android:inputType="number"
+            android:maxLength="6"
+            android:nextFocusDown="@+id/filter.commissions.edittext.coomission.number"
+            android:padding="8dp"
             android:textSize="@dimen/fontsize.login.edittext" />
 
         <TextView
@@ -51,15 +69,15 @@
 
         <EditText
             android:id="@+id/filter.commissions.edittext.coomission.number"
-            android:layout_weight="0.5"
             android:layout_width="0dp"
-            android:maxLength="4"
-            android:padding="8dp"
-            android:background="@drawable/filter_commission_number_border"
-            android:inputType="number"
-            android:hint="@string/filter.commissions.edittext.commission.number"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/filter_commission_number_border"
+            android:hint="@string/filter.commissions.edittext.commission.number"
+            android:inputType="number"
+            android:maxLength="4"
+            android:padding="8dp"
             android:textSize="@dimen/fontsize.login.edittext" />
 
     </LinearLayout>
@@ -84,24 +102,24 @@
         android:layout_height="match_parent">
 
         <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/filter.commissions.example.label"
-                android:paddingBottom="10dp"
-                android:layout_above="@+id/fragment_filter_commissions_protocol_image" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/fragment_filter_commissions_protocol_image"
+            android:paddingBottom="10dp"
+            android:text="@string/filter.commissions.example.label" />
 
         <ImageView
             android:id="@+id/fragment_filter_commissions_protocol_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/step"
             android:adjustViewBounds="true"
-            android:src="@drawable/protokol_wyborczy"
-            android:layout_above="@+id/step"/>
+            android:src="@drawable/protokol_wyborczy" />
 
         <TextView
-            android:text="u@string/general.step"
             android:id="@+id/step"
-            style="@style/footerText" />
+            style="@style/footerText"
+            android:text="u@string/general.step" />
     </RelativeLayout>
 
 </LinearLayout>

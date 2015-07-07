@@ -40,7 +40,8 @@
     <string name="internal.server.error">Wystąpił błąd</string>
     <string name="login.error.nointernetconnection">Brak połączenia internetowego!\nSprawdź swoje ustawienia sieciowe</string>
     <string name="filter.commissions.label.top">Wyszukaj komisję, z której przekazujesz dane</string>
-    <string name="filter.commissions.label">Wpisz kod terytorialny gminy i nr obwodu głosowania z protokołu wyborczego dla Twojej komisji lokalnej</string>
+    <string name="filter.commissions.label">Skanuj Kod QR bądź wpisz ręcznie Kod Terytorialny Gminy w której znajduje się  Twoja Komisja (znajdziesz go na protokole wyborczym)</string>
+    <string name="filter.commissions.scan.button">Skanuj</string>
     <string name="filter.commissions.example.label">Przykladowe dane w ramkach:</string>
     <string name="filter.commissions.edittext.teritorial.code">Kod terytorialny</string>
     <string name="filter.commissions.edittext.commission.number">Nr obwodu</string>

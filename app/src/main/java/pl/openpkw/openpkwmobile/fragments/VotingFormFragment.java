@@ -25,6 +25,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,18 +37,11 @@ import pl.openpkw.openpkwmobile.activities.FilterCommissionsActivity;
 import pl.openpkw.openpkwmobile.activities.OpenPKWActivity;
 import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
 import pl.openpkw.openpkwmobile.concurrent.GetCommisionDetailsCallback;
-import pl.openpkw.openpkwmobile.concurrent.GetCommissionDetailsAT;
-import pl.openpkw.openpkwmobile.managers.OfflineStorage;
 import pl.openpkw.openpkwmobile.models.Candidate;
 import pl.openpkw.openpkwmobile.models.Commission;
 import pl.openpkw.openpkwmobile.models.CommissionDetails;
-import pl.openpkw.openpkwmobile.models.Protocol;
 import pl.openpkw.openpkwmobile.models.User;
-import pl.openpkw.openpkwmobile.network.RestClient;
 import pl.openpkw.openpkwmobile.views.CustomAlertDialog;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * Created by fockeRR on 28.04.15.
@@ -97,7 +94,6 @@ public class VotingFormFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_voting_form, container, false);
         mScrollView = (ScrollView) v.findViewById(R.id.fvoting_scrollview);
-//        mCommisionNumber = (TextView) v.findViewById(R.id.fvoting_commision_number);
         mCommisionId = (TextView) v.findViewById(R.id.fvoting_commision_id);
         mCommisionName = (TextView) v.findViewById(R.id.fvoting_commision_name);
         mCommisionAddress = (TextView) v.findViewById(R.id.fvoting_commision_address);
@@ -121,12 +117,13 @@ public class VotingFormFragment extends Fragment {
         return v;
     }
 
-    public static VotingFormFragment create(User user, Commission commission) {
+    public static VotingFormFragment create(User user, Commission commission, String qrCodeData) {
         VotingFormFragment votingFormFragment = new VotingFormFragment();
         votingFormFragment.setRetainInstance(true);
         Bundle args = new Bundle();
         args.putParcelable("commission", commission);
         args.putSerializable("user", user);
+        args.putString("qrcode_data", qrCodeData);
         votingFormFragment.setArguments(args);
         return votingFormFragment;
     }
@@ -180,15 +177,41 @@ public class VotingFormFragment extends Fragment {
                 mScrollView.setVisibility(View.GONE);
                 mProgress.setVisibility(View.VISIBLE);
 
-                // executing background job
-                GetCommissionDetailsAT backgroundJob = new GetCommissionDetailsAT(getActivity().getApplicationContext(), user, commission.getPkwId(), callback);
-                backgroundJob.execute();
+                // mocking objects
+                candidatesAndCommission = new CommissionDetails();
+                candidatesAndCommission.setAddress(commission.getAddress());
+                candidatesAndCommission.setPkwId(commission.getPkwId());
+                candidatesAndCommission.setName(commission.getName());
+                ArrayList<Candidate> candidates = new ArrayList<>(2);
+
+                Candidate k1 = new Candidate();
+                k1.setLastname("Duda");
+                k1.setFirstname("Andrzej Sebastian");
+                k1.setPkwId(1);
+                k1.setGlosow(500);
+                candidates.add(k1);
+
+                Candidate k2 = new Candidate();
+                k2.setLastname("Komorowski");
+                k2.setFirstname("Bronisław Maria");
+                k2.setPkwId(2);
+                k2.setGlosow(500);
+                candidates.add(k2);
+
+                candidatesAndCommission.setKandydatList(candidates);
             }
-        } else {
-            fillLayoutWithData(candidatesAndCommission);
-            mProgress.setVisibility(View.GONE);
-            mScrollView.setVisibility(View.VISIBLE);
         }
+        fillLayoutWithData(candidatesAndCommission);
+
+        if (getArguments() != null && getArguments().containsKey("qrcode_data")) {
+            String dataFromQR = getArguments().getString("qrcode_data");
+            if (dataFromQR != null)
+                fillWithScannedData(fromQRCode(dataFromQR));
+        }
+
+        mProgress.setVisibility(View.GONE);
+        mScrollView.setVisibility(View.VISIBLE);
+
     }
 
     @Override
@@ -247,6 +270,53 @@ public class VotingFormFragment extends Fragment {
         }
     }
 
+    private void fillWithScannedData(Map<String, Integer> resultsMap) {
+        if (mCandidates == null || resultsMap == null) {
+            return;
+        }
+        mAbleToVote.setText(String.valueOf(resultsMap.get("uprawnionych")));
+        mCards.setText(String.valueOf(resultsMap.get("glosujacych")));
+        mValidCards.setText(String.valueOf(resultsMap.get("kartWaznych")));
+        mInvalidVotes.setText(String.valueOf(resultsMap.get("glosowNieWaznych")));
+        mValidVotes.setText(String.valueOf(resultsMap.get("glosowWaznych")));
+
+        for (int i = 0, j = mCandidates.getChildCount(); i < j; i++) {
+            View view = mCandidates.getChildAt(i);
+            if (view instanceof TableRow) {
+                if (view.getTag() != null) {
+                    int pkwId = Integer.parseInt((String) view.getTag());
+                    if (resultsMap.containsKey(String.valueOf(pkwId))) {
+                        EditText editWithVotes = (EditText) view.findViewWithTag("votes");
+                        editWithVotes.setText(String.valueOf(resultsMap.get(String.valueOf(pkwId))));
+                    }
+
+                }
+            }
+        }
+    }
+
+    private Map<String, Integer> fromQRCode(String jsonString) {
+        Map<String, Integer> mapWithResults = new HashMap<>();
+        try {
+            JSONObject result = new JSONObject(jsonString);
+            mapWithResults.put("glosowWaznych", result.getInt("glosowWaznych"));
+            mapWithResults.put("glosujacych", result.getInt("glosujacych"));
+            mapWithResults.put("glosowNieWaznych", result.getInt("glosowNieWaznych"));
+            mapWithResults.put("kartWaznych", result.getInt("kartWaznych"));
+            mapWithResults.put("uprawnionych", result.getInt("uprawnionych"));
+
+            for (Candidate candidate : candidatesAndCommission.getKandydatList()) {
+                int candidateId = candidate.getPkwId();
+                if (result.has("k" + candidateId))
+                    mapWithResults.put(String.valueOf(candidateId), result.getInt("k" + candidateId));
+            }
+
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+        return mapWithResults;
+    }
+
     View.OnClickListener onNextButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -280,9 +350,13 @@ public class VotingFormFragment extends Fragment {
 
     private void runTakePhoto() {
         mNextButton.setEnabled(false);
-        RestClient.get(getActivity().getApplicationContext()).submitProtocol(user.getLogin(), user.getToken(), commission.getPkwId(), protocol, new Callback<Void>() {
-
-            @Override
+        //RestClient.get(getActivity().getApplicationContext()).submitProtocol(user.getLogin(), user.getToken(), commission.getPkwId(), protocol, new Callback<Void>() {
+        Intent takePhoto = new Intent(getActivity(), TakePhotosActivity.class);
+        takePhoto.putExtra(TakePhotosActivity.COMMISSION_ID, commission.getCommissionNumber());
+        takePhoto.putExtra(TakePhotosActivity.PKW_ID, commission.getPkwId());
+        startActivity(takePhoto);
+        getActivity().finish();
+ /*           @Override
             public void success(Void aVoid, Response response) {
                 mNextButton.setEnabled(true);
                 Context ctx = getActivity().getApplicationContext();
@@ -308,7 +382,7 @@ public class VotingFormFragment extends Fragment {
                 startActivity(takePhoto);
                 getActivity().finish();
             }
-        });
+        });*/
     }
 
     private boolean validateForm(Context ctx) {

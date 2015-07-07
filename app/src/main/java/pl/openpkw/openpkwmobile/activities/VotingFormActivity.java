@@ -1,5 +1,6 @@
 package pl.openpkw.openpkwmobile.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,16 +21,21 @@ public class VotingFormActivity extends OpenPKWActivity {
         setContentView(R.layout.activity_voting_form);
         User user = null;
         Commission commission = null;
+        String fromQRCode = null;
+        Intent i = getIntent();
         if (getIntent() != null && getIntent().hasExtra("user_extra") && getIntent().hasExtra("commission_extra")) {
             user = (User) getIntent().getSerializableExtra("user_extra");
             commission = (Commission) getIntent().getParcelableExtra("commission_extra");
+        }
+        if (getIntent() != null && getIntent().hasExtra("qrcode_extra")) {
+            fromQRCode = getIntent().getStringExtra("qrcode_extra");
         }
         if (user != null && commission != null) {
             FragmentManager fm = getSupportFragmentManager();
             VotingFormFragment fvFragment = (VotingFormFragment) fm.findFragmentByTag(VOTINGFORM_FRAGMENT_TAG);
             if (fvFragment == null) {
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.fvoting_fragment_container, VotingFormFragment.create(user, commission), VOTINGFORM_FRAGMENT_TAG);
+                ft.replace(R.id.fvoting_fragment_container, VotingFormFragment.create(user, commission,fromQRCode), VOTINGFORM_FRAGMENT_TAG);
                 ft.commit();
                 fm.executePendingTransactions();
             }

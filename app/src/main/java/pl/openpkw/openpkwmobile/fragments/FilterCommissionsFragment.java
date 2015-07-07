@@ -14,6 +14,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,10 +39,14 @@ public class FilterCommissionsFragment extends Fragment {
     private EditText teritorialCodeET;
     private EditText commissionNumberET;
     private Button searchCommission;
+    private Button scanCode;
     private User user;
+    private String toast;
+    String fromQRCode = null;
 
     public static String COMMISSION_EXTRA = "commission_extra";
     public static String USER_EXTRA = "user_extra";
+    public static String QRCODE_DATA_EXTRA = "qrcode_extra";
     Logger logger = Logger.getLogger(getClass().getSimpleName());
 
     public static FilterCommissionsFragment create(User user) {
@@ -62,6 +72,7 @@ public class FilterCommissionsFragment extends Fragment {
         teritorialCodeET = (EditText) v.findViewById(R.id.filter_commissions_edittext_teritorial_code);
         commissionNumberET = (EditText) v.findViewById(R.id.filter_commissions_edittext_coomission_number);
         searchCommission = (Button) v.findViewById(R.id.filter_commissions_search);
+        scanCode = (Button) v.findViewById(R.id.filter_commissions_scan_button);
 
         ((OpenPKWActivity) getActivity()).setStepNo(v.findViewById(R.id.step), 3);
         return v;
@@ -84,6 +95,12 @@ public class FilterCommissionsFragment extends Fragment {
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), getActivity().getString(R.string.filter_commissions_edittext_no_teritorial_code_is_short), Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        scanCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scan();
             }
         });
     }
@@ -115,8 +132,12 @@ public class FilterCommissionsFragment extends Fragment {
             try {
                 br = new BufferedReader(
                         new InputStreamReader(getActivity().getAssets().open("pollstations.csv")));
+                if (params.length == 3 && params[2] != null) {
+                    fromQRCode = new String(params[2]);
+                }
                 while ((line = br.readLine()) != null) {
                     String[] commissionRow = line.split(cvsSplitBy);
+
                     if (commissionRow[0].trim().contains(params[0]) && commissionRow[1].trim().equals(params[1])) {
                         commission = new Commission();
                         commission.setCommissionCity(commissionRow[2]);
@@ -169,6 +190,7 @@ public class FilterCommissionsFragment extends Fragment {
                     Intent votingFormActivity = new Intent(getActivity(), VotingFormActivity.class);
                     votingFormActivity.putExtra(COMMISSION_EXTRA, commission);
                     votingFormActivity.putExtra(USER_EXTRA, user);
+                    votingFormActivity.putExtra(QRCODE_DATA_EXTRA, fromQRCode);
                     startActivity(votingFormActivity);
                     getActivity().finish();
                 } else {
@@ -180,6 +202,31 @@ public class FilterCommissionsFragment extends Fragment {
                 Toast toast = Toast.makeText(getActivity().getApplicationContext(), getActivity().getString(R.string.filter_commissions_no_commission_found), Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
+            }
+        }
+    }
+
+    public void scan() {
+        IntentIntegrator.forSupportFragment(this).initiateScan();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+                toast = "Cancelled from fragment";
+            } else {
+                try {
+                    JSONObject jsonObject = new JSONObject(result.getContents());
+                    toast = "Scanned from fragment: " + result.getContents();
+                    String teritCode = jsonObject.getString("kodTerytorialnyGminy");
+                    String number = jsonObject.getString("nrObwoduGlosowania");
+                    new SearchCommission().execute(teritCode, number, result.getContents());
+                } catch (JSONException e) {
+                    logger.warning(e.getMessage());
+                }
+                //pass data to VotingFormActivity
             }
         }
     }

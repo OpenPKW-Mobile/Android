@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import pl.openpkw.openpkwmobile.R;
 import pl.openpkw.openpkwmobile.activities.FilterCommissionsActivity;
 import pl.openpkw.openpkwmobile.activities.OpenPKWActivity;
@@ -20,7 +21,7 @@ import pl.openpkw.openpkwmobile.activities.PasswordRestoreActivity;
 import pl.openpkw.openpkwmobile.activities.RegisterActivity;
 import pl.openpkw.openpkwmobile.managers.OfflineStorage;
 import pl.openpkw.openpkwmobile.models.User;
-import pl.openpkw.openpkwmobile.network.RestClient;
+import pl.openpkw.openpkwmobile.network.MockAPI;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -47,7 +48,7 @@ public class LoginFragment extends Fragment {
         buttonText.setSpan(new UnderlineSpan(), 0, buttonText.length(), 0);
         restorePasswordBtn.setText(buttonText);
 
-        ((OpenPKWActivity)getActivity()).setStepNo(v.findViewById(R.id.step),1);
+        ((OpenPKWActivity) getActivity()).setStepNo(v.findViewById(R.id.step), 1);
         return v;
     }
 
@@ -125,7 +126,7 @@ public class LoginFragment extends Fragment {
             public void success(User user, Response response) {
                 //TODO: change to for other activity ChooseCommisionActivity or similar if implemented
                 Intent fvIntent = new Intent(getActivity(), FilterCommissionsActivity.class);
-                fvIntent.putExtra("user",user);
+                fvIntent.putExtra("user", user);
                 user.setPassword(password);
                 OfflineStorage.setLoggedInUser(user, getActivity().getApplicationContext());
                 startActivity(fvIntent);
@@ -144,7 +145,14 @@ public class LoginFragment extends Fragment {
         //running background network process of authentication
         //the result is handled by loginCallback
         Context appContext = getActivity().getApplicationContext();
-        RestClient.get(appContext).login(login, password, loginCallback);
-
+        //RestClient.get(appContext).login(login, password, loginCallback);
+        // Mocking user only for testing
+        User user = MockAPI.mockUser();
+        Intent fvIntent = new Intent(getActivity(), FilterCommissionsActivity.class);
+        fvIntent.putExtra("user", user);
+        user.setPassword(password);
+        OfflineStorage.setLoggedInUser(user, getActivity().getApplicationContext());
+        startActivity(fvIntent);
+        getActivity().finish();
     }
 }
