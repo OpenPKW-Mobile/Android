@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical|center_horizontal"
         android:padding="10dp"
-        android:text="lub wprowadź ręcznie kod terytorialny" />
+        android:text="@string/filter.commissions.label.enterdatamanually" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -100,13 +100,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/fragment_filter_commissions_protocol_image"
-            android:paddingBottom="10dp"
-            android:text="@string/filter.commissions.example.label" />
 
         <ImageView
             android:id="@+id/fragment_filter_commissions_protocol_image"

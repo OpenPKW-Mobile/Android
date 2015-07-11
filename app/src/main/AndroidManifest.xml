@@ -13,6 +13,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
+        android:name=".app.OpenpkwApp"
         android:allowBackup="true"
         android:icon="@mipmap/openpkw_icon"
         android:label="@string/app.name"

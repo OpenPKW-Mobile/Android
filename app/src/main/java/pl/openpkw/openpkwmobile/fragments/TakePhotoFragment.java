@@ -5,13 +5,20 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.*;
-import android.widget.*;
-import pl.openpkw.openpkwmobile.R;
-import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
+import android.view.LayoutInflater;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.List;
+
+import pl.openpkw.openpkwmobile.R;
+import pl.openpkw.openpkwmobile.activities.TakePhotosActivity;
 
 /**
  * Created by Bartlomiej 'baslow' Slowik on 2015.05.02.
@@ -57,7 +64,9 @@ public class TakePhotoFragment extends Fragment {
         }
 
         private void setCameraParameters(int surfaceWidth, int surfaceHeight) {
-
+            if (camera == null) {
+                setupCamera();
+            }
             Camera.Parameters cameraParameters = camera.getParameters();
 
             // preview size
@@ -113,8 +122,7 @@ public class TakePhotoFragment extends Fragment {
                 if ((size.width <= width && size.height <= height) || (size.height <= width && size.width <= height)) {
                     if (bestSize == null) {
                         bestSize = size;
-                    }
-                    else {
+                    } else {
                         int resultArea = bestSize.width * bestSize.height;
                         int newArea = size.width * size.height;
 
@@ -135,8 +143,7 @@ public class TakePhotoFragment extends Fragment {
                 if ((size.width <= maxWidth && size.height <= maxHeight) || (size.height <= maxWidth && size.width <= maxHeight)) {
                     if (bestSize == null) {
                         bestSize = size;
-                    }
-                    else {
+                    } else {
                         int bestArea = bestSize.width * bestSize.height;
                         int newArea = size.width * size.height;
                         if (newArea > bestArea) {

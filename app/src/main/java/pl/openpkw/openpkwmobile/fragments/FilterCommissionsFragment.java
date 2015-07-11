@@ -186,7 +186,7 @@ public class FilterCommissionsFragment extends Fragment {
                 progressDialog.dismiss();
             }
             if (commission != null) {
-                if (getActivity() != null && NetworkManager.isOnline(getActivity().getApplicationContext())) {
+                if (getActivity() != null) { //&& NetworkManager.isOnline(getActivity().getApplicationContext())
                     Intent votingFormActivity = new Intent(getActivity(), VotingFormActivity.class);
                     votingFormActivity.putExtra(COMMISSION_EXTRA, commission);
                     votingFormActivity.putExtra(USER_EXTRA, user);

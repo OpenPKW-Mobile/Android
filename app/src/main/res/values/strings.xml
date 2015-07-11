@@ -20,7 +20,7 @@
     <string name="register.buttonlabel.register">Zarejestruj</string>
     <string name="register.fill.all.fields">Wypełnij wszystkie pola</string>
     <string name="register.email.exists">Podany adres e-mail już istnieje w naszej bazie</string>
-    <string name="register.ok">Rejestracja przebiegła prawidłowo, na podany adres e-mail w dniu 24.05.2015 ok godziny 18:00 zostanie wysłana informacja z dalszymi krokami</string>
+    <string name="register.ok">Rejestracja przebiegła prawidłowo, na podany adres e-mail w dniu 24.05.2015 ok. godziny 18:00 zostanie wysłana informacja z dalszymi krokami</string>
     <string name="global.search">Szukaj</string>
     <string name="login.label.newaccount">Nowy użytkownik</string>
     <string name="login.label.fpassword">Nie pamiętasz hasła?</string>
@@ -40,7 +40,7 @@
     <string name="internal.server.error">Wystąpił błąd</string>
     <string name="login.error.nointernetconnection">Brak połączenia internetowego!\nSprawdź swoje ustawienia sieciowe</string>
     <string name="filter.commissions.label.top">Wyszukaj komisję, z której przekazujesz dane</string>
-    <string name="filter.commissions.label">Skanuj Kod QR bądź wpisz ręcznie Kod Terytorialny Gminy w której znajduje się  Twoja Komisja (znajdziesz go na protokole wyborczym)</string>
+    <string name="filter.commissions.label">Zeskanuj kod QR, aby wprowadzić dane z protokołu automatycznie</string>
     <string name="filter.commissions.scan.button">Skanuj</string>
     <string name="filter.commissions.example.label">Przykladowe dane w ramkach:</string>
     <string name="filter.commissions.edittext.teritorial.code">Kod terytorialny</string>
@@ -82,7 +82,7 @@
     <string name="fragment.send.images.will.send.later">Zostaną one przesłane na serwer automatycznie gdy połączysz się z Internetem</string>
 
     <string name="fragment.send.images.final.text.with.results">Wyniki przekażemy na:</string>
-    <string name="fragment.send.images.final.text.with.results.link">otwartapw.pl</string>
+    <string name="fragment.send.images.final.text.with.results.link">www.openpkw.pl</string>
 
     <string name="fragment.photo.preview.dont.have.images">Nie wykonałeś żadnych zdjęć. Czy chcesz kontynuować bez wysyłania fotografii protokołu wyborczego.</string>
     <string name="dialog.ok">Tak</string>
@@ -124,4 +124,5 @@
     <string name="summary.info.failed">Twoje dane nie zostały przesłane na serwer</string>
     <string name="summary.detail.success">Dziękujemy za poświęcony czas i dobrze wykonaną misję społeczną</string>
     <string name="summary.detail.failed">Sprawdź ustawienia czy jesteś połączony z Internetem i spróbuj ponownie.</string>
+    <string name="filter.commissions.label.enterdatamanually">lub wpisz ręcznie kod terytorialny gminy, w której znajduje się Twoja komisja (zobacz przykład poniżej)</string>
 </resources>
